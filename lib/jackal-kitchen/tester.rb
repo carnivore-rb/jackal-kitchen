@@ -1,5 +1,4 @@
 require 'jackal-kitchen'
-require 'pry'
 ## check out jackal commander & target commit hook stuff
 ## check out jackal commander tests
 
@@ -34,7 +33,6 @@ module Jackal
               run_command("bundle exec kitchen test", working_path, payload)
             end
           rescue => e
-            binding.pry
             raise
           ensure
             FileUtils.rm_rf(working_dir)
