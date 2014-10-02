@@ -1,8 +1,8 @@
 require 'jackal-kitchen'
 
-class Jackal::Kitchen::Interface < Jackal::Utils::HttpApi;end
+class Jackal::Kitchen::Hook < Jackal::Utils::HttpApi; end
 
-Jackal::Kitchen::Interface.define do
+Jackal::Kitchen::Hook.define do
   post '/kitchen' do |msg|
     begin
       Carnivore::Supervisor.supervisor[:jackal_kitchen_input].transmit(
