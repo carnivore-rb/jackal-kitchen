@@ -33,14 +33,14 @@ module Jackal
           working_dir = working_path = Dir.mktmpdir
           begin
             maybe_clean_bundle do
-              setup_command("git clone #{repo} cookbook", working_path, payload)
+              run_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
               run_command("git checkout #{ref}", working_path, payload)
               run_command("bundle install --path vendor", working_path, payload)
               run_command("bundle exec kitchen test", working_path, payload)
             end
           rescue => e
-            raise
+            error "Command failed! #{e.class}: #{e}"
           ensure
             FileUtils.rm_rf(working_dir)
           end
@@ -73,7 +73,9 @@ module Jackal
           stderr.rewind
           payload.set(:data, :kitchen, :result, command, :fail)
           payload.set(:data, :kitchen, :error, stderr.read)
-          false
+          stdout.rewind
+          stderr.rewind
+          raise "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
         end
       end
 
