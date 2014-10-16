@@ -35,9 +35,9 @@ module Jackal
             maybe_clean_bundle do
               setup_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
-              setup_command("git checkout #{ref}", working_path, payload)
-              setup_command("bundle install", working_path, payload)
-              kitchen_command("bundle exec kitchen test", working_path, payload)
+              run_command("git checkout #{ref}", working_path, payload)
+              run_command("bundle install --path vendor", working_path, payload)
+              run_command("bundle exec kitchen test", working_path, payload)
             end
           rescue => e
             raise
@@ -54,28 +54,7 @@ module Jackal
       # @param working_path [String] local working path
       # @param payload [Smash] current payload
       # @return [TrueClass]
-      def setup_command(command, working_path, payload)
-        cmd_input = Shellwords.shellsplit(command)
-        process = ChildProcess.build(*cmd_input)
-        stdout = File.open(File.join(working_path, 'stdout'), 'w+')
-        stderr = File.open(File.join(working_path, 'stderr'), 'w+')
-        process.io.stdout = stdout
-        process.io.stderr = stderr
-        process.cwd = working_path
-        process.start
-        status = process.wait
-        if status == 0
-          info "Setup command '#{command}' completed sucessfully"
-          payload.set(:data, :kitchen, :result, command, :success)
-          true
-        else
-          error "Command '#{command}' failed"
-          payload.set(:data, :kitchen, :result, command, :fail)
-          raise "Failed to execute setup command '#{command}'"
-        end
-      end
-
-      def kitchen_command(command, working_path, payload)
+      def run_command(command, working_path, payload)
         cmd_input = Shellwords.shellsplit(command)
         process = ChildProcess.build(*cmd_input)
         stdout = File.open(File.join(working_path, 'stdout'), 'w+')
@@ -91,8 +70,10 @@ module Jackal
           true
         else
           error "Command '#{command}' failed"
+          stderr.rewind
           payload.set(:data, :kitchen, :result, command, :fail)
-          raise "Failed to execute command '#{command}'"
+          payload.set(:data, :kitchen, :error, stderr.read)
+          false
         end
       end
 
