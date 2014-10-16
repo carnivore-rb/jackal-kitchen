@@ -36,6 +36,8 @@ module Jackal
               run_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
               run_command("git checkout #{ref}", working_path, payload)
+              insert_kitchen_lxc(working_path)
+              insert_kitchen_local(working_path)
               run_command("bundle install --path vendor", working_path, payload)
               run_command("bundle exec kitchen test", working_path, payload)
             end
@@ -45,6 +47,30 @@ module Jackal
             FileUtils.rm_rf(working_dir)
           end
           job_completed(:kitchen, payload, msg)
+        end
+      end
+
+      def insert_kitchen_local(path)
+        File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
+          file.puts '---'
+          file.puts 'driver:'
+          file.puts '  name: lxc'
+        end
+      end
+
+      # Update gemfile to include kitchen-lxc driver
+      #
+      # @param path [String] working directory
+      def insert_kitchen_lxc(path)
+        gemfile = File.join(path, 'Gemfile')
+        if(File.exists?(gemfile))
+          content = File.readlines(gemfile)
+        else
+          content = ['source "https://rubygems.org"']
+        end
+        content << 'gem "kitchen-lxc"'
+        File.open(gemfile, 'w') do |file|
+          file.puts content.join("\n")
         end
       end
 
