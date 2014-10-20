@@ -38,7 +38,7 @@ module Jackal
               run_command("git checkout #{ref}", working_path, payload)
               insert_kitchen_lxc(working_path)
               insert_kitchen_local(working_path)
-              run_command("bundle install --path vendor", working_path, payload)
+              run_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
               run_command("bundle exec kitchen test", working_path, payload)
             end
           rescue => e
@@ -55,6 +55,10 @@ module Jackal
           file.puts '---'
           file.puts 'driver:'
           file.puts '  name: lxc'
+          file.puts '  use_sudo: false'
+          if(config[:ssh_key])
+            file.puts "  ssh_key: #{config[:ssh_key]}"
+          end
         end
       end
 
