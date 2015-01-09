@@ -33,7 +33,7 @@ module Jackal
           working_dir = working_path = Dir.mktmpdir
           begin
             maybe_clean_bundle do
-              run_command("git clone #{repo} cookbook", working_path, payload)
+              setup_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
               insert_kitchen_lxc(working_path)
               insert_kitchen_local(working_path)
