@@ -35,11 +35,12 @@ module Jackal
             maybe_clean_bundle do
               run_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
-              run_command("git checkout #{ref}", working_path, payload)
               insert_kitchen_lxc(working_path)
               insert_kitchen_local(working_path)
-              run_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
-              run_command("bundle exec kitchen test", working_path, payload)
+              setup_command("git checkout #{ref}", working_path, payload)
+              setup_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
+              spec_command("bundle exec rspec", working_path, payload)
+              kitchen_command("bundle exec kitchen test", working_path, payload)
             end
           rescue => e
             error "Command failed! #{e.class}: #{e}"
@@ -84,7 +85,48 @@ module Jackal
       # @param working_path [String] local working path
       # @param payload [Smash] current payload
       # @return [TrueClass]
-      def run_command(command, working_path, payload)
+      def setup_command(command, working_path, payload)
+        cmd_input = Shellwords.shellsplit(command)
+        process = ChildProcess.build(*cmd_input)
+        stdout = File.open(File.join(working_path, 'stdout'), 'w+')
+        stderr = File.open(File.join(working_path, 'stderr'), 'w+')
+        process.io.stdout = stdout
+        process.io.stderr = stderr
+        process.cwd = working_path
+        process.start
+        status = process.wait
+        if status == 0
+          info "Setup command '#{command}' completed sucessfully"
+          payload.set(:data, :kitchen, :result, command, :success)
+          true
+        else
+          error "Command '#{command}' failed"
+          payload.set(:data, :kitchen, :result, command, :fail)
+          raise "Failed to execute setup command '#{command}'"
+        end
+      end
+
+      def spec_command(command, working_path, payload)
+        cmd_input = Shellwords.shellsplit(command)
+        process = ChildProcess.build(*cmd_input)
+        stdout = File.open(File.join(working_path, 'stdout'), 'w+')
+        stderr = File.open(File.join(working_path, 'stderr'), 'w+')
+        process.io.stdout = stdout
+        process.io.stderr = stderr
+        process.cwd = working_path
+        process.start
+        status = process.wait
+        if status == 0
+          info "Spec command '#{command}' completed sucessfully"
+          payload.set(:data, :kitchen, :result, command, :success)
+          true
+        else
+          error "Command '#{command}' failed"
+          payload.set(:data, :kitchen, :result, command, :fail)
+        end
+      end
+
+      def kitchen_command(command, working_path, payload)
         cmd_input = Shellwords.shellsplit(command)
         process = ChildProcess.build(*cmd_input)
         stdout = File.open(File.join(working_path, 'stdout'), 'w+')
@@ -107,6 +149,12 @@ module Jackal
           stderr.rewind
           raise "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
         end
+        %w(chefspec serverspec teapot).each do |format|
+          file = File.open(File.join(process.cwd, 'output', "#{format}.json")).read
+          output = JSON.parse(file)
+          payload.set(:data, :kitchen, :test_output, format.to_sym, output)
+        end
+
       end
 
       # Clean environment of bundler variables
