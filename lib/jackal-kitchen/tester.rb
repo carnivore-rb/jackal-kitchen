@@ -31,6 +31,8 @@ module Jackal
           ref = payload.get(:data, :github, :head_commit, :id)
           repo = payload.get(:data, :github, :repository, :url)
           working_dir = working_path = Dir.mktmpdir
+          debug "Working path: #{working_path}"
+
           begin
             maybe_clean_bundle do
               setup_command("git clone #{repo} cookbook", working_path, payload)
