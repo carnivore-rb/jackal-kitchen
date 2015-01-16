@@ -37,8 +37,8 @@ module Jackal
             maybe_clean_bundle do
               setup_command("git clone #{repo} cookbook", working_path, payload)
               working_path = File.join(working_path, 'cookbook')
-              insert_kitchen_lxc(working_path)
-              insert_kitchen_local(working_path)
+              insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
+              insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
               setup_command("git checkout #{ref}", working_path, payload)
               setup_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
               spec_command("bundle exec rspec", working_path, payload)
