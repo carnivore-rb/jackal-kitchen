@@ -47,7 +47,8 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
-            parse_test_output(File.join(working_path, 'cookbook', 'output'), payload)
+            working_path = File.join(working_path, 'output')
+            parse_test_output(working_path, payload)
             FileUtils.rm_rf(working_dir)
           end
           job_completed(:kitchen, payload, msg)
