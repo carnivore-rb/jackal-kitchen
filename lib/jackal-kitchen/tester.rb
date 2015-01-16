@@ -106,7 +106,7 @@ module Jackal
         else
           error "Command '#{command}' failed"
           payload.set(:data, :kitchen, :result, command, :fail)
-          raise "Failed to execute setup command '#{command}'"
+          error "Failed to execute setup command '#{command}'"
         end
       end
 
@@ -151,7 +151,7 @@ module Jackal
           payload.set(:data, :kitchen, :error, stderr.read)
           stdout.rewind
           stderr.rewind
-          raise "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
+          error "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
         end
       end
 
@@ -165,7 +165,7 @@ module Jackal
             output = JSON.parse(file)
             payload.set(:data, :kitchen, :test_output, format.to_sym, output)
           rescue => e
-            raise "there was an problem: #{e.inspect}"
+            error "Processing #{format} output failed: #{e.inspect}"
           end
         end
       end
