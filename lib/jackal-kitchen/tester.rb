@@ -45,6 +45,7 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
+            parse_test_output(File.join(working_path, 'cookbook', 'output'), payload)
             FileUtils.rm_rf(working_dir)
           end
           job_completed(:kitchen, payload, msg)
@@ -149,12 +150,21 @@ module Jackal
           stderr.rewind
           raise "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
         end
-        %w(chefspec serverspec teapot).each do |format|
-          file = File.open(File.join(process.cwd, 'output', "#{format}.json")).read
-          output = JSON.parse(file)
-          payload.set(:data, :kitchen, :test_output, format.to_sym, output)
-        end
+      end
 
+      def parse_test_output(cwd, payload)
+        formats = config.fetch(:test_formats, %w(chefspec serverspec teapot))
+        formats.each do |format|
+          begin
+            file_path = File.join(cwd, "#{format}.json")
+            debug "processing #{format} from #{file_path}"
+            file = File.open(file_path).read
+            output = JSON.parse(file)
+            payload.set(:data, :kitchen, :test_output, format.to_sym, output)
+          rescue => e
+            raise "there was an problem: #{e.inspect}"
+          end
+        end
       end
 
       # Clean environment of bundler variables
