@@ -43,12 +43,12 @@ module Jackal
               setup_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
               spec_command("bundle exec rspec", working_path, payload)
               kitchen_command("bundle exec kitchen test", working_path, payload)
+              working_path = File.join(working_path, 'output')
+              parse_test_output(working_path, payload)
             end
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
-            working_path = File.join(working_path, 'output')
-            parse_test_output(working_path, payload)
             FileUtils.rm_rf(working_dir)
           end
           job_completed(:kitchen, payload, msg)
