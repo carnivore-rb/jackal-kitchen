@@ -29,7 +29,7 @@ module Jackal
         failure_wrap(msg) do |payload|
           user = payload.get(:data, :github, :repository, :owner, :name)
           ref = payload.get(:data, :github, :head_commit, :id)
-          repo = payload.get(:data, :github, :repository, :url)
+          repo = payload.get(:data, :github, :repository, :git_url)
           working_dir = working_path = Dir.mktmpdir
           debug "Working path: #{working_path}"
 
