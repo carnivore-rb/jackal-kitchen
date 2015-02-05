@@ -167,6 +167,7 @@ module Jackal
             payload.set(:data, :kitchen, :test_output, format.to_sym, output)
           rescue => e
             error "Processing #{format} output failed: #{e.inspect}"
+            raise
           end
         end
       end
