@@ -156,8 +156,9 @@ module Jackal
       end
 
       def parse_test_output(cwd, payload)
-        formats = config.fetch(:test_formats, %w(chefspec serverspec teapot))
-        formats.each do |format|
+        # TODO make formats configurable
+        # e.g. formats = config.fetch(:kitchen, :config, :test_formats, %w(chefspec serverspec teapot))
+        %w(chefspec serverspec teapot).each do |format|
           begin
             file_path = File.join(cwd, "#{format}.json")
             debug "processing #{format} from #{file_path}"
