@@ -120,19 +120,19 @@ module Jackal
             end
             result[:stop_time] = Time.now.to_i
             result[:exit_code] = process.exit_code
-              [stdout, stderr].each do |io|
+            command_key = command.gsub!(/[^0-9A-Za-z.\-]/, '_')
+            [stdout, stderr].each do |io|
               key = "kitchen/#{File.basename(io.path)}"
               type = io.path.split('-').last
               io.rewind
               asset_store.put(key, io)
-              command_key = command.gsub!(/[^0-9A-Za-z.\-]/, '_')
               result.set(:logs, command_key, type, key)
               io.close
               File.delete(io.path)
             end
             results << result
             unless(process.exit_code == 0)
-              payload.set(:data, :kitchen, :result, :failed, true)
+              payload.set(:data, :kitchen, :result, command_key.to_sym, :failed, true)
             end
           end
         end
