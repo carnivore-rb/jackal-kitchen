@@ -49,7 +49,8 @@ module Jackal
                 ],
                 {},
                 working_path,
-                payload)
+                payload
+              )
 
               working_path = File.join(working_path, 'output')
               parse_test_output(working_path, payload)
