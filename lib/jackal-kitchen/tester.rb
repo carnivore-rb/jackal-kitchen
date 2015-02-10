@@ -120,15 +120,15 @@ module Jackal
             end
             result[:stop_time] = Time.now.to_i
             result[:exit_code] = process.exit_code
-            # [stdout, stderr].each do |io|
-            #   key = "nellie/#{File.basename(io.path)}"
-            #   type = io.path.split('-').last
-            #   io.rewind
-            #   asset_store.put(key, io)
-            #   result.set(:logs, type, key)
-            #   io.close
-            #   File.delete(io.path)
-            # end
+              [stdout, stderr].each do |io|
+              key = "kitchen/#{File.basename(io.path)}"
+              type = io.path.split('-').last
+              io.rewind
+              asset_store.put(key, io)
+              result.set(:logs, type, key)
+              io.close
+              File.delete(io.path)
+            end
             results << result
             unless(process.exit_code == 0)
               payload.set(:data, :kitchen, :result, :failed, true)
