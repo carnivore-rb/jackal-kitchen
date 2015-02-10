@@ -27,22 +27,37 @@ module Jackal
       # @param msg [Carnivore::Message]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          user = payload.get(:data, :github, :repository, :owner, :name)
-          ref = payload.get(:data, :github, :head_commit, :id)
-          repo = payload.get(:data, :github, :repository, :git_url)
+          user = payload.get(:data, :code_fetcher, :info, :owner)
+          ref = payload.get(:data, :code_fetcher, :info, :commit_sha)
+          repo = payload.get(:data, :code_fetcher, :info, :name)
           working_dir = working_path = Dir.mktmpdir
           debug "Working path: #{working_path}"
 
           begin
             maybe_clean_bundle do
-              setup_command("git clone #{repo} cookbook", working_path, payload)
-              working_path = File.join(working_path, 'cookbook')
+              asset_key = [
+                user,
+                repo,
+                ref
+              ].join('-') + '.zip'
+              object = asset_store.get(asset_key)
+              asset_filename = File.join(working_path, asset_key)
+              asset = File.open(asset_filename, 'w')
+              asset.write object.read
+              asset.close
+              asset_store.unpack(asset, working_path)
               insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
               insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
-              setup_command("git checkout #{ref}", working_path, payload)
-              setup_command("bundle install --path /tmp/.kitchen-jackal-vendor", working_path, payload)
-              spec_command("bundle exec rspec", working_path, payload)
-              kitchen_command("bundle exec kitchen test", working_path, payload)
+              run_commands(
+                [
+                  'bundle install --path /tmp/.kitchen-jackal-vendor',
+                  'bundle exec rspec',
+                  'bundle exec kitchen test'
+                ],
+                {},
+                working_path,
+                payload)
+
               working_path = File.join(working_path, 'output')
               parse_test_output(working_path, payload)
             end
@@ -81,6 +96,52 @@ module Jackal
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
+      end
+
+      # Run collection of commands
+      #
+      # @param commands [Array<String>] commands to execute
+      # @param env [Hash] environment variables for process
+      # @param payload [Smash]
+      # @return [Array<Smash>] command results ({:start_time, :stop_time, :exit_code, :logs, :timed_out})
+      def run_commands(commands, env, cwd, payload)
+        results = []
+        commands.each do |command|
+          process_manager.process(payload[:id], command) do |process|
+            result = Smash.new
+            stdout = process_manager.create_io_tmp(Celluloid.uuid, 'stdout')
+            stderr = process_manager.create_io_tmp(Celluloid.uuid, 'stderr')
+            process.io.stdout = stdout
+            process.io.stderr = stderr
+            process.environment.replace(env.dup)
+            process.leader = true
+            process.cwd = cwd
+            result[:start_time] = Time.now.to_i
+            process.start
+            begin
+              process.poll_for_exit(config.fetch(:max_execution_time, 600))
+            rescue ChildProcess::TimeoutError
+              process.stop
+              result[:timed_out] = true
+            end
+            result[:stop_time] = Time.now.to_i
+            result[:exit_code] = process.exit_code
+            # [stdout, stderr].each do |io|
+            #   key = "nellie/#{File.basename(io.path)}"
+            #   type = io.path.split('-').last
+            #   io.rewind
+            #   asset_store.put(key, io)
+            #   result.set(:logs, type, key)
+            #   io.close
+            #   File.delete(io.path)
+            # end
+            results << result
+            unless(process.exit_code == 0)
+              payload.set(:data, :kitchen, :result, :failed, true)
+            end
+          end
+        end
+        results
       end
 
       # Run a command
