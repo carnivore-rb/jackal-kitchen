@@ -35,11 +35,7 @@ module Jackal
 
           begin
             maybe_clean_bundle do
-              asset_key = [
-                user,
-                repo,
-                ref
-              ].join('-') + '.zip'
+              asset_key = payload.get(:data, :code_fetcher, :info, :asset)
               object = asset_store.get(asset_key)
               asset_filename = File.join(working_path, asset_key)
               asset = File.open(asset_filename, 'w')
