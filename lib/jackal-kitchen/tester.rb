@@ -125,7 +125,8 @@ module Jackal
               type = io.path.split('-').last
               io.rewind
               asset_store.put(key, io)
-              result.set(:logs, type, key)
+              command_key = command.gsub!(/[^0-9A-Za-z.\-]/, '_')
+              result.set(:logs, command_key, type, key)
               io.close
               File.delete(io.path)
             end
