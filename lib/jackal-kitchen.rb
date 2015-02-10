@@ -1,6 +1,5 @@
 require 'jackal'
 require 'jackal-kitchen/version'
-require 'jackal-kitchen/hook'
 
 module Jackal
   module Kitchen
