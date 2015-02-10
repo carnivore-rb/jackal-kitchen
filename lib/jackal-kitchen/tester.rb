@@ -27,9 +27,6 @@ module Jackal
       # @param msg [Carnivore::Message]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          user = payload.get(:data, :code_fetcher, :info, :owner)
-          ref = payload.get(:data, :code_fetcher, :info, :commit_sha)
-          repo = payload.get(:data, :code_fetcher, :info, :name)
           working_dir = working_path = Dir.mktmpdir
           debug "Working path: #{working_path}"
 
