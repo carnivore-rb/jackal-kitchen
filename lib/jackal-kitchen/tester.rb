@@ -102,6 +102,7 @@ module Jackal
       def run_commands(commands, env, cwd, payload)
         results = []
         commands.each do |command|
+          debug "running command: #{command}"
           process_manager.process(payload[:id], command) do |process|
             result = Smash.new
             stdout = process_manager.create_io_tmp(Celluloid.uuid, 'stdout')
