@@ -58,6 +58,7 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
+            run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
             FileUtils.rm_rf(working_dir)
           end
           job_completed(:kitchen, payload, msg)
