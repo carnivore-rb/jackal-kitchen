@@ -41,7 +41,7 @@ module Jackal
 
           payload.set(:data, :kitchen, :judge, :teapot, @teapot_data || Smash.new)
 
-          judgement = Smash.new({ :reasons => [] })
+          judgement = Smash.new(:reasons => [])
 
           judgement[:reasons] << :teapot_runtime if @teapot_data[:total_runtime][:threshold_exceeded]
 
@@ -81,9 +81,11 @@ module Jackal
             )
           }
 
-          Smash.new({ :slowest_resource => slowest_resource,
+          Smash.new(
+            :slowest_resource => slowest_resource,
             :resources_over_threshold => resources_over_threshold,
-            :total_runtime => total_runtime })
+            :total_runtime => total_runtime
+          )
         end
 
         # Process spec metadata to determine if any thresholds were exceeded
@@ -104,9 +106,11 @@ module Jackal
             end
           }
 
-          Smash.new({ :slowest_test => slowest_test,
+          Smash.new(
+            :slowest_test => slowest_test,
             :tests_over_threshold => tests_over_threshold,
-            :total_runtime => duration })
+            :total_runtime => duration
+          )
         end
       end
     end
