@@ -11,7 +11,7 @@ module Jackal
         # Destination service
         DESTINATION = :slack
 
-        # Format payload to provide output comment to GitHub
+        # Format payload to provide message to slack
         #
         # @param payload [Smash]
         def format(payload)
