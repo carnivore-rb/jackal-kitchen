@@ -6,9 +6,14 @@ module Jackal
     module Formatter
       class Adjudicate < Jackal::Formatter
 
+        # Source service
         SOURCE = :kitchen
+        # Destination service
         DESTINATION = :slack
 
+        # Populate payload with judgement regarding test outcome
+        #
+        # @param payload [Smash]
         def format(payload)
           payload.set(:data, :kitchen, :judge, Smash.new)
           verdict = adjudicate(payload)
@@ -16,8 +21,10 @@ module Jackal
           payload.set(:data, :kitchen, :judge, :reasons, verdict[:reasons])
         end
 
-        # payload:: Payload
-        # Return true if tests passed
+        # Return hash of judgement regarding outcome payload
+        #
+        # @param payload [Smash]
+        # @return [Smash]
         def adjudicate(payload)
           # TODO make formats configurable
           # e.g. formats = config.fetch(:kitchen, :config, :test_formats, %w(chefspec serverspec teapot))
@@ -34,7 +41,7 @@ module Jackal
 
           payload.set(:data, :kitchen, :judge, :teapot, @teapot_data || Smash.new)
 
-          judgement = { :reasons => [] }
+          judgement = Smash.new({ :reasons => [] })
 
           judgement[:reasons] << :teapot_runtime if @teapot_data[:total_runtime][:threshold_exceeded]
 
@@ -49,6 +56,10 @@ module Jackal
           judgement
         end
 
+        # Process teapot metadata to determine if any thresholds were exceeded
+        #
+        # @param data [Smash] the teapot data from payload
+        # @return [Smash] the resulting teapot metadata
         def teapot_metadata(data) # data,kitchen,test_output,teapot ->  #return hash
           # TODO :transient_failures => [],
 
@@ -70,11 +81,16 @@ module Jackal
             )
           }
 
-          { :slowest_resource => slowest_resource,
+          Smash.new({ :slowest_resource => slowest_resource,
             :resources_over_threshold => resources_over_threshold,
-            :total_runtime => total_runtime }
+            :total_runtime => total_runtime })
         end
 
+        # Process spec metadata to determine if any thresholds were exceeded
+        #
+        # @param data [Smash] the rspec data from payload
+        # @param format [Symbol] the name of the rspec data "format" (e.g. chefspec, serverspec)
+        # @return [Smash] the resulting rspec metadata
         def spec_metadata(data, format)
           duration = data["summary"]["duration"]
           sorted_tests = data["examples"].sort_by{ |x|x["run_time"] }
@@ -88,9 +104,9 @@ module Jackal
             end
           }
 
-          { :slowest_test => slowest_test,
+          Smash.new({ :slowest_test => slowest_test,
             :tests_over_threshold => tests_over_threshold,
-            :total_runtime => duration }
+            :total_runtime => duration })
         end
       end
     end
