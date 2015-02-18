@@ -1,7 +1,7 @@
 require 'jackal'
 
 module Jackal
-  module KitchenJudge
+  module Kitchen
     module Formatter
 
       class SlackMessage < Jackal::Formatter

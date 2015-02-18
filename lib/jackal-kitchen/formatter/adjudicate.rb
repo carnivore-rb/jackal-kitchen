@@ -2,7 +2,7 @@ require "jackal"
 
 module Jackal
   # Formulate kitchen output into short message
-  module KitchenJudge
+  module Kitchen
     module Formatter
       class Adjudicate < Jackal::Formatter
 
