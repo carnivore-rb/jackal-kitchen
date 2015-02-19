@@ -139,51 +139,6 @@ module Jackal
         results
       end
 
-      def spec_command(command, working_path, payload)
-        cmd_input = Shellwords.shellsplit(command)
-        process = ChildProcess.build(*cmd_input)
-        stdout = File.open(File.join(working_path, 'stdout'), 'w+')
-        stderr = File.open(File.join(working_path, 'stderr'), 'w+')
-        process.io.stdout = stdout
-        process.io.stderr = stderr
-        process.cwd = working_path
-        process.start
-        status = process.wait
-        if status == 0
-          info "Spec command '#{command}' completed sucessfully"
-          payload.set(:data, :kitchen, :result, command, :success)
-          true
-        else
-          error "Command '#{command}' failed"
-          payload.set(:data, :kitchen, :result, command, :fail)
-        end
-      end
-
-      def kitchen_command(command, working_path, payload)
-        cmd_input = Shellwords.shellsplit(command)
-        process = ChildProcess.build(*cmd_input)
-        stdout = File.open(File.join(working_path, 'stdout'), 'w+')
-        stderr = File.open(File.join(working_path, 'stderr'), 'w+')
-        process.io.stdout = stdout
-        process.io.stderr = stderr
-        process.cwd = working_path
-        process.start
-        status = process.wait
-        if status == 0
-          info "Command '#{command}' completed sucessfully"
-          payload.set(:data, :kitchen, :result, command, :success)
-          true
-        else
-          error "Command '#{command}' failed"
-          stderr.rewind
-          payload.set(:data, :kitchen, :result, command, :fail)
-          payload.set(:data, :kitchen, :error, stderr.read)
-          stdout.rewind
-          stderr.rewind
-          error "Command failure! (#{command}). STDOUT: #{stdout.read} STDERR: #{stderr.read}"
-        end
-      end
-
       def parse_test_output(cwd, payload)
         # TODO make formats configurable
         # e.g. formats = config.fetch(:kitchen, :config, :test_formats, %w(chefspec serverspec teapot))
