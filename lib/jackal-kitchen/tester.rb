@@ -133,9 +133,7 @@ module Jackal
               File.delete(io.path)
             end
             results << result
-            unless(process.exit_code == 0)
-              payload.set(:data, :kitchen, :result, command_key.to_sym, :failed, true)
-            end
+            payload.set(:data, :kitchen, :result, command_key.to_sym, :exit_code, process.exit_code)
           end
         end
         results
