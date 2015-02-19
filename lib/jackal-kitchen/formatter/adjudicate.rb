@@ -16,44 +16,11 @@ module Jackal
         # @param payload [Smash]
         def format(payload)
           payload.set(:data, :kitchen, :judge, Smash.new)
-          verdict = adjudicate(payload)
-          payload.set(:data, :kitchen, :judge, :decision, verdict[:decision])
-          payload.set(:data, :kitchen, :judge, :reasons, verdict[:reasons])
-        end
+          payload.set(:data, :kitchen, :judge, :teapot, metadata(payload, :teapot))
+          reasons = populate_reasons_for_failure(payload)
 
-        # Return hash of judgement regarding outcome payload
-        #
-        # @param payload [Smash]
-        # @return [Smash]
-        def adjudicate(payload)
-          # TODO make formats configurable
-          # e.g. formats = config.fetch(:kitchen, :config, :test_formats, %w(chefspec serverspec teapot))
-          %w(chefspec serverspec teapot).each do |f|
-            case f
-            when 'teapot'
-              @teapot_data = teapot_metadata(payload.get(:data, :kitchen, :test_output, :teapot))
-            when 'chefspec'
-              @chefspec_data = spec_metadata(payload.get(:data, :kitchen, :test_output, :chefspec), :chefspec)
-            when 'serverspec'
-              @serverspec_data = spec_metadata(payload.get(:data, :kitchen, :test_output, :serverspec), :serverspec)
-            end
-          end
-
-          payload.set(:data, :kitchen, :judge, :teapot, @teapot_data || Smash.new)
-
-          judgement = Smash.new(:reasons => [])
-
-          judgement[:reasons] << :teapot_runtime if @teapot_data[:total_runtime][:threshold_exceeded]
-
-          rspec_result = payload.get(:data, :kitchen, :result, "bundle exec rspec")
-          kitchen_result = payload.get(:data, :kitchen, :result, "bundle exec kitchen test")
-
-          judgement[:reasons] << :rspec unless rspec_result.to_s == "success"
-          judgement[:reasons] << :kitchen unless kitchen_result.to_s == "success"
-
-          judgement[:decision] = judgement[:reasons].empty?
-
-          judgement
+          verdict = reasons.values.flatten.empty?
+          payload.set(:data, :kitchen, :judge, :decision, verdict)
         end
 
         # Process teapot metadata to determine if any thresholds were exceeded
@@ -112,6 +79,42 @@ module Jackal
             :total_runtime => duration
           )
         end
+
+        private
+
+        # For each test category, populate a results array that indicates
+        #   any test failures
+        #
+        # @param payload [Smash] payload data with test example info
+        # @return [Hash] eg: { reasons: [teapot: ['I was born to fail'], chefspec: [], ...]}
+        def populate_reasons_for_failure(payload)
+          reasons = {}
+
+          [:chefspec, :serverspec, :teapot].each do |type|
+            reasons[type] = []
+            examples = payload[:data][:kitchen][:test_output][type][:examples] || []
+            examples.select { |h| h[:status] == 'failed' }.each do |h|
+              reasons[type] << h[:description]
+            end
+
+            cond = (type == :teapot &&
+                    metadata(payload, type)[:total_runtime][:threshold_exceeded])
+            reasons[type] << 'Threshold exceeded' if cond
+          end
+
+          payload.set(:data, :kitchen, :judge, :reasons, Smash.new(reasons))
+          reasons
+        end
+
+        # Convenience method to fetch payload metadata based on type
+        #
+        # @param payload [Smash] payload data with test example info
+        # @return [Smash] metadata associated with test type
+        def metadata(payload, type)
+          meth = (type == :teapot) ? :teapot_metadata : :spec_metadata
+          send(meth, payload.get(:data, :kitchen, :test_output, type))
+        end
+
       end
     end
   end
