@@ -44,7 +44,7 @@ module Jackal
 
               run_commands(
                 [
-                  "bundle install --path #{File.join(working_path, 'vendor')}",
+                  "bundle install --path #{File.join(working_path, '.jackal-kitchen-vendor')}",
                   'bundle exec rspec',
                 ],
                 {},
