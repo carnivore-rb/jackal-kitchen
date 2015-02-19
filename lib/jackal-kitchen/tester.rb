@@ -41,19 +41,29 @@ module Jackal
               asset_store.unpack(asset, working_path)
               insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
               insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
+
               run_commands(
                 [
                   'bundle install --path /tmp/.kitchen-jackal-vendor',
                   'bundle exec rspec',
-                  'bundle exec kitchen test'
                 ],
                 {},
                 working_path,
                 payload
               )
 
-              working_path = File.join(working_path, 'output')
-              parse_test_output(working_path, payload)
+              output_path = File.join(working_path, 'output')
+              parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
+
+              kitchen_instances(working_path).each do |instance|
+                run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
+                %w(teapot serverspec).each do |format|
+                  parse_test_output(payload, {
+                    :format => format.to_sym, :cwd => output_path, :instance => instance
+                  })
+                end
+              end
+
             end
           rescue => e
             error "Command failed! #{e.class}: #{e}"
@@ -75,6 +85,18 @@ module Jackal
             file.puts "  ssh_key: #{config[:ssh_key]}"
           end
         end
+      end
+
+      # Load kitchen config and return an array of instances
+      #
+      # @param path [String] working directory
+      def kitchen_instances(path)
+        require 'kitchen'
+        yaml_path = File.join(path, '.kitchen.yml')
+        config = ::Kitchen::Config.new(
+          :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
+        )
+        return config.instances.map(&:name)
       end
 
       # Update gemfile to include kitchen-lxc driver
@@ -139,20 +161,39 @@ module Jackal
         results
       end
 
-      def parse_test_output(cwd, payload)
-        # TODO make formats configurable
-        # e.g. formats = config.fetch(:kitchen, :config, :test_formats, %w(chefspec serverspec teapot))
-        %w(chefspec serverspec teapot).each do |format|
-          begin
-            file_path = File.join(cwd, "#{format}.json")
-            debug "processing #{format} from #{file_path}"
-            file = File.open(file_path).read
-            output = JSON.parse(file)
-            payload.set(:data, :kitchen, :test_output, format.to_sym, output)
-          rescue => e
-            error "Processing #{format} output failed: #{e.inspect}"
-            raise
+      # Parse test output json and add it to the payload
+      #
+      # @param format, [Symbol, String] test output format name (:chefspec, :serverspec, :teapot)
+      # @param cwd, [String] test output directory path
+
+      def parse_test_output(payload, config = {})
+
+        unless config[:cwd]
+          raise "Please pass the cwd in config when parsing #{config[:format.to_s]} test output"
+        end
+
+        unless %w( chefspec serverspec teapot ).include?(config[:format].to_s)
+          raise "Unknown test output format #{config[:format].to_s}"
+        end
+
+        begin
+          file_path = File.join(config[:cwd], "#{config[:format].to_s}.json")
+          debug "processing #{config[:format].to_s} from #{file_path}"
+          file = File.open(file_path).read
+          output = JSON.parse(file)
+          case config[:format]
+          when :chefspec
+            payload.set(:data, :kitchen, :test_output, config[:format].to_sym, output)
+          when :serverspec, :teapot
+            unless config[:instance].is_a?(String)
+              raise "Please pass an instance name in config when parsing #{config[:format].to_s} test output"
+            else
+              payload.set(:data, :kitchen, :test_output, config[:format].to_sym, config[:instance], output)
+            end
           end
+        rescue => e
+          error "Processing #{config[:format].to_s} output failed: #{e.inspect}"
+          raise
         end
       end
 
