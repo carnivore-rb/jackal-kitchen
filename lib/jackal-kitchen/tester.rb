@@ -57,12 +57,11 @@ module Jackal
 
               kitchen_instances(working_path).each do |instance|
                 run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
-                parse_test_output(payload, {
-                  :format => :teapot, :cwd => output_path, :instance => instance
-                })
-                parse_test_output(payload, {
-                  :format => :serverspec, :cwd => output_path, :instance => instance
-                })
+                %w(teapot serverspec).each do |format|
+                  parse_test_output(payload, {
+                    :format => format.to_sym, :cwd => output_path, :instance => instance
+                  })
+                end
               end
 
             end
