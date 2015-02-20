@@ -181,6 +181,20 @@
             }
         },
         "kitchen": {
+            "result": {
+                "bundle_exec_kitchen_destroy": {
+                    "exit_code": 0
+                },
+                "bundle_exec_kitchen_test_default-ubuntu-1204": {
+                    "exit_code": 0
+                },
+                "bundle_exec_rspec": {
+                    "exit_code": 0
+                },
+                "bundle_install_--path__tmp_.kitchen-jackal-vendor": {
+                    "exit_code": 0
+                }
+            },
             "test_output": {
                 "chefspec": {
                     "examples": [
@@ -189,7 +203,7 @@
                             "file_path": "./spec/default_spec.rb",
                             "full_description": "test-cookbook does not include a broken recipe",
                             "line_number": 9,
-                            "run_time": 0.013328,
+                            "run_time": 0.019912,
                             "status": "passed"
                         },
                         {
@@ -197,12 +211,12 @@
                             "file_path": "./spec/default_spec.rb",
                             "full_description": "test-cookbook includes a working recipe",
                             "line_number": 13,
-                            "run_time": 0.007998,
+                            "run_time": 0.007603,
                             "status": "passed"
                         }
                     ],
                     "summary": {
-                        "duration": 5.08046,
+                        "duration": 4.911222,
                         "example_count": 2,
                         "failure_count": 0,
                         "pending_count": 0
@@ -210,56 +224,60 @@
                     "summary_line": "2 examples, 0 failures"
                 },
                 "serverspec": {
-                    "examples": [
-                        {
-                            "description": "should be directory",
-                            "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                            "full_description": "File \"/tmp\" should be directory",
-                            "line_number": 7,
-                            "run_time": 0.099281351,
-                            "status": "passed"
+                    "default-ubuntu-1204": {
+                        "examples": [
+                            {
+                                "description": "should be directory",
+                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
+                                "full_description": "File \"/tmp\" should be directory",
+                                "line_number": 7,
+                                "run_time": 0.109514599,
+                                "status": "passed"
+                            },
+                            {
+                                "description": "is listening on port 22",
+                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
+                                "full_description": "port-success is listening on port 22",
+                                "line_number": 11,
+                                "run_time": 0.010305639,
+                                "status": "passed"
+                            }
+                        ],
+                        "summary": {
+                            "duration": 0.122409215,
+                            "example_count": 2,
+                            "failure_count": 0,
+                            "pending_count": 0
                         },
-                        {
-                            "description": "is listening on port 22",
-                            "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                            "full_description": "port-success is listening on port 22",
-                            "line_number": 11,
-                            "run_time": 0.009132676,
-                            "status": "passed"
-                        }
-                    ],
-                    "summary": {
-                        "duration": 0.113465991,
-                        "example_count": 2,
-                        "failure_count": 0,
-                        "pending_count": 0
-                    },
-                    "summary_line": "2 examples, 0 failures"
+                        "summary_line": "2 examples, 0 failures"
+                    }
                 },
                 "teapot": {
-                    "resource_status": {
-                        "not_updated": 0,
-                        "total": 4,
-                        "updated": 4
-                    },
-                    "timing": [
-                        {
-                            "resource": "remote_directory[/tmp/kitchen/handlers]",
-                            "time": 0.00207516
+                    "default-ubuntu-1204": {
+                        "resource_status": {
+                            "not_updated": 0,
+                            "total": 4,
+                            "updated": 4
                         },
-                        {
-                            "resource": "chef_gem[chef-teapot]",
-                            "time": 0.016489192
-                        },
-                        {
-                            "resource": "chef_handler[Chef::Handler::Teapot]",
-                            "time": 0.001126725
-                        },
-                        {
-                            "resource": "remote_file[/opt/200]",
-                            "time": 1.007501292
-                        }
-                    ]
+                        "timing": [
+                            {
+                                "resource": "remote_directory[/tmp/kitchen/handlers]",
+                                "time": 0.00162704
+                            },
+                            {
+                                "resource": "chef_gem[chef-teapot]",
+                                "time": 0.00786959
+                            },
+                            {
+                                "resource": "chef_handler[Chef::Handler::Teapot]",
+                                "time": 0.00132471
+                            },
+                            {
+                                "resource": "remote_file[/opt/200]",
+                                "time": 0.908311201
+                            }
+                        ]
+                    }
                 }
             }
         },
@@ -278,6 +296,6 @@
             "version": "v1"
         }
     },
-    "id": "100b3183-f4af-45fa-8f70-0000001a0000",
+    "id": "d977a3d4-03ce-48ee-80e8-0000001a0000",
     "name": "github"
 }

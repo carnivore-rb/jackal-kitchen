@@ -22,7 +22,7 @@ describe Jackal::Kitchen::Tester do
 
     it 'should contain create a chefspec test_output key' do
       kitchen.transmit(
-        payload_for(:tester)
+        payload_for(:tester, :raw => true)
       )
       source_wait 200
       result = MessageStore.messages.pop
@@ -31,7 +31,7 @@ describe Jackal::Kitchen::Tester do
 
     it 'should contain create a serverspec test_output key' do
       kitchen.transmit(
-        payload_for(:tester)
+        payload_for(:tester, :raw => true)
       )
       source_wait 200
       result = MessageStore.messages.pop
