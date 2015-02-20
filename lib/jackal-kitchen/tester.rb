@@ -56,7 +56,10 @@ module Jackal
               output_path = File.join(working_path, 'output')
               parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
 
-              kitchen_instances(working_path).each do |instance|
+              instances = kitchen_instances(working_path)
+              payload.set(:data, :kitchen, :instances, instances)
+
+              instances.each do |instance|
                 run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
                 %w(teapot serverspec).each do |format|
                   parse_test_output(payload, {
@@ -91,6 +94,7 @@ module Jackal
       # Load kitchen config and return an array of instances
       #
       # @param path [String] working directory
+      # @returns [Array] array of strings representing test-kitchen instances
       def kitchen_instances(path)
         require 'kitchen'
         yaml_path = File.join(path, '.kitchen.yml')
