@@ -18,7 +18,8 @@ module Jackal
       # @return [TrueClass, FalseClass]
       def valid?(msg)
         super do |payload|
-          payload.get(:data, :github, :ref)
+          payload.get(:data, :code_fetcher, :asset) &&
+            !payload.get(:data, :kitchen, :test_output)
         end
       end
 
