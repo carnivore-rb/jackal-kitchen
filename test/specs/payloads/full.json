@@ -1,11 +1,11 @@
 {
     "data": {
         "code_fetcher": {
-            "asset": "teapot-test-cookbook-hw-labs-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip",
+            "asset": "hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip",
             "info": {
                 "commit_sha": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-                "name": "hw-labs",
-                "owner": "teapot-test-cookbook",
+                "name": "teapot-test-cookbook",
+                "owner": "hw-labs",
                 "private": false,
                 "reference": "refs/heads/master",
                 "url": "https://github.com/hw-labs/teapot-test-cookbook"
@@ -181,6 +181,9 @@
             }
         },
         "kitchen": {
+            "instances": [
+                "default-ubuntu-1204"
+            ],
             "result": {
                 "bundle_exec_kitchen_destroy": {
                     "exit_code": 0
@@ -203,7 +206,7 @@
                             "file_path": "./spec/default_spec.rb",
                             "full_description": "test-cookbook does not include a broken recipe",
                             "line_number": 9,
-                            "run_time": 0.019912,
+                            "run_time": 0.014241,
                             "status": "passed"
                         },
                         {
@@ -211,12 +214,12 @@
                             "file_path": "./spec/default_spec.rb",
                             "full_description": "test-cookbook includes a working recipe",
                             "line_number": 13,
-                            "run_time": 0.007603,
+                            "run_time": 0.018503,
                             "status": "passed"
                         }
                     ],
                     "summary": {
-                        "duration": 4.911222,
+                        "duration": 4.81945,
                         "example_count": 2,
                         "failure_count": 0,
                         "pending_count": 0
@@ -231,7 +234,7 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "File \"/tmp\" should be directory",
                                 "line_number": 7,
-                                "run_time": 0.109514599,
+                                "run_time": 0.094873796,
                                 "status": "passed"
                             },
                             {
@@ -239,12 +242,12 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "port-success is listening on port 22",
                                 "line_number": 11,
-                                "run_time": 0.010305639,
+                                "run_time": 0.007431011,
                                 "status": "passed"
                             }
                         ],
                         "summary": {
-                            "duration": 0.122409215,
+                            "duration": 0.107230479,
                             "example_count": 2,
                             "failure_count": 0,
                             "pending_count": 0
@@ -262,19 +265,19 @@
                         "timing": [
                             {
                                 "resource": "remote_directory[/tmp/kitchen/handlers]",
-                                "time": 0.00162704
+                                "time": 0.001670942
                             },
                             {
                                 "resource": "chef_gem[chef-teapot]",
-                                "time": 0.00786959
+                                "time": 0.016046321
                             },
                             {
                                 "resource": "chef_handler[Chef::Handler::Teapot]",
-                                "time": 0.00132471
+                                "time": 0.001436943
                             },
                             {
                                 "resource": "remote_file[/opt/200]",
-                                "time": 0.908311201
+                                "time": 1.66163625
                             }
                         ]
                     }
@@ -296,6 +299,6 @@
             "version": "v1"
         }
     },
-    "id": "d977a3d4-03ce-48ee-80e8-0000001a0000",
+    "id": "623c456a-18c2-44ed-8bd9-0000001a0000",
     "name": "github"
 }

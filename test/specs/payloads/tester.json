@@ -1,11 +1,11 @@
 {
     "data": {
         "code_fetcher": {
-            "asset": "teapot-test-cookbook-hw-labs-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip",
+            "asset": "hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip",
             "info": {
                 "commit_sha": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-                "name": "hw-labs",
-                "owner": "teapot-test-cookbook",
+                "name": "teapot-test-cookbook",
+                "owner": "hw-labs",
                 "private": false,
                 "reference": "refs/heads/master",
                 "url": "https://github.com/hw-labs/teapot-test-cookbook"
@@ -195,6 +195,6 @@
             "version": "v1"
         }
     },
-    "id": "d977a3d4-03ce-48ee-80e8-0000001a0000",
+    "id": "623c456a-18c2-44ed-8bd9-0000001a0000",
     "name": "github"
 }
