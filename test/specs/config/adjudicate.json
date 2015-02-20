@@ -1,0 +1,24 @@
+{
+  "jackal": {
+    "require": [
+      "carnivore-actor",
+      "jackal-kitchen"
+    ],
+    "kitchen": {
+      "sources": {
+        "input": {
+          "type": "actor"
+        },
+        "output": {
+          "type": "spec"
+        }
+      },
+      "callbacks": [
+        "Jackal::Kitchen::Adjudicate"
+      ],
+      "formatters": [
+        "Jackal::Kitchen::Formatter::SlackMessage"
+      ]
+    }
+  }
+}

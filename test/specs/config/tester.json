@@ -1,0 +1,31 @@
+{
+  "jackal": {
+    "require": [
+      "carnivore-actor",
+      "jackal-kitchen",
+      "jackal-assets"
+    ],
+    "assets": {
+      "bucket": "bucket_name",
+      "connection": {
+        "provider": "local",
+        "credentials": {
+          "object_store_root": "/tmp/asset-store-root"
+        }
+      }
+    },
+    "kitchen": {
+      "sources": {
+        "input": {
+          "type": "actor"
+        },
+        "output": {
+          "type": "spec"
+        }
+      },
+      "callbacks": [
+        "Jackal::Kitchen::Tester"
+      ]
+    }
+  }
+}
