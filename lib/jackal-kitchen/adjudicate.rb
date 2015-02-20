@@ -25,13 +25,15 @@ module Jackal
       #
       # @param payload [Smash]
       def execute(msg)
-        payload.set(:data, :kitchen, :judge, Smash.new)
-        payload.set(:data, :kitchen, :judge, :teapot, metadata(payload, :teapot))
-        reasons = populate_reasons_for_failure(payload)
+        failure_wrap(msg) do |payload|
+          payload.set(:data, :kitchen, :judge, Smash.new)
+          payload.set(:data, :kitchen, :judge, :teapot, metadata(payload, :teapot))
+          reasons = populate_reasons_for_failure(payload)
 
-        verdict = reasons.values.flatten.empty?
-        payload.set(:data, :kitchen, :judge, :decision, verdict)
-        job_completed(:kitchen, payload, msg)
+          verdict = reasons.values.flatten.empty?
+          payload.set(:data, :kitchen, :judge, :decision, verdict)
+          job_completed(:kitchen, payload, msg)
+        end
       end
 
       # Process teapot metadata to determine if any thresholds were exceeded
