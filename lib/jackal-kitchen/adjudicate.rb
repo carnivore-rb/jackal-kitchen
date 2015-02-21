@@ -122,9 +122,9 @@ module Jackal
       #
       # @param payload [Smash] payload data with test example info
       # @return [Smash] metadata associated with test type
-      def metadata(payload, type)
+      def metadata(data, type)
         meth = (type == :teapot) ? :teapot_metadata : :spec_metadata
-        send(meth, payload.get(:data, :kitchen, :test_output, type))
+        send(meth, data)
       end
 
     end
