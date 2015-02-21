@@ -26,8 +26,15 @@ module Jackal
       # @param payload [Smash]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          payload.set(:data, :kitchen, :judge, Smash.new)
-          payload.set(:data, :kitchen, :judge, :teapot, metadata(payload, :teapot))
+          [:serverspec, :teapot].each do |format|
+            payload.get(:data, :kitchen, :test_output, format).each do |instance, data|
+              payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
+            end
+          end
+
+          payload.set(:data, :kitchen, :judge, :chefspec, metadata(
+                        payload.get(:data, :kitchen, :test_output,:chefspec), :spec))
+
           reasons = populate_reasons_for_failure(payload)
 
           verdict = reasons.values.flatten.empty?
