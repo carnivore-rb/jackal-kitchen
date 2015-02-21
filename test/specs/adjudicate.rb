@@ -20,13 +20,31 @@ describe Jackal::Kitchen::Adjudicate do
 
   describe 'execute' do
 
-    it 'should contain a judgement decision' do
+    it 'should contain a judge key' do
       kitchen.transmit(
-        payload_for(:adjudicate, :raw => true)
+        payload_for(:adjudicate_success, :raw => true)
       )
       source_wait{ !MessageStore.messages.empty? }
       result = MessageStore.messages.pop
-      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision).wont_be_nil
+      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge).wont_be_nil
+    end
+
+    it 'should have a "true" decision for passing tests' do
+      kitchen.transmit(
+        payload_for(:adjudicate_success, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+      result = MessageStore.messages.pop
+      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision) == true
+    end
+
+    it 'should have a "false" decision for failing tests' do
+      kitchen.transmit(
+        payload_for(:adjudicate_failure, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+      result = MessageStore.messages.pop
+      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision) == false
     end
 
   end
