@@ -37,7 +37,7 @@ module Jackal
 
           reasons = populate_reasons_for_failure(payload)
 
-          verdict = reasons.values.flatten.empty?
+          verdict = reasons.delete_if{|k,v| v.values.flatten.empty?}.empty?
           payload.set(:data, :kitchen, :judge, :decision, verdict)
           job_completed(:kitchen, payload, msg)
         end
