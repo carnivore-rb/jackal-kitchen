@@ -49,7 +49,6 @@ module Jackal
       # @return [Smash] the resulting teapot metadata
       def teapot_metadata(data) # data,kitchen,test_output,teapot ->  #return hash
         # TODO :transient_failures => [],
-
         duration = data["timing"].map { |d|d["time"] }.inject(:+)
 
         exceeded = duration > config.fetch(
@@ -109,18 +108,29 @@ module Jackal
       def populate_reasons_for_failure(payload)
         reasons = {}
 
-        [:chefspec, :serverspec, :teapot].each do |type|
-          reasons[type] = []
-          examples = payload[:data][:kitchen][:test_output][type][:examples] || []
-          examples.select { |h| h[:status] == 'failed' }.each do |h|
-            reasons[type] << h[:description]
+        payload.get(:data, :kitchen, :instances).each do |instance|
+          [:chefspec, :serverspec, :teapot].each do |type|
+
+            case type
+            when :chefspec
+              examples = payload.get(:data, :kitchen, :test_output, type, :examples) || []
+              reasons[type] = Smash.new(:chefspec => [])
+              examples.select { |h| h[:status] == 'failed' }.each do |h|
+                reasons[type][type] << h[:description]
+              end
+            else
+              examples = payload.get(:data, :kitchen, :test_output, type, instance.to_sym, :examples) || []
+              reasons[type] = Smash.new(instance.to_sym => [])
+              examples.select { |h| h[:status] == 'failed' }.each do |h|
+                reasons[type][instance.to_sym] << h[:description]
+              end
+            end
+
+            cond = (type == :teapot &&
+                    teapot_metadata(payload.get(:data, :kitchen, :test_output, :teapot)[instance.to_sym])[:total_runtime][:threshold_exceeded])
+            reasons[type][instance.to_sym] << 'Threshold exceeded' if cond
           end
-
-          cond = (type == :teapot &&
-                  metadata(payload, type)[:total_runtime][:threshold_exceeded])
-          reasons[type] << 'Threshold exceeded' if cond
         end
-
         payload.set(:data, :kitchen, :judge, :reasons, Smash.new(reasons))
         reasons
       end
