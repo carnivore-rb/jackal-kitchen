@@ -186,6 +186,7 @@ module Jackal
           debug "processing #{config[:format].to_s} from #{file_path}"
           file = File.open(file_path).read
           output = JSON.parse(file)
+          output[:test_format] = config[:format].to_sym
           case config[:format]
           when :chefspec
             payload.set(:data, :kitchen, :test_output, config[:format].to_sym, output)
