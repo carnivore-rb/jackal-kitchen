@@ -71,14 +71,13 @@ module Jackal
       # Process spec metadata to determine if any thresholds were exceeded
       #
       # @param data [Smash] the rspec data from payload
-      # @param format [Symbol] the name of the rspec data "format" (e.g. chefspec, serverspec)
       # @return [Smash] the resulting rspec metadata
-      def spec_metadata(data, format)
+      def spec_metadata(data)
         duration = data["summary"]["duration"]
         sorted_tests = data["examples"].sort_by{ |x|x["run_time"] }
         slowest_test = sorted_tests.last
         tests_over_threshold = []
-        threshold = config.fetch(:kitchen, :thresholds, format, :test_runtime, 60)
+        threshold = config.fetch(:kitchen, :thresholds, :spec, :test_runtime, 60)
 
         tests_over_threshold = data["examples"].reject { |e|
           if e.key?("run_time")
