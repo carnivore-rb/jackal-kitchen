@@ -26,7 +26,7 @@ describe Jackal::Kitchen::Adjudicate do
       )
       source_wait{ !MessageStore.messages.empty? }
       result = MessageStore.messages.pop
-      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge).wont_be_nil
+      result.get(:data, :kitchen, :judge).wont_equal nil
     end
 
     it 'should have a "true" decision for passing tests' do
@@ -35,7 +35,7 @@ describe Jackal::Kitchen::Adjudicate do
       )
       source_wait{ !MessageStore.messages.empty? }
       result = MessageStore.messages.pop
-      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision) == true
+      result.get(:data, :kitchen, :judge, :decision).must_equal true
     end
 
     it 'should have a "false" decision for failing tests' do
@@ -44,7 +44,7 @@ describe Jackal::Kitchen::Adjudicate do
       )
       source_wait{ !MessageStore.messages.empty? }
       result = MessageStore.messages.pop
-      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision) == false
+      result.get(:data, :kitchen, :judge, :decision).must_equal false
     end
 
   end
