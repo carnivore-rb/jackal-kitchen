@@ -111,19 +111,11 @@ module Jackal
         payload.get(:data, :kitchen, :instances).each do |instance|
           [:chefspec, :serverspec, :teapot].each do |type|
 
-            case type
-            when :chefspec
-              examples = payload.get(:data, :kitchen, :test_output, type, :examples) || []
-              reasons[type] = Smash.new(:chefspec => [])
-              examples.select { |h| h[:status] == 'failed' }.each do |h|
-                reasons[type][type] << h[:description]
-              end
-            else
-              examples = payload.get(:data, :kitchen, :test_output, type, instance.to_sym, :examples) || []
-              reasons[type] = Smash.new(instance.to_sym => [])
-              examples.select { |h| h[:status] == 'failed' }.each do |h|
-                reasons[type][instance.to_sym] << h[:description]
-              end
+            t = (type == :chefspec) ? type : instance.to_sym
+            reasons[type] = Smash.new(t => [])
+            examples = payload.get(:data, :kitchen, :test_output, type, t, :examples) || []
+            examples.select { |h| h[:status] == 'failed' }.each do |h|
+              reasons[type][t] << h[:description]
             end
 
             cond = (type == :teapot &&
