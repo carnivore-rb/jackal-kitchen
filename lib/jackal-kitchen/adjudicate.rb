@@ -16,7 +16,7 @@ module Jackal
       # @return [TrueClass, FalseClass]
       def valid?(msg)
         super do |payload|
-          test_output(payload)
+          payload.get(:data, :kitchen, :test_output)
         end
       end
 
