@@ -47,7 +47,7 @@ describe Jackal::Kitchen::Adjudicate do
       result.get(:data, :kitchen, :judge, :decision).must_equal false
     end
 
-    it 'failure reasons should reflect failing tests' do
+    it 'contains descriptions of failing test cases' do
       kitchen.transmit(
         payload_for(:adjudicate_failure, :raw => true)
       )
