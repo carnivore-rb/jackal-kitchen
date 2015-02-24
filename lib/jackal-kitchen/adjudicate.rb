@@ -5,7 +5,6 @@ module Jackal
   module Kitchen
     class Adjudicate < Jackal::Callback
 
-
       # Setup the callback
       def setup(*_)
 
@@ -17,7 +16,7 @@ module Jackal
       # @return [TrueClass, FalseClass]
       def valid?(msg)
         super do |payload|
-          payload.get(:data, :kitchen, :test_output)
+          test_output(payload)
         end
       end
 
@@ -27,13 +26,13 @@ module Jackal
       def execute(msg)
         failure_wrap(msg) do |payload|
           [:serverspec, :teapot].each do |format|
-            payload.get(:data, :kitchen, :test_output, format).each do |instance, data|
+            test_output(payload, format).each do |instance, data|
               payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
             end
           end
 
-          payload.set(:data, :kitchen, :judge, :chefspec, metadata(
-                        payload.get(:data, :kitchen, :test_output,:chefspec), :spec))
+          mdata = metadata(test_output(payload, :chefspec), :spec)
+          payload.set(:data, :kitchen, :judge, :chefspec, mdata)
 
           reasons = populate_reasons_for_failure(payload)
           verdict = reasons.all? { |k, v| v.values.flatten.empty? }
@@ -107,22 +106,19 @@ module Jackal
       # @return [Hash] eg: { reasons: [teapot: ['I was born to fail'], chefspec: [], ...]}
       def populate_reasons_for_failure(payload)
         reasons = {}
-
-        payload.get(:data, :kitchen, :instances).each do |instance|
-          [:chefspec, :serverspec, :teapot].each do |type|
-
-            t = (type == :chefspec) ? type : instance.to_sym
-            reasons[type] = Smash.new(t => [])
-            examples = payload.get(:data, :kitchen, :test_output, type, t, :examples) || []
+        [:chefspec, :serverspec, :teapot].each do |type|
+          instances = (type == :chefspec) ? [:chefspec] : payload.get(:data, :kitchen, :instances)
+          instances.map(&:to_sym).each do |instance|
+            reasons[type] = { instance => [] }
+            output_format = (type == :chefspec) ? [type, :examples] : [type, instance, :examples]
+            examples = test_output(payload, *output_format) || []
             examples.select { |h| h[:status] == 'failed' }.each do |h|
-              reasons[type][t] << h[:description]
+              reasons[type][instance] << h[:description]
             end
-
-            cond = (type == :teapot &&
-                    teapot_metadata(payload.get(:data, :kitchen, :test_output, :teapot)[instance.to_sym])[:total_runtime][:threshold_exceeded])
-            reasons[type][instance.to_sym] << 'Threshold exceeded' if cond
+            reasons[type][instance] << msg if threshold_exceeded?(payload, type, instance)
           end
         end
+
         payload.set(:data, :kitchen, :judge, :reasons, Smash.new(reasons))
         reasons
       end
@@ -134,6 +130,16 @@ module Jackal
       def metadata(data, type)
         meth = (type == :teapot) ? :teapot_metadata : :spec_metadata
         send(meth, data)
+      end
+
+      def test_output(payload, *args)
+        payload.get(:data, :kitchen, :test_output, *args)
+      end
+
+      def threshold_exceeded?(payload, type, instance)
+        return false unless type == :teapot
+        mdata = teapot_metadata(test_output(payload, :teapot)[instance])
+        mdata[:total_runtime][:threshold_exceeded]
       end
 
     end

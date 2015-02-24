@@ -47,6 +47,22 @@ describe Jackal::Kitchen::Adjudicate do
       result.get(:data, :kitchen, :judge, :decision).must_equal false
     end
 
+    it 'failure reasons should reflect failing tests' do
+      kitchen.transmit(
+        payload_for(:adjudicate_failure, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+
+      result   = MessageStore.messages.pop
+      reasons  = result.get(:data, :kitchen, :judge, :reasons)
+      expected = {
+        "chefspec"   => { "chefspec" => ["includes a broken recipe"] },
+        "serverspec" => { "default-ubuntu-1204" => ["is listening on port 79"]},
+        "teapot"     => { "default-ubuntu-1204" => [] }
+      }
+      reasons.must_equal expected
+    end
+
   end
 
 end
