@@ -5,7 +5,6 @@ module Jackal
   module Kitchen
     class Adjudicate < Jackal::Callback
 
-
       # Setup the callback
       def setup(*_)
 
@@ -26,11 +25,18 @@ module Jackal
       # @param payload [Smash]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          payload.set(:data, :kitchen, :judge, Smash.new)
-          payload.set(:data, :kitchen, :judge, :teapot, metadata(payload, :teapot))
-          reasons = populate_reasons_for_failure(payload)
+          [:serverspec, :teapot].each do |format|
+            test_output(payload, format).each do |instance, data|
+              payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
+            end
+          end
 
-          verdict = reasons.values.flatten.empty?
+          mdata = metadata(test_output(payload, :chefspec), :spec)
+          payload.set(:data, :kitchen, :judge, :chefspec, mdata)
+
+          reasons = populate_reasons_for_failure(payload)
+          verdict = reasons.all? { |k, v| v.values.flatten.empty? }
+
           payload.set(:data, :kitchen, :judge, :decision, verdict)
           job_completed(:kitchen, payload, msg)
         end
@@ -42,7 +48,6 @@ module Jackal
       # @return [Smash] the resulting teapot metadata
       def teapot_metadata(data) # data,kitchen,test_output,teapot ->  #return hash
         # TODO :transient_failures => [],
-
         duration = data["timing"].map { |d|d["time"] }.inject(:+)
 
         exceeded = duration > config.fetch(
@@ -71,14 +76,13 @@ module Jackal
       # Process spec metadata to determine if any thresholds were exceeded
       #
       # @param data [Smash] the rspec data from payload
-      # @param format [Symbol] the name of the rspec data "format" (e.g. chefspec, serverspec)
       # @return [Smash] the resulting rspec metadata
-      def spec_metadata(data, format)
+      def spec_metadata(data)
         duration = data["summary"]["duration"]
         sorted_tests = data["examples"].sort_by{ |x|x["run_time"] }
         slowest_test = sorted_tests.last
         tests_over_threshold = []
-        threshold = config.fetch(:kitchen, :thresholds, format, :test_runtime, 60)
+        threshold = config.fetch(:kitchen, :thresholds, :spec, :test_runtime, 60)
 
         tests_over_threshold = data["examples"].reject { |e|
           if e.key?("run_time")
@@ -102,17 +106,17 @@ module Jackal
       # @return [Hash] eg: { reasons: [teapot: ['I was born to fail'], chefspec: [], ...]}
       def populate_reasons_for_failure(payload)
         reasons = {}
-
         [:chefspec, :serverspec, :teapot].each do |type|
-          reasons[type] = []
-          examples = payload[:data][:kitchen][:test_output][type][:examples] || []
-          examples.select { |h| h[:status] == 'failed' }.each do |h|
-            reasons[type] << h[:description]
+          instances = (type == :chefspec) ? [:chefspec] : payload.get(:data, :kitchen, :instances)
+          instances.map(&:to_sym).each do |instance|
+            reasons[type] = { instance => [] }
+            output_format = (type == :chefspec) ? [type, :examples] : [type, instance, :examples]
+            examples = test_output(payload, *output_format) || []
+            examples.select { |h| h[:status] == 'failed' }.each do |h|
+              reasons[type][instance] << h[:description]
+            end
+            reasons[type][instance] << msg if threshold_exceeded?(payload, type, instance)
           end
-
-          cond = (type == :teapot &&
-                  metadata(payload, type)[:total_runtime][:threshold_exceeded])
-          reasons[type] << 'Threshold exceeded' if cond
         end
 
         payload.set(:data, :kitchen, :judge, :reasons, Smash.new(reasons))
@@ -123,9 +127,29 @@ module Jackal
       #
       # @param payload [Smash] payload data with test example info
       # @return [Smash] metadata associated with test type
-      def metadata(payload, type)
+      def metadata(data, type)
         meth = (type == :teapot) ? :teapot_metadata : :spec_metadata
-        send(meth, payload.get(:data, :kitchen, :test_output, type))
+        send(meth, data)
+      end
+
+      # Convenience method to fetch test output
+      #
+      # @param payload [Smash] entire payload
+      # @return [Smash] test output from payload
+      def test_output(payload, *args)
+        payload.get(:data, :kitchen, :test_output, *args)
+      end
+
+      # Check metadata to see if any thresholds have been exceeded
+      #
+      # @param payload [Smash] entire payload
+      # @param type [String] test type eg: 'chefspec'
+      # @param instance [String] test instance eg: 'default_ubuntu_1204'
+      # @return [TrueClass, FalseClass]
+      def threshold_exceeded?(payload, type, instance)
+        return false unless type == :teapot
+        mdata = teapot_metadata(test_output(payload, :teapot)[instance])
+        mdata[:total_runtime][:threshold_exceeded]
       end
 
     end

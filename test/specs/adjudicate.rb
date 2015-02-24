@@ -20,13 +20,47 @@ describe Jackal::Kitchen::Adjudicate do
 
   describe 'execute' do
 
-    it 'should contain a judgement decision' do
+    it 'should contain a judge key' do
       kitchen.transmit(
-        payload_for(:adjudicate, :raw => true)
+        payload_for(:adjudicate_success, :raw => true)
       )
       source_wait{ !MessageStore.messages.empty? }
       result = MessageStore.messages.pop
-      Carnivore::Utils.retrieve(result, :data, :kitchen, :judge, :decision).wont_be_nil
+      result.get(:data, :kitchen, :judge).wont_equal nil
+    end
+
+    it 'should have a "true" decision for passing tests' do
+      kitchen.transmit(
+        payload_for(:adjudicate_success, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+      result = MessageStore.messages.pop
+      result.get(:data, :kitchen, :judge, :decision).must_equal true
+    end
+
+    it 'should have a "false" decision for failing tests' do
+      kitchen.transmit(
+        payload_for(:adjudicate_failure, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+      result = MessageStore.messages.pop
+      result.get(:data, :kitchen, :judge, :decision).must_equal false
+    end
+
+    it 'contains descriptions of failing test cases' do
+      kitchen.transmit(
+        payload_for(:adjudicate_failure, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+
+      result   = MessageStore.messages.pop
+      reasons  = result.get(:data, :kitchen, :judge, :reasons)
+      expected = {
+        "chefspec"   => { "chefspec" => ["includes a broken recipe"] },
+        "serverspec" => { "default-ubuntu-1204" => ["is listening on port 79"]},
+        "teapot"     => { "default-ubuntu-1204" => [] }
+      }
+      reasons.must_equal expected
     end
 
   end
