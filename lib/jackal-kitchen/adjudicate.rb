@@ -132,10 +132,20 @@ module Jackal
         send(meth, data)
       end
 
+      # Convenience method to fetch test output
+      #
+      # @param payload [Smash] entire payload
+      # @return [Smash] test output from payload
       def test_output(payload, *args)
         payload.get(:data, :kitchen, :test_output, *args)
       end
 
+      # Check metadata to see if any thresholds have been exceeded
+      #
+      # @param payload [Smash] entire payload
+      # @param type [String] test type eg: 'chefspec'
+      # @param instance [String] test instance eg: 'default_ubuntu_1204'
+      # @return [TrueClass, FalseClass]
       def threshold_exceeded?(payload, type, instance)
         return false unless type == :teapot
         mdata = teapot_metadata(test_output(payload, :teapot)[instance])
