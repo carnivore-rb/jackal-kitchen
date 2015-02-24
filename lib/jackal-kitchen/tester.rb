@@ -172,33 +172,28 @@ module Jackal
       # @param cwd, [String] test output directory path
 
       def parse_test_output(payload, config = {})
+        fmt = config[:format].to_sym
 
-        unless config[:cwd]
-          raise "Please pass the cwd in config when parsing #{config[:format.to_s]} test output"
-        end
+        msg = "Please pass the cwd in config when parsing #{fmt} test output"
+        raise msg unless config[:cwd]
 
-        unless %w( chefspec serverspec teapot ).include?(config[:format].to_s)
-          raise "Unknown test output format #{config[:format].to_s}"
-        end
+        msg = "Unknown test output format #{fmt}"
+        raise msg unless %i( chefspec serverspec teapot ).include?(fmt)
 
         begin
-          file_path = File.join(config[:cwd], "#{config[:format].to_s}.json")
-          debug "processing #{config[:format].to_s} from #{file_path}"
-          file = File.open(file_path).read
-          output = JSON.parse(file)
-          output[:test_format] = config[:format].to_sym
-          case config[:format]
-          when :chefspec
-            payload.set(:data, :kitchen, :test_output, config[:format].to_sym, output)
-          when :serverspec, :teapot
-            unless config[:instance].is_a?(String)
-              raise "Please pass an instance name in config when parsing #{config[:format].to_s} test output"
-            else
-              payload.set(:data, :kitchen, :test_output, config[:format].to_sym, config[:instance], output)
-            end
-          end
+          file_path = File.join(config[:cwd], "#{fmt}.json")
+          debug "processing #{fmt} from #{file_path}"
+
+          output = JSON.parse(File.open(file_path).read)
+          output[:test_format] = fmt
+
+          config[:instance] = fmt if fmt == :chefspec
+          payload.set(:data, :kitchen, :test_output, fmt, config[:instance], output)
+
+          msg = "Please pass an instance name in config when parsing #{fmt} test output"
+          raise msg unless config[:instance].is_a?(String)
         rescue => e
-          error "Processing #{config[:format].to_s} output failed: #{e.inspect}"
+          error "Processing #{fmt} output failed: #{e.inspect}"
           raise
         end
       end
