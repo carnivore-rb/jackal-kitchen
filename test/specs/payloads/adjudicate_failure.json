@@ -181,7 +181,7 @@
         "kitchen": {
             "instances": [
                 "default-ubuntu-1204"
-            ],			
+            ],
             "result": {
                 "bundle_exec_kitchen_destroy": {
                     "exit_code": 0
@@ -192,68 +192,69 @@
                 "bundle_exec_rspec": {
                     "exit_code": 1
                 },
-                "bundle_install_--path__tmp_.kitchen-jackal-vendor": {
+                "bundle_install_--path__var_folders_5f_18v2fb5x7w9639m66jr_8ccc0000gn_T_d20150225-60779-kh6769_.jackal-kitchen-vendor": {
                     "exit_code": 0
                 }
             },
             "test_output": {
                 "chefspec": {
                     "chefspec": {
-                    "examples": [
-                        {
-                            "description": "includes a broken recipe",
-                            "exception": {
-                                "backtrace": [
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/fail_with.rb:30:in `fail_with'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:37:in `handle_failure'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/expectation_target.rb:54:in `to'",
-                                    "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150220-8733-151942v/spec/recipes/default_spec.rb:10:in `block (2 levels) in <top (required)>'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `instance_exec'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `block in run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:329:in `with_around_example_hooks'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:149:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:490:in `block in run_examples'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `map'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `run_examples'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:453:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block (2 levels) in run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `map'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block in run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/reporter.rb:53:in `report'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:107:in `run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:85:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/bin/rspec:23:in `load'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/bin/rspec:23:in `<main>'"
-                                ],
-                                "class": "RSpec::Expectations::ExpectationNotMetError",
-                                "message": "expected [\"test-cookbook::default\", \"http-fail::default\"] to include \"will_not_work::_broken\""
+                        "examples": [
+                            {
+                                "description": "includes a broken recipe",
+                                "exception": {
+                                    "backtrace": [
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/fail_with.rb:30:in `fail_with'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:37:in `handle_failure'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/expectation_target.rb:54:in `to'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/spec/recipes/default_spec.rb:10:in `block (2 levels) in <top (required)>'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `instance_exec'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `block in run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:329:in `with_around_example_hooks'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:149:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:490:in `block in run_examples'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `map'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `run_examples'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:453:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block (2 levels) in run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `map'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block in run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/reporter.rb:53:in `report'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:107:in `run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:85:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `load'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150225-60779-kh6769/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `<main>'"
+                                    ],
+                                    "class": "RSpec::Expectations::ExpectationNotMetError",
+                                    "message": "expected [\"test-cookbook::default\", \"http-fail::default\"] to include \"will_not_work::_broken\""
+                                },
+                                "file_path": "./spec/recipes/default_spec.rb",
+                                "full_description": "test-cookbook includes a broken recipe",
+                                "line_number": 9,
+                                "run_time": 0.016327,
+                                "status": "failed"
                             },
-                            "file_path": "./spec/recipes/default_spec.rb",
-                            "full_description": "test-cookbook includes a broken recipe",
-                            "line_number": 9,
-                            "run_time": 0.008852,
-                            "status": "failed"
+                            {
+                                "description": "includes a working recipe",
+                                "file_path": "./spec/recipes/default_spec.rb",
+                                "full_description": "test-cookbook includes a working recipe",
+                                "line_number": 13,
+                                "run_time": 0.008745,
+                                "status": "passed"
+                            }
+                        ],
+                        "summary": {
+                            "duration": 6.462429,
+                            "example_count": 2,
+                            "failure_count": 1,
+                            "pending_count": 0
                         },
-                        {
-                            "description": "includes a working recipe",
-                            "file_path": "./spec/recipes/default_spec.rb",
-                            "full_description": "test-cookbook includes a working recipe",
-                            "line_number": 13,
-                            "run_time": 0.009955,
-                            "status": "passed"
-                        }
-                    ],
-                    "summary": {
-                        "duration": 16.026415,
-                        "example_count": 2,
-                        "failure_count": 1,
-                        "pending_count": 0
-                    },
-                    "summary_line": "2 examples, 1 failure"
+                        "summary_line": "2 examples, 1 failure",
+                        "test_format": "chefspec"
                     }
                 },
                 "serverspec": {
@@ -264,7 +265,7 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "File \"/tmp\" should be directory",
                                 "line_number": 7,
-                                "run_time": 0.078477615,
+                                "run_time": 0.09869186,
                                 "status": "passed"
                             },
                             {
@@ -278,31 +279,31 @@
                                         "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
                                         "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/expectation_target.rb:54:in `to'",
                                         "/tmp/busser/suites/serverspec/default_spec.rb:12:in `block (2 levels) in <top (required)>'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:177:in `instance_exec'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:177:in `block in run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:385:in `block in with_around_and_singleton_context_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:343:in `block in with_around_example_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:474:in `block in run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:612:in `run_around_example_hooks_for'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:474:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:343:in `with_around_example_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:385:in `with_around_and_singleton_context_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:174:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:548:in `block in run_examples'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:544:in `map'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:544:in `run_examples'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:512:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `block (3 levels) in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `map'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `block (2 levels) in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/configuration.rb:1526:in `with_suite_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:109:in `block in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/reporter.rb:62:in `report'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:108:in `run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:86:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:70:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:38:in `invoke'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/exe/rspec:4:in `<top (required)>'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:177:in `instance_exec'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:177:in `block in run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:385:in `block in with_around_and_singleton_context_hooks'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:343:in `block in with_around_example_hooks'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/hooks.rb:474:in `block in run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/hooks.rb:612:in `run_around_example_hooks_for'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/hooks.rb:474:in `run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:343:in `with_around_example_hooks'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:385:in `with_around_and_singleton_context_hooks'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example.rb:174:in `run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example_group.rb:548:in `block in run_examples'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example_group.rb:544:in `map'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example_group.rb:544:in `run_examples'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/example_group.rb:512:in `run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:110:in `block (3 levels) in run_specs'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:110:in `map'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:110:in `block (2 levels) in run_specs'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/configuration.rb:1526:in `with_suite_hooks'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:109:in `block in run_specs'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/reporter.rb:62:in `report'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:108:in `run_specs'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:86:in `run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:70:in `run'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/lib/rspec/core/runner.rb:38:in `invoke'",
+                                        "/tmp/busser/gems/gems/rspec-core-3.2.1/exe/rspec:4:in `<top (required)>'",
                                         "/opt/chef/embedded/bin/rspec:23:in `load'",
                                         "/opt/chef/embedded/bin/rspec:23:in `<main>'"
                                     ],
@@ -312,17 +313,18 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "port-fail is listening on port 79",
                                 "line_number": 11,
-                                "run_time": 0.006025366,
+                                "run_time": 0.007271897,
                                 "status": "failed"
                             }
                         ],
                         "summary": {
-                            "duration": 0.089266615,
+                            "duration": 0.110419835,
                             "example_count": 2,
                             "failure_count": 1,
                             "pending_count": 0
                         },
-                        "summary_line": "2 examples, 1 failure"
+                        "summary_line": "2 examples, 1 failure",
+                        "test_format": "serverspec"
                     }
                 },
                 "teapot": {
@@ -332,22 +334,23 @@
                             "total": 4,
                             "updated": 4
                         },
+                        "test_format": "teapot",
                         "timing": [
                             {
                                 "resource": "remote_directory[/tmp/kitchen/handlers]",
-                                "time": 0.001602201
+                                "time": 0.002038366
                             },
                             {
                                 "resource": "chef_gem[chef-teapot]",
-                                "time": 0.01158204
+                                "time": 0.015447992
                             },
                             {
                                 "resource": "chef_handler[Chef::Handler::Teapot]",
-                                "time": 0.001284562
+                                "time": 0.001216216
                             },
                             {
                                 "resource": "remote_file[/opt/200]",
-                                "time": 3.555789515
+                                "time": 1.140707692
                             }
                         ]
                     }
@@ -369,6 +372,6 @@
             "version": "v1"
         }
     },
-    "id": "4f2488d0-4903-4e4e-8c25-0000001a0000",
+    "id": "6fc71dd8-555f-46db-8ae1-0000001a0001",
     "name": "github"
 }

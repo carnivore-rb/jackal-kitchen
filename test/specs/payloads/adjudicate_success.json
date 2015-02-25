@@ -194,38 +194,39 @@
                 "bundle_exec_rspec": {
                     "exit_code": 0
                 },
-                "bundle_install_--path__tmp_.kitchen-jackal-vendor": {
+                "bundle_install_--path__var_folders_5f_18v2fb5x7w9639m66jr_8ccc0000gn_T_d20150225-60779-1buzl18_.jackal-kitchen-vendor": {
                     "exit_code": 0
                 }
             },
             "test_output": {
                 "chefspec": {
                     "chefspec": {
-                    "examples": [
-                        {
-                            "description": "does not include a broken recipe",
-                            "file_path": "./spec/default_spec.rb",
-                            "full_description": "test-cookbook does not include a broken recipe",
-                            "line_number": 9,
-                            "run_time": 0.014241,
-                            "status": "passed"
+                        "examples": [
+                            {
+                                "description": "does not include a broken recipe",
+                                "file_path": "./spec/default_spec.rb",
+                                "full_description": "test-cookbook does not include a broken recipe",
+                                "line_number": 9,
+                                "run_time": 0.020473,
+                                "status": "passed"
+                            },
+                            {
+                                "description": "includes a working recipe",
+                                "file_path": "./spec/default_spec.rb",
+                                "full_description": "test-cookbook includes a working recipe",
+                                "line_number": 13,
+                                "run_time": 0.008349,
+                                "status": "passed"
+                            }
+                        ],
+                        "summary": {
+                            "duration": 5.026417,
+                            "example_count": 2,
+                            "failure_count": 0,
+                            "pending_count": 0
                         },
-                        {
-                            "description": "includes a working recipe",
-                            "file_path": "./spec/default_spec.rb",
-                            "full_description": "test-cookbook includes a working recipe",
-                            "line_number": 13,
-                            "run_time": 0.018503,
-                            "status": "passed"
-                        }
-                    ],
-                    "summary": {
-                        "duration": 4.81945,
-                        "example_count": 2,
-                        "failure_count": 0,
-                        "pending_count": 0
-                    },
-                    "summary_line": "2 examples, 0 failures"
+                        "summary_line": "2 examples, 0 failures",
+                        "test_format": "chefspec"
                     }
                 },
                 "serverspec": {
@@ -236,7 +237,7 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "File \"/tmp\" should be directory",
                                 "line_number": 7,
-                                "run_time": 0.094873796,
+                                "run_time": 0.094047434,
                                 "status": "passed"
                             },
                             {
@@ -244,17 +245,18 @@
                                 "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
                                 "full_description": "port-success is listening on port 22",
                                 "line_number": 11,
-                                "run_time": 0.007431011,
+                                "run_time": 0.008351844,
                                 "status": "passed"
                             }
                         ],
                         "summary": {
-                            "duration": 0.107230479,
+                            "duration": 0.105823663,
                             "example_count": 2,
                             "failure_count": 0,
                             "pending_count": 0
                         },
-                        "summary_line": "2 examples, 0 failures"
+                        "summary_line": "2 examples, 0 failures",
+                        "test_format": "serverspec"
                     }
                 },
                 "teapot": {
@@ -264,22 +266,23 @@
                             "total": 4,
                             "updated": 4
                         },
+                        "test_format": "teapot",
                         "timing": [
                             {
                                 "resource": "remote_directory[/tmp/kitchen/handlers]",
-                                "time": 0.001670942
+                                "time": 0.002850708
                             },
                             {
                                 "resource": "chef_gem[chef-teapot]",
-                                "time": 0.016046321
+                                "time": 0.015664794
                             },
                             {
                                 "resource": "chef_handler[Chef::Handler::Teapot]",
-                                "time": 0.001436943
+                                "time": 0.001555029
                             },
                             {
                                 "resource": "remote_file[/opt/200]",
-                                "time": 1.66163625
+                                "time": 1.484884947
                             }
                         ]
                     }
@@ -301,6 +304,6 @@
             "version": "v1"
         }
     },
-    "id": "623c456a-18c2-44ed-8bd9-0000001a0000",
+    "id": "6fc71dd8-555f-46db-8ae1-0000001a0000",
     "name": "github"
 }
