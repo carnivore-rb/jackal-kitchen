@@ -198,6 +198,7 @@
             },
             "test_output": {
                 "chefspec": {
+                    "chefspec": {
                     "examples": [
                         {
                             "description": "includes a broken recipe",
@@ -253,6 +254,7 @@
                         "pending_count": 0
                     },
                     "summary_line": "2 examples, 1 failure"
+                    }
                 },
                 "serverspec": {
                     "default-ubuntu-1204": {
