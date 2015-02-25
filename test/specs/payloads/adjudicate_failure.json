@@ -1,374 +1,282 @@
 {
-    "data": {
-        "code_fetcher": {
-            "asset": "hw-labs-teapot-test-cookbook-d9a84466898ac71e8b8ecd0c4a72af0885f412c2.zip",
-            "info": {
-                "commit_sha": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
-                "name": "teapot-test-cookbook",
-                "owner": "hw-labs",
-                "private": false,
-                "reference": "refs/heads/master",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook"
-            }
-        },
-        "github": {
-            "after": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
-            "base_ref": null,
-            "before": "c9c2b53e2247a5d2ef8aec2b5a345e0de906ec92",
-            "commits": [
-                {
-                    "added": [],
-                    "author": {
-                        "email": "cameron@rootdown.net",
-                        "name": "Cameron Johnston",
-                        "username": "cwjohnston"
-                    },
-                    "committer": {
-                        "email": "cameron@rootdown.net",
-                        "name": "Cameron Johnston",
-                        "username": "cwjohnston"
-                    },
-                    "distinct": true,
-                    "id": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
-                    "message": "lock test-kitchen to ~> 1.2.0",
-                    "modified": [
-                        "Gemfile",
-                        "Gemfile.lock"
-                    ],
-                    "removed": [],
-                    "timestamp": "2015-01-19T12:37:23-07:00",
-                    "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/d9a84466898ac71e8b8ecd0c4a72af0885f412c2"
-                }
-            ],
-            "compare": "https://github.com/hw-labs/teapot-test-cookbook/compare/c9c2b53e2247...d9a84466898a",
-            "created": false,
-            "deleted": false,
-            "forced": false,
-            "head_commit": {
-                "added": [],
-                "author": {
-                    "email": "cameron@rootdown.net",
-                    "name": "Cameron Johnston",
-                    "username": "cwjohnston"
-                },
-                "committer": {
-                    "email": "cameron@rootdown.net",
-                    "name": "Cameron Johnston",
-                    "username": "cwjohnston"
-                },
-                "distinct": true,
-                "id": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
-                "message": "lock test-kitchen to ~> 1.2.0",
-                "modified": [
-                    "Gemfile",
-                    "Gemfile.lock"
-                ],
-                "removed": [],
-                "timestamp": "2015-01-19T12:37:23-07:00",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/d9a84466898ac71e8b8ecd0c4a72af0885f412c2"
-            },
-            "organization": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/9833645?v=3",
-                "description": "Experimental projects by your friends at Heavy Water Operations #d2olabs",
-                "events_url": "https://api.github.com/orgs/hw-labs/events",
-                "id": 9833645,
-                "login": "hw-labs",
-                "members_url": "https://api.github.com/orgs/hw-labs/members{/member}",
-                "public_members_url": "https://api.github.com/orgs/hw-labs/public_members{/member}",
-                "repos_url": "https://api.github.com/orgs/hw-labs/repos",
-                "url": "https://api.github.com/orgs/hw-labs"
-            },
-            "pusher": {
-                "email": "cameron@rootdown.net",
-                "name": "cwjohnston"
-            },
-            "ref": "refs/heads/master",
-            "repository": {
-                "archive_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/{archive_format}{/ref}",
-                "assignees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/assignees{/user}",
-                "blobs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/blobs{/sha}",
-                "branches_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/branches{/branch}",
-                "clone_url": "https://github.com/hw-labs/teapot-test-cookbook.git",
-                "collaborators_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/collaborators{/collaborator}",
-                "comments_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/comments{/number}",
-                "commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/commits{/sha}",
-                "compare_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/compare/{base}...{head}",
-                "contents_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contents/{+path}",
-                "contributors_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contributors",
-                "created_at": 1420353535,
-                "default_branch": "master",
-                "description": "",
-                "downloads_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/downloads",
-                "events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/events",
-                "fork": false,
-                "forks": 0,
-                "forks_count": 0,
-                "forks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/forks",
-                "full_name": "hw-labs/teapot-test-cookbook",
-                "git_commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/commits{/sha}",
-                "git_refs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/refs{/sha}",
-                "git_tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/tags{/sha}",
-                "git_url": "git://github.com/hw-labs/teapot-test-cookbook.git",
-                "has_downloads": true,
-                "has_issues": true,
-                "has_pages": false,
-                "has_wiki": true,
-                "homepage": null,
-                "hooks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/hooks",
-                "html_url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "id": 28766545,
-                "issue_comment_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/comments/{number}",
-                "issue_events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/events{/number}",
-                "issues_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues{/number}",
-                "keys_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/keys{/key_id}",
-                "labels_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/labels{/name}",
-                "language": "Ruby",
-                "languages_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/languages",
-                "master_branch": "master",
-                "merges_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/merges",
-                "milestones_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/milestones{/number}",
-                "mirror_url": null,
-                "name": "teapot-test-cookbook",
-                "notifications_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/notifications{?since,all,participating}",
-                "open_issues": 0,
-                "open_issues_count": 0,
-                "organization": "hw-labs",
-                "owner": {
-                    "email": "labs@hw-ops.com",
-                    "name": "hw-labs"
-                },
-                "private": false,
-                "pulls_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/pulls{/number}",
-                "pushed_at": 1421696266,
-                "releases_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/releases{/id}",
-                "size": 257,
-                "ssh_url": "git@github.com:hw-labs/teapot-test-cookbook.git",
-                "stargazers": 0,
-                "stargazers_count": 0,
-                "stargazers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/stargazers",
-                "statuses_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/statuses/{sha}",
-                "subscribers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscribers",
-                "subscription_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscription",
-                "svn_url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/tags",
-                "teams_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/teams",
-                "trees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/trees{/sha}",
-                "updated_at": "2015-01-19T19:37:46Z",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "watchers": 0,
-                "watchers_count": 0
-            },
-            "sender": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/148017?v=3",
-                "events_url": "https://api.github.com/users/cwjohnston/events{/privacy}",
-                "followers_url": "https://api.github.com/users/cwjohnston/followers",
-                "following_url": "https://api.github.com/users/cwjohnston/following{/other_user}",
-                "gists_url": "https://api.github.com/users/cwjohnston/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/cwjohnston",
-                "id": 148017,
-                "login": "cwjohnston",
-                "organizations_url": "https://api.github.com/users/cwjohnston/orgs",
-                "received_events_url": "https://api.github.com/users/cwjohnston/received_events",
-                "repos_url": "https://api.github.com/users/cwjohnston/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/cwjohnston/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/cwjohnston/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/cwjohnston"
-            }
-        },
-        "kitchen": {
-            "instances": [
-                "default-ubuntu-1204"
-            ],			
-            "result": {
-                "bundle_exec_kitchen_destroy": {
-                    "exit_code": 0
-                },
-                "bundle_exec_kitchen_test_default-ubuntu-1204": {
-                    "exit_code": 10
-                },
-                "bundle_exec_rspec": {
-                    "exit_code": 1
-                },
-                "bundle_install_--path__tmp_.kitchen-jackal-vendor": {
-                    "exit_code": 0
-                }
-            },
-            "test_output": {
-                "chefspec": {
-                    "chefspec": {
-                    "examples": [
-                        {
-                            "description": "includes a broken recipe",
-                            "exception": {
-                                "backtrace": [
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/fail_with.rb:30:in `fail_with'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:37:in `handle_failure'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/expectation_target.rb:54:in `to'",
-                                    "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150220-8733-151942v/spec/recipes/default_spec.rb:10:in `block (2 levels) in <top (required)>'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `instance_exec'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `block in run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:329:in `with_around_example_hooks'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:149:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:490:in `block in run_examples'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `map'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `run_examples'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:453:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block (2 levels) in run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `map'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block in run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/reporter.rb:53:in `report'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:107:in `run_specs'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:85:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'",
-                                    "/private/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/bin/rspec:23:in `load'",
-                                    "/tmp/.kitchen-jackal-vendor/ruby/2.1.0/bin/rspec:23:in `<main>'"
-                                ],
-                                "class": "RSpec::Expectations::ExpectationNotMetError",
-                                "message": "expected [\"test-cookbook::default\", \"http-fail::default\"] to include \"will_not_work::_broken\""
-                            },
-                            "file_path": "./spec/recipes/default_spec.rb",
-                            "full_description": "test-cookbook includes a broken recipe",
-                            "line_number": 9,
-                            "run_time": 0.008852,
-                            "status": "failed"
-                        },
-                        {
-                            "description": "includes a working recipe",
-                            "file_path": "./spec/recipes/default_spec.rb",
-                            "full_description": "test-cookbook includes a working recipe",
-                            "line_number": 13,
-                            "run_time": 0.009955,
-                            "status": "passed"
-                        }
-                    ],
-                    "summary": {
-                        "duration": 16.026415,
-                        "example_count": 2,
-                        "failure_count": 1,
-                        "pending_count": 0
-                    },
-                    "summary_line": "2 examples, 1 failure"
-                    }
-                },
-                "serverspec": {
-                    "default-ubuntu-1204": {
-                        "examples": [
-                            {
-                                "description": "should be directory",
-                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                                "full_description": "File \"/tmp\" should be directory",
-                                "line_number": 7,
-                                "run_time": 0.078477615,
-                                "status": "passed"
-                            },
-                            {
-                                "description": "is listening on port 79",
-                                "exception": {
-                                    "backtrace": [
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/fail_with.rb:29:in `fail_with'",
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/handler.rb:40:in `handle_failure'",
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/handler.rb:50:in `block in handle_matcher'",
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/handler.rb:27:in `with_matcher'",
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
-                                        "/tmp/busser/gems/gems/rspec-expectations-3.2.0/lib/rspec/expectations/expectation_target.rb:54:in `to'",
-                                        "/tmp/busser/suites/serverspec/default_spec.rb:12:in `block (2 levels) in <top (required)>'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:177:in `instance_exec'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:177:in `block in run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:385:in `block in with_around_and_singleton_context_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:343:in `block in with_around_example_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:474:in `block in run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:612:in `run_around_example_hooks_for'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/hooks.rb:474:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:343:in `with_around_example_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:385:in `with_around_and_singleton_context_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example.rb:174:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:548:in `block in run_examples'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:544:in `map'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:544:in `run_examples'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/example_group.rb:512:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `block (3 levels) in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `map'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:110:in `block (2 levels) in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/configuration.rb:1526:in `with_suite_hooks'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:109:in `block in run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/reporter.rb:62:in `report'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:108:in `run_specs'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:86:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:70:in `run'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/lib/rspec/core/runner.rb:38:in `invoke'",
-                                        "/tmp/busser/gems/gems/rspec-core-3.2.0/exe/rspec:4:in `<top (required)>'",
-                                        "/opt/chef/embedded/bin/rspec:23:in `load'",
-                                        "/opt/chef/embedded/bin/rspec:23:in `<main>'"
-                                    ],
-                                    "class": "RSpec::Expectations::ExpectationNotMetError",
-                                    "message": "expected Port \"79\" to be listening"
-                                },
-                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                                "full_description": "port-fail is listening on port 79",
-                                "line_number": 11,
-                                "run_time": 0.006025366,
-                                "status": "failed"
-                            }
-                        ],
-                        "summary": {
-                            "duration": 0.089266615,
-                            "example_count": 2,
-                            "failure_count": 1,
-                            "pending_count": 0
-                        },
-                        "summary_line": "2 examples, 1 failure"
-                    }
-                },
-                "teapot": {
-                    "default-ubuntu-1204": {
-                        "resource_status": {
-                            "not_updated": 0,
-                            "total": 4,
-                            "updated": 4
-                        },
-                        "timing": [
-                            {
-                                "resource": "remote_directory[/tmp/kitchen/handlers]",
-                                "time": 0.001602201
-                            },
-                            {
-                                "resource": "chef_gem[chef-teapot]",
-                                "time": 0.01158204
-                            },
-                            {
-                                "resource": "chef_handler[Chef::Handler::Teapot]",
-                                "time": 0.001284562
-                            },
-                            {
-                                "resource": "remote_file[/opt/200]",
-                                "time": 3.555789515
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "webhook": {
-            "action": "github",
-            "headers": {
-                "accept": "application/json",
-                "accept_encoding": "gzip, deflate",
-                "content_length": "6960",
-                "content_type": "application/json",
-                "host": "localhost:9999",
-                "user_agent": "Ruby"
-            },
-            "path_extra": "github",
-            "query": {},
-            "version": "v1"
+  "name": "github",
+  "id": "578c701a-21ca-4c83-84c0-0000001a0000",
+  "data": {
+    "github": {
+      "after": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
+      "base_ref": null,
+      "before": "c9c2b53e2247a5d2ef8aec2b5a345e0de906ec92",
+      "commits": [
+        {
+          "added": [
+
+          ],
+          "author": {
+            "email": "cameron@rootdown.net",
+            "name": "Cameron Johnston",
+            "username": "cwjohnston"
+          },
+          "committer": {
+            "email": "cameron@rootdown.net",
+            "name": "Cameron Johnston",
+            "username": "cwjohnston"
+          },
+          "distinct": true,
+          "id": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
+          "message": "lock test-kitchen to ~> 1.2.0",
+          "modified": [
+            "Gemfile",
+            "Gemfile.lock"
+          ],
+          "removed": [
+
+          ],
+          "timestamp": "2015-01-19T12:37:23-07:00",
+          "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/d9a84466898ac71e8b8ecd0c4a72af0885f412c2"
         }
+      ],
+      "compare": "https://github.com/hw-labs/teapot-test-cookbook/compare/c9c2b53e2247...d9a84466898a",
+      "created": false,
+      "deleted": false,
+      "forced": false,
+      "head_commit": {
+        "added": [
+
+        ],
+        "author": {
+          "email": "cameron@rootdown.net",
+          "name": "Cameron Johnston",
+          "username": "cwjohnston"
+        },
+        "committer": {
+          "email": "cameron@rootdown.net",
+          "name": "Cameron Johnston",
+          "username": "cwjohnston"
+        },
+        "distinct": true,
+        "id": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
+        "message": "lock test-kitchen to ~> 1.2.0",
+        "modified": [
+          "Gemfile",
+          "Gemfile.lock"
+        ],
+        "removed": [
+
+        ],
+        "timestamp": "2015-01-19T12:37:23-07:00",
+        "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/d9a84466898ac71e8b8ecd0c4a72af0885f412c2"
+      },
+      "organization": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/9833645?v=3",
+        "description": "Experimental projects by your friends at Heavy Water Operations #d2olabs",
+        "events_url": "https://api.github.com/orgs/hw-labs/events",
+        "id": 9833645,
+        "login": "hw-labs",
+        "members_url": "https://api.github.com/orgs/hw-labs/members{/member}",
+        "public_members_url": "https://api.github.com/orgs/hw-labs/public_members{/member}",
+        "repos_url": "https://api.github.com/orgs/hw-labs/repos",
+        "url": "https://api.github.com/orgs/hw-labs"
+      },
+      "pusher": {
+        "email": "cameron@rootdown.net",
+        "name": "cwjohnston"
+      },
+      "ref": "refs/heads/master",
+      "repository": {
+        "archive_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/{archive_format}{/ref}",
+        "assignees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/assignees{/user}",
+        "blobs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/blobs{/sha}",
+        "branches_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/branches{/branch}",
+        "clone_url": "https://github.com/hw-labs/teapot-test-cookbook.git",
+        "collaborators_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/collaborators{/collaborator}",
+        "comments_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/comments{/number}",
+        "commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/commits{/sha}",
+        "compare_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/compare/{base}...{head}",
+        "contents_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contents/{+path}",
+        "contributors_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contributors",
+        "created_at": 1420353535,
+        "default_branch": "master",
+        "description": "",
+        "downloads_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/downloads",
+        "events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/events",
+        "fork": false,
+        "forks": 0,
+        "forks_count": 0,
+        "forks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/forks",
+        "full_name": "hw-labs/teapot-test-cookbook",
+        "git_commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/commits{/sha}",
+        "git_refs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/refs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/tags{/sha}",
+        "git_url": "git://github.com/hw-labs/teapot-test-cookbook.git",
+        "has_downloads": true,
+        "has_issues": true,
+        "has_pages": false,
+        "has_wiki": true,
+        "homepage": null,
+        "hooks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/hooks",
+        "html_url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "id": 28766545,
+        "issue_comment_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/comments/{number}",
+        "issue_events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/events{/number}",
+        "issues_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues{/number}",
+        "keys_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/keys{/key_id}",
+        "labels_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/labels{/name}",
+        "language": "Ruby",
+        "languages_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/languages",
+        "master_branch": "master",
+        "merges_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/merges",
+        "milestones_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/milestones{/number}",
+        "mirror_url": null,
+        "name": "teapot-test-cookbook",
+        "notifications_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/notifications{?since,all,participating}",
+        "open_issues": 0,
+        "open_issues_count": 0,
+        "organization": "hw-labs",
+        "owner": {
+          "email": "labs@hw-ops.com",
+          "name": "hw-labs"
+        },
+        "private": false,
+        "pulls_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/pulls{/number}",
+        "pushed_at": 1421696266,
+        "releases_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/releases{/id}",
+        "size": 257,
+        "ssh_url": "git@github.com:hw-labs/teapot-test-cookbook.git",
+        "stargazers": 0,
+        "stargazers_count": 0,
+        "stargazers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/stargazers",
+        "statuses_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/statuses/{sha}",
+        "subscribers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscribers",
+        "subscription_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscription",
+        "svn_url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/tags",
+        "teams_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/teams",
+        "trees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/trees{/sha}",
+        "updated_at": "2015-01-19T19:37:46Z",
+        "url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "watchers": 0,
+        "watchers_count": 0
+      },
+      "sender": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/148017?v=3",
+        "events_url": "https://api.github.com/users/cwjohnston/events{/privacy}",
+        "followers_url": "https://api.github.com/users/cwjohnston/followers",
+        "following_url": "https://api.github.com/users/cwjohnston/following{/other_user}",
+        "gists_url": "https://api.github.com/users/cwjohnston/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/cwjohnston",
+        "id": 148017,
+        "login": "cwjohnston",
+        "organizations_url": "https://api.github.com/users/cwjohnston/orgs",
+        "received_events_url": "https://api.github.com/users/cwjohnston/received_events",
+        "repos_url": "https://api.github.com/users/cwjohnston/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/cwjohnston/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/cwjohnston/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/cwjohnston"
+      }
     },
-    "id": "4f2488d0-4903-4e4e-8c25-0000001a0000",
-    "name": "github"
+    "webhook": {
+      "version": "v1",
+      "action": "github",
+      "path_extra": "github",
+      "headers": {
+        "accept": "application/json",
+        "accept_encoding": "gzip, deflate",
+        "content_type": "application/json",
+        "content_length": "6960",
+        "user_agent": "Ruby",
+        "host": "localhost:9999"
+      },
+      "query": {
+      }
+    },
+    "code_fetcher": {
+      "info": {
+        "owner": "hw-labs",
+        "name": "teapot-test-cookbook",
+        "reference": "refs/heads/master",
+        "commit_sha": "d9a84466898ac71e8b8ecd0c4a72af0885f412c2",
+        "private": false,
+        "url": "https://github.com/hw-labs/teapot-test-cookbook"
+      },
+      "asset": "hw-labs-teapot-test-cookbook-d9a84466898ac71e8b8ecd0c4a72af0885f412c2.zip"
+    },
+    "kitchen": {
+      "result": {
+        "bundle_install_--path__tmp_d20150224-17445-1i6a6z1_.jackal-kitchen-vendor": {
+          "exit_code": 0
+        },
+        "bundle_exec_rspec": {
+          "exit_code": 1
+        },
+        "bundle_exec_kitchen_destroy": {
+          "exit_code": 20
+        }
+      },
+      "test_output": {
+        "chefspec": {
+          "chefspec": {
+            "examples": [
+              {
+                "description": "includes a broken recipe",
+                "full_description": "test-cookbook includes a broken recipe",
+                "status": "failed",
+                "file_path": "./spec/recipes/default_spec.rb",
+                "line_number": 9,
+                "run_time": 0.006605236,
+                "exception": {
+                  "class": "RSpec::Expectations::ExpectationNotMetError",
+                  "message": "expected [\"test-cookbook::default\", \"http-fail::default\"] to include \"will_not_work::_broken\"",
+                  "backtrace": [
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/fail_with.rb:30:in `fail_with'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:37:in `handle_failure'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/expectation_target.rb:54:in `to'",
+                    "/tmp/d20150224-17445-1i6a6z1/spec/recipes/default_spec.rb:10:in `block (2 levels) in <top (required)>'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `instance_exec'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `block in run'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:329:in `with_around_example_hooks'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:149:in `run'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:490:in `block in run_examples'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `map'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `run_examples'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:453:in `run'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block (2 levels) in run_specs'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `map'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block in run_specs'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/reporter.rb:53:in `report'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:107:in `run_specs'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:85:in `run'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `load'",
+                    "/tmp/d20150224-17445-1i6a6z1/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `<main>'"
+                  ]
+                }
+              },
+              {
+                "description": "includes a working recipe",
+                "full_description": "test-cookbook includes a working recipe",
+                "status": "passed",
+                "file_path": "./spec/recipes/default_spec.rb",
+                "line_number": 13,
+                "run_time": 0.004341813
+              }
+            ],
+            "summary": {
+              "duration": 7.375011089,
+              "example_count": 2,
+              "failure_count": 1,
+              "pending_count": 0
+            },
+            "summary_line": "2 examples, 1 failure",
+            "test_format": "chefspec"
+          }
+        }
+      }
+    }
+  }
 }

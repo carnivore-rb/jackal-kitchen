@@ -1,306 +1,250 @@
 {
-    "data": {
-        "code_fetcher": {
-            "asset": "hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip",
-            "info": {
-                "commit_sha": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-                "name": "teapot-test-cookbook",
-                "owner": "hw-labs",
-                "private": false,
-                "reference": "refs/heads/master",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook"
-            }
-        },
-        "github": {
-            "after": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-            "base_ref": null,
-            "before": "03ef259210aa0b09db1b52a9223991b5eacd3543",
-            "commits": [
-                {
-                    "added": [
-                        "spec/default_spec.rb"
-                    ],
-                    "author": {
-                        "email": "cameron@rootdown.net",
-                        "name": "Cameron Johnston",
-                        "username": "cwjohnston"
-                    },
-                    "committer": {
-                        "email": "cameron@rootdown.net",
-                        "name": "Cameron Johnston",
-                        "username": "cwjohnston"
-                    },
-                    "distinct": true,
-                    "id": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-                    "message": "make rspec pass, move specs to rightful place in universe",
-                    "modified": [],
-                    "removed": [
-                        "spec/recipes/default_spec.rb"
-                    ],
-                    "timestamp": "2015-02-05T15:45:21-07:00",
-                    "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/8f4ec29b8d1704cd524218665f7ae9daee5275b0"
-                }
-            ],
-            "compare": "https://github.com/hw-labs/teapot-test-cookbook/compare/03ef259210aa...8f4ec29b8d17",
-            "created": false,
-            "deleted": false,
-            "forced": false,
-            "head_commit": {
-                "added": [
-                    "spec/default_spec.rb"
-                ],
-                "author": {
-                    "email": "cameron@rootdown.net",
-                    "name": "Cameron Johnston",
-                    "username": "cwjohnston"
-                },
-                "committer": {
-                    "email": "cameron@rootdown.net",
-                    "name": "Cameron Johnston",
-                    "username": "cwjohnston"
-                },
-                "distinct": true,
-                "id": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
-                "message": "make rspec pass, move specs to rightful place in universe",
-                "modified": [],
-                "removed": [
-                    "spec/recipes/default_spec.rb"
-                ],
-                "timestamp": "2015-02-05T15:45:21-07:00",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/8f4ec29b8d1704cd524218665f7ae9daee5275b0"
-            },
-            "organization": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/9833645?v=3",
-                "description": "Experimental projects by your friends at Heavy Water Operations #d2olabs",
-                "events_url": "https://api.github.com/orgs/hw-labs/events",
-                "id": 9833645,
-                "login": "hw-labs",
-                "members_url": "https://api.github.com/orgs/hw-labs/members{/member}",
-                "public_members_url": "https://api.github.com/orgs/hw-labs/public_members{/member}",
-                "repos_url": "https://api.github.com/orgs/hw-labs/repos",
-                "url": "https://api.github.com/orgs/hw-labs"
-            },
-            "pusher": {
-                "email": "cameron@rootdown.net",
-                "name": "cwjohnston"
-            },
-            "ref": "refs/heads/master",
-            "repository": {
-                "archive_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/{archive_format}{/ref}",
-                "assignees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/assignees{/user}",
-                "blobs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/blobs{/sha}",
-                "branches_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/branches{/branch}",
-                "clone_url": "https://github.com/hw-labs/teapot-test-cookbook.git",
-                "collaborators_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/collaborators{/collaborator}",
-                "comments_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/comments{/number}",
-                "commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/commits{/sha}",
-                "compare_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/compare/{base}...{head}",
-                "contents_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contents/{+path}",
-                "contributors_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contributors",
-                "created_at": 1420353535,
-                "default_branch": "master",
-                "description": "",
-                "downloads_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/downloads",
-                "events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/events",
-                "fork": false,
-                "forks": 0,
-                "forks_count": 0,
-                "forks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/forks",
-                "full_name": "hw-labs/teapot-test-cookbook",
-                "git_commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/commits{/sha}",
-                "git_refs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/refs{/sha}",
-                "git_tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/tags{/sha}",
-                "git_url": "git://github.com/hw-labs/teapot-test-cookbook.git",
-                "has_downloads": true,
-                "has_issues": true,
-                "has_pages": false,
-                "has_wiki": true,
-                "homepage": null,
-                "hooks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/hooks",
-                "html_url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "id": 28766545,
-                "issue_comment_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/comments/{number}",
-                "issue_events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/events{/number}",
-                "issues_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues{/number}",
-                "keys_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/keys{/key_id}",
-                "labels_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/labels{/name}",
-                "language": "Ruby",
-                "languages_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/languages",
-                "master_branch": "master",
-                "merges_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/merges",
-                "milestones_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/milestones{/number}",
-                "mirror_url": null,
-                "name": "teapot-test-cookbook",
-                "notifications_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/notifications{?since,all,participating}",
-                "open_issues": 0,
-                "open_issues_count": 0,
-                "organization": "hw-labs",
-                "owner": {
-                    "email": "labs@hw-ops.com",
-                    "name": "hw-labs"
-                },
-                "private": false,
-                "pulls_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/pulls{/number}",
-                "pushed_at": 1423176343,
-                "releases_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/releases{/id}",
-                "size": 274,
-                "ssh_url": "git@github.com:hw-labs/teapot-test-cookbook.git",
-                "stargazers": 0,
-                "stargazers_count": 0,
-                "stargazers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/stargazers",
-                "statuses_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/statuses/{sha}",
-                "subscribers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscribers",
-                "subscription_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscription",
-                "svn_url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/tags",
-                "teams_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/teams",
-                "trees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/trees{/sha}",
-                "updated_at": "2015-02-05T22:31:51Z",
-                "url": "https://github.com/hw-labs/teapot-test-cookbook",
-                "watchers": 0,
-                "watchers_count": 0
-            },
-            "sender": {
-                "avatar_url": "https://avatars.githubusercontent.com/u/148017?v=3",
-                "events_url": "https://api.github.com/users/cwjohnston/events{/privacy}",
-                "followers_url": "https://api.github.com/users/cwjohnston/followers",
-                "following_url": "https://api.github.com/users/cwjohnston/following{/other_user}",
-                "gists_url": "https://api.github.com/users/cwjohnston/gists{/gist_id}",
-                "gravatar_id": "",
-                "html_url": "https://github.com/cwjohnston",
-                "id": 148017,
-                "login": "cwjohnston",
-                "organizations_url": "https://api.github.com/users/cwjohnston/orgs",
-                "received_events_url": "https://api.github.com/users/cwjohnston/received_events",
-                "repos_url": "https://api.github.com/users/cwjohnston/repos",
-                "site_admin": false,
-                "starred_url": "https://api.github.com/users/cwjohnston/starred{/owner}{/repo}",
-                "subscriptions_url": "https://api.github.com/users/cwjohnston/subscriptions",
-                "type": "User",
-                "url": "https://api.github.com/users/cwjohnston"
-            }
-        },
-        "kitchen": {
-            "instances": [
-                "default-ubuntu-1204"
-            ],
-            "result": {
-                "bundle_exec_kitchen_destroy": {
-                    "exit_code": 0
-                },
-                "bundle_exec_kitchen_test_default-ubuntu-1204": {
-                    "exit_code": 0
-                },
-                "bundle_exec_rspec": {
-                    "exit_code": 0
-                },
-                "bundle_install_--path__tmp_.kitchen-jackal-vendor": {
-                    "exit_code": 0
-                }
-            },
-            "test_output": {
-                "chefspec": {
-                    "chefspec": {
-                    "examples": [
-                        {
-                            "description": "does not include a broken recipe",
-                            "file_path": "./spec/default_spec.rb",
-                            "full_description": "test-cookbook does not include a broken recipe",
-                            "line_number": 9,
-                            "run_time": 0.014241,
-                            "status": "passed"
-                        },
-                        {
-                            "description": "includes a working recipe",
-                            "file_path": "./spec/default_spec.rb",
-                            "full_description": "test-cookbook includes a working recipe",
-                            "line_number": 13,
-                            "run_time": 0.018503,
-                            "status": "passed"
-                        }
-                    ],
-                    "summary": {
-                        "duration": 4.81945,
-                        "example_count": 2,
-                        "failure_count": 0,
-                        "pending_count": 0
-                    },
-                    "summary_line": "2 examples, 0 failures"
-                    }
-                },
-                "serverspec": {
-                    "default-ubuntu-1204": {
-                        "examples": [
-                            {
-                                "description": "should be directory",
-                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                                "full_description": "File \"/tmp\" should be directory",
-                                "line_number": 7,
-                                "run_time": 0.094873796,
-                                "status": "passed"
-                            },
-                            {
-                                "description": "is listening on port 22",
-                                "file_path": "/tmp/busser/suites/serverspec/default_spec.rb",
-                                "full_description": "port-success is listening on port 22",
-                                "line_number": 11,
-                                "run_time": 0.007431011,
-                                "status": "passed"
-                            }
-                        ],
-                        "summary": {
-                            "duration": 0.107230479,
-                            "example_count": 2,
-                            "failure_count": 0,
-                            "pending_count": 0
-                        },
-                        "summary_line": "2 examples, 0 failures"
-                    }
-                },
-                "teapot": {
-                    "default-ubuntu-1204": {
-                        "resource_status": {
-                            "not_updated": 0,
-                            "total": 4,
-                            "updated": 4
-                        },
-                        "timing": [
-                            {
-                                "resource": "remote_directory[/tmp/kitchen/handlers]",
-                                "time": 0.001670942
-                            },
-                            {
-                                "resource": "chef_gem[chef-teapot]",
-                                "time": 0.016046321
-                            },
-                            {
-                                "resource": "chef_handler[Chef::Handler::Teapot]",
-                                "time": 0.001436943
-                            },
-                            {
-                                "resource": "remote_file[/opt/200]",
-                                "time": 1.66163625
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "webhook": {
-            "action": "github",
-            "headers": {
-                "accept": "application/json",
-                "accept_encoding": "gzip, deflate",
-                "content_length": "7072",
-                "content_type": "application/json",
-                "host": "localhost:9999",
-                "user_agent": "Ruby"
-            },
-            "path_extra": "github",
-            "query": {},
-            "version": "v1"
+  "name": "github",
+  "id": "6c33e409-dcf8-4908-84f6-0000001a0000",
+  "data": {
+    "github": {
+      "after": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
+      "base_ref": null,
+      "before": "03ef259210aa0b09db1b52a9223991b5eacd3543",
+      "commits": [
+        {
+          "added": [
+            "spec/default_spec.rb"
+          ],
+          "author": {
+            "email": "cameron@rootdown.net",
+            "name": "Cameron Johnston",
+            "username": "cwjohnston"
+          },
+          "committer": {
+            "email": "cameron@rootdown.net",
+            "name": "Cameron Johnston",
+            "username": "cwjohnston"
+          },
+          "distinct": true,
+          "id": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
+          "message": "make rspec pass, move specs to rightful place in universe",
+          "modified": [
+
+          ],
+          "removed": [
+            "spec/recipes/default_spec.rb"
+          ],
+          "timestamp": "2015-02-05T15:45:21-07:00",
+          "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/8f4ec29b8d1704cd524218665f7ae9daee5275b0"
         }
+      ],
+      "compare": "https://github.com/hw-labs/teapot-test-cookbook/compare/03ef259210aa...8f4ec29b8d17",
+      "created": false,
+      "deleted": false,
+      "forced": false,
+      "head_commit": {
+        "added": [
+          "spec/default_spec.rb"
+        ],
+        "author": {
+          "email": "cameron@rootdown.net",
+          "name": "Cameron Johnston",
+          "username": "cwjohnston"
+        },
+        "committer": {
+          "email": "cameron@rootdown.net",
+          "name": "Cameron Johnston",
+          "username": "cwjohnston"
+        },
+        "distinct": true,
+        "id": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
+        "message": "make rspec pass, move specs to rightful place in universe",
+        "modified": [
+
+        ],
+        "removed": [
+          "spec/recipes/default_spec.rb"
+        ],
+        "timestamp": "2015-02-05T15:45:21-07:00",
+        "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/8f4ec29b8d1704cd524218665f7ae9daee5275b0"
+      },
+      "organization": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/9833645?v=3",
+        "description": "Experimental projects by your friends at Heavy Water Operations #d2olabs",
+        "events_url": "https://api.github.com/orgs/hw-labs/events",
+        "id": 9833645,
+        "login": "hw-labs",
+        "members_url": "https://api.github.com/orgs/hw-labs/members{/member}",
+        "public_members_url": "https://api.github.com/orgs/hw-labs/public_members{/member}",
+        "repos_url": "https://api.github.com/orgs/hw-labs/repos",
+        "url": "https://api.github.com/orgs/hw-labs"
+      },
+      "pusher": {
+        "email": "cameron@rootdown.net",
+        "name": "cwjohnston"
+      },
+      "ref": "refs/heads/master",
+      "repository": {
+        "archive_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/{archive_format}{/ref}",
+        "assignees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/assignees{/user}",
+        "blobs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/blobs{/sha}",
+        "branches_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/branches{/branch}",
+        "clone_url": "https://github.com/hw-labs/teapot-test-cookbook.git",
+        "collaborators_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/collaborators{/collaborator}",
+        "comments_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/comments{/number}",
+        "commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/commits{/sha}",
+        "compare_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/compare/{base}...{head}",
+        "contents_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contents/{+path}",
+        "contributors_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contributors",
+        "created_at": 1420353535,
+        "default_branch": "master",
+        "description": "",
+        "downloads_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/downloads",
+        "events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/events",
+        "fork": false,
+        "forks": 0,
+        "forks_count": 0,
+        "forks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/forks",
+        "full_name": "hw-labs/teapot-test-cookbook",
+        "git_commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/commits{/sha}",
+        "git_refs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/refs{/sha}",
+        "git_tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/tags{/sha}",
+        "git_url": "git://github.com/hw-labs/teapot-test-cookbook.git",
+        "has_downloads": true,
+        "has_issues": true,
+        "has_pages": false,
+        "has_wiki": true,
+        "homepage": null,
+        "hooks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/hooks",
+        "html_url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "id": 28766545,
+        "issue_comment_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/comments/{number}",
+        "issue_events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/events{/number}",
+        "issues_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues{/number}",
+        "keys_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/keys{/key_id}",
+        "labels_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/labels{/name}",
+        "language": "Ruby",
+        "languages_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/languages",
+        "master_branch": "master",
+        "merges_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/merges",
+        "milestones_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/milestones{/number}",
+        "mirror_url": null,
+        "name": "teapot-test-cookbook",
+        "notifications_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/notifications{?since,all,participating}",
+        "open_issues": 0,
+        "open_issues_count": 0,
+        "organization": "hw-labs",
+        "owner": {
+          "email": "labs@hw-ops.com",
+          "name": "hw-labs"
+        },
+        "private": false,
+        "pulls_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/pulls{/number}",
+        "pushed_at": 1423176343,
+        "releases_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/releases{/id}",
+        "size": 274,
+        "ssh_url": "git@github.com:hw-labs/teapot-test-cookbook.git",
+        "stargazers": 0,
+        "stargazers_count": 0,
+        "stargazers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/stargazers",
+        "statuses_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/statuses/{sha}",
+        "subscribers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscribers",
+        "subscription_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscription",
+        "svn_url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/tags",
+        "teams_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/teams",
+        "trees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/trees{/sha}",
+        "updated_at": "2015-02-05T22:31:51Z",
+        "url": "https://github.com/hw-labs/teapot-test-cookbook",
+        "watchers": 0,
+        "watchers_count": 0
+      },
+      "sender": {
+        "avatar_url": "https://avatars.githubusercontent.com/u/148017?v=3",
+        "events_url": "https://api.github.com/users/cwjohnston/events{/privacy}",
+        "followers_url": "https://api.github.com/users/cwjohnston/followers",
+        "following_url": "https://api.github.com/users/cwjohnston/following{/other_user}",
+        "gists_url": "https://api.github.com/users/cwjohnston/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/cwjohnston",
+        "id": 148017,
+        "login": "cwjohnston",
+        "organizations_url": "https://api.github.com/users/cwjohnston/orgs",
+        "received_events_url": "https://api.github.com/users/cwjohnston/received_events",
+        "repos_url": "https://api.github.com/users/cwjohnston/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/cwjohnston/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/cwjohnston/subscriptions",
+        "type": "User",
+        "url": "https://api.github.com/users/cwjohnston"
+      }
     },
-    "id": "623c456a-18c2-44ed-8bd9-0000001a0000",
-    "name": "github"
+    "webhook": {
+      "version": "v1",
+      "action": "github",
+      "path_extra": "github",
+      "headers": {
+        "accept": "application/json",
+        "accept_encoding": "gzip, deflate",
+        "content_type": "application/json",
+        "content_length": "7072",
+        "user_agent": "Ruby",
+        "host": "localhost:9999"
+      },
+      "query": {
+      }
+    },
+    "code_fetcher": {
+      "info": {
+        "owner": "hw-labs",
+        "name": "teapot-test-cookbook",
+        "reference": "refs/heads/master",
+        "commit_sha": "8f4ec29b8d1704cd524218665f7ae9daee5275b0",
+        "private": false,
+        "url": "https://github.com/hw-labs/teapot-test-cookbook"
+      },
+      "asset": "hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip"
+    },
+    "kitchen": {
+      "result": {
+        "bundle_install_--path__tmp_d20150224-24236-98l4mv_.jackal-kitchen-vendor": {
+          "exit_code": 0
+        },
+        "bundle_exec_rspec": {
+          "exit_code": 0
+        },
+        "bundle_exec_kitchen_destroy": {
+          "exit_code": 20
+        }
+      },
+      "test_output": {
+        "chefspec": {
+          "chefspec": {
+            "examples": [
+              {
+                "description": "does not include a broken recipe",
+                "full_description": "test-cookbook does not include a broken recipe",
+                "status": "passed",
+                "file_path": "./spec/default_spec.rb",
+                "line_number": 9,
+                "run_time": 0.005517829
+              },
+              {
+                "description": "includes a working recipe",
+                "full_description": "test-cookbook includes a working recipe",
+                "status": "passed",
+                "file_path": "./spec/default_spec.rb",
+                "line_number": 13,
+                "run_time": 0.004100131
+              }
+            ],
+            "summary": {
+              "duration": 8.568899573,
+              "example_count": 2,
+              "failure_count": 0,
+              "pending_count": 0
+            },
+            "summary_line": "2 examples, 0 failures",
+            "test_format": "chefspec"
+          }
+        }
+      }
+    }
+  }
 }
