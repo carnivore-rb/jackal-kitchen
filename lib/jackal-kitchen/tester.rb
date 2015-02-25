@@ -55,10 +55,8 @@ module Jackal
 
               output_path = File.join(working_path, 'output')
               parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
-
               instances = kitchen_instances(working_path)
               payload.set(:data, :kitchen, :instances, instances)
-
               instances.each do |instance|
                 run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
                 %w(teapot serverspec).each do |format|
@@ -191,7 +189,7 @@ module Jackal
           payload.set(:data, :kitchen, :test_output, fmt, config[:instance], output)
 
           msg = "Please pass an instance name in config when parsing #{fmt} test output"
-          raise msg unless config[:instance].is_a?(String)
+          raise msg unless config[:instance]
         rescue => e
           error "Processing #{fmt} output failed: #{e.inspect}"
           raise
