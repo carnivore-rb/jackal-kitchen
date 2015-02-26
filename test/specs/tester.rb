@@ -42,7 +42,7 @@ describe Jackal::Kitchen::Tester do
       kitchen.transmit(
         payload_for(:tester, :raw => true)
       )
-      source_wait 20
+      source_wait 5
       f = File.read(File.expand_path('~/.netrc')) rescue nil
       assert_match(/^machine +github\.com$/, f)
       assert_match(/ *login foo/, f)
