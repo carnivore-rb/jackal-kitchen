@@ -38,6 +38,17 @@ describe Jackal::Kitchen::Tester do
       Carnivore::Utils.retrieve(result, :data, :kitchen, :test_output, :serverspec).wont_be_nil
     end
 
+    it 'creates a netrc file with relevant github credentials' do
+      kitchen.transmit(
+        payload_for(:tester, :raw => true)
+      )
+      source_wait 20
+      f = File.read(File.expand_path('~/.netrc')) rescue nil
+      assert_match(/^machine +github\.com$/, f)
+      assert_match(/ *login foo/, f)
+      assert_match(/ *password x-oauth-basic/, f)
+    end
+
   end
 
 end
