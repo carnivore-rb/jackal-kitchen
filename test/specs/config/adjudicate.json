@@ -17,7 +17,8 @@
         "Jackal::Kitchen::Adjudicate"
       ],
       "formatters": [
-        "Jackal::Kitchen::Formatter::SlackMessage"
+          "Jackal::Kitchen::Formatter::SlackMessage",
+          "Jackal::Kitchen::Formatter::GithubStatus"
       ]
     }
   }
