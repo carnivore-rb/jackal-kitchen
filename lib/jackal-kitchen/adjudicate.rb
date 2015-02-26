@@ -25,14 +25,11 @@ module Jackal
       # @param payload [Smash]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          [:serverspec, :teapot].each do |format|
+          test_types(payload).each do |format|
             test_output(payload, format).each do |instance, data|
               payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
             end
           end
-
-          mdata = metadata(test_output(payload, :chefspec), :spec)
-          payload.set(:data, :kitchen, :judge, :chefspec, mdata)
 
           reasons = populate_reasons_for_failure(payload)
           verdict = reasons.all? { |k, v| v.values.flatten.empty? }
@@ -106,12 +103,11 @@ module Jackal
       # @return [Hash] eg: { reasons: [teapot: ['I was born to fail'], chefspec: [], ...]}
       def populate_reasons_for_failure(payload)
         reasons = {}
-        [:chefspec, :serverspec, :teapot].each do |type|
-          instances = (type == :chefspec) ? [:chefspec] : payload.get(:data, :kitchen, :instances)
+        test_types(payload).each do |type|
+          instances = test_output(payload, type).keys
           instances.map(&:to_sym).each do |instance|
             reasons[type] = { instance => [] }
-            output_format = (type == :chefspec) ? [type, :examples] : [type, instance, :examples]
-            examples = test_output(payload, *output_format) || []
+            examples = test_output(payload, type, instance, :examples) || []
             examples.select { |h| h[:status] == 'failed' }.each do |h|
               reasons[type][instance] << h[:description]
             end
@@ -128,7 +124,7 @@ module Jackal
       # @param payload [Smash] payload data with test example info
       # @return [Smash] metadata associated with test type
       def metadata(data, type)
-        meth = (type == :teapot) ? :teapot_metadata : :spec_metadata
+        meth = (type.to_sym == :teapot) ? :teapot_metadata : :spec_metadata
         send(meth, data)
       end
 
@@ -138,6 +134,14 @@ module Jackal
       # @return [Smash] test output from payload
       def test_output(payload, *args)
         payload.get(:data, :kitchen, :test_output, *args)
+      end
+
+      # Convenience method to grab test types from payloads
+      #
+      # @param payload [Smash] entire payload
+      # @return [Array] types of tests in payload (chefspec, serverspec, etc)
+      def test_types(payload)
+        test_output(payload).keys
       end
 
       # Check metadata to see if any thresholds have been exceeded
