@@ -42,6 +42,12 @@ module Jackal
               asset_store.unpack(asset, working_path)
               insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
               insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
+              netrc_file = File.open(File.expand_path('~/.netrc'), 'w')
+              gh_token = config.fetch(:github, :access_token,
+                app_config.get(:github, :access_token)
+              )
+              netrc_file.write("machine github.com\n  login #{gh_token}\n  password x-oauth-basic")
+              netrc_file.close
 
               run_commands(
                 [
