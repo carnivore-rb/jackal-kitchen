@@ -7,7 +7,15 @@ require 'pry'
 describe Jackal::Kitchen::Tester do
 
   before do
-    @runner = run_setup(:tester)
+    @runner = run_setup(:tester, 'rb')
+    @store = Jackal::Assets::Store.new
+
+    fname = 'hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip'
+    fpath = "./test/specs/files/bucket_name/#{fname}"
+    io    = File.read(fpath)
+
+    @store.put(fname, io)
+    @runner
   end
 
   after do
@@ -45,7 +53,7 @@ describe Jackal::Kitchen::Tester do
       source_wait 5
       f = File.read(File.expand_path('~/.netrc')) rescue nil
       assert_match(/^machine +github\.com$/, f)
-      assert_match(/ *login foo/, f)
+      assert_match(/ *login/, f)
       assert_match(/ *password x-oauth-basic/, f)
     end
 

@@ -10,6 +10,7 @@ module Jackal
         require 'childprocess'
         require 'tmpdir'
         require 'shellwords'
+        write_netrc
       end
 
       # Validity of message
@@ -42,12 +43,6 @@ module Jackal
               asset_store.unpack(asset, working_path)
               insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
               insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
-              netrc_file = File.open(File.expand_path('~/.netrc'), 'w')
-              gh_token = config.fetch(:github, :access_token,
-                app_config.get(:github, :access_token)
-              )
-              netrc_file.write("machine github.com\n  login #{gh_token}\n  password x-oauth-basic")
-              netrc_file.close
 
               run_commands(
                 [
@@ -92,6 +87,25 @@ module Jackal
           if(config[:ssh_key])
             file.puts "  ssh_key: #{config[:ssh_key]}"
           end
+        end
+      end
+
+      # Attempt to write .netrc in user directory for github auth
+      #
+      # @
+      # @returns [NilClass]
+      def write_netrc
+        begin
+          gh_token = config.fetch(:github, :access_token,
+                                  app_config.get(:github, :access_token))
+          git_host = config.fetch(:github, :uri,
+                                  app_config.get(:github, :uri))
+
+          File.open(File.expand_path('~/.netrc'), 'w') do |f|
+            f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
+          end
+        rescue
+          warn "Could not write .netrc file"
         end
       end
 
