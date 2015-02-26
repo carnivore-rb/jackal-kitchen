@@ -1,6 +1,7 @@
 require 'jackal'
 require 'jackal-kitchen/version'
 require 'jackal-kitchen/formatter/slack_message'
+require 'jackal-kitchen/formatter/github_status'
 
 module Jackal
   module Kitchen
