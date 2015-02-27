@@ -1,0 +1,400 @@
+{
+    "data": {
+        "code_fetcher": {
+            "asset": "hw-labs-teapot-test-cookbook-cc01cf6f17b0c08e2f6894eb8cfc9943430da141.zip",
+            "info": {
+                "commit_sha": "cc01cf6f17b0c08e2f6894eb8cfc9943430da141",
+                "name": "teapot-test-cookbook",
+                "owner": "hw-labs",
+                "private": false,
+                "reference": "refs/heads/master",
+                "url": "https://github.com/hw-labs/teapot-test-cookbook"
+            }
+        },
+        "github": {
+            "after": "cc01cf6f17b0c08e2f6894eb8cfc9943430da141",
+            "base_ref": null,
+            "before": "4c0f484c8b4cb549a1c8b96e88afb6be89d55df3",
+            "commits": [
+                {
+                    "added": [],
+                    "author": {
+                        "email": "anthony@anthonygoddard.com",
+                        "name": "Anthony Goddard",
+                        "username": "agoddard"
+                    },
+                    "committer": {
+                        "email": "anthony@anthonygoddard.com",
+                        "name": "Anthony Goddard",
+                        "username": "agoddard"
+                    },
+                    "distinct": true,
+                    "id": "c19dc21bed476b7dd25d11bbbcbe2feb347a1a08",
+                    "message": "remove old teapot",
+                    "modified": [],
+                    "removed": [
+                        "test/integration/data/chef-teapot-0.1.1.gem"
+                    ],
+                    "timestamp": "2015-02-26T22:23:29-07:00",
+                    "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/c19dc21bed476b7dd25d11bbbcbe2feb347a1a08"
+                },
+                {
+                    "added": [],
+                    "author": {
+                        "email": "anthony@anthonygoddard.com",
+                        "name": "Anthony Goddard",
+                        "username": "agoddard"
+                    },
+                    "committer": {
+                        "email": "anthony@anthonygoddard.com",
+                        "name": "Anthony Goddard",
+                        "username": "agoddard"
+                    },
+                    "distinct": true,
+                    "id": "cc01cf6f17b0c08e2f6894eb8cfc9943430da141",
+                    "message": "cheffile sync",
+                    "modified": [
+                        "Cheffile.lock"
+                    ],
+                    "removed": [],
+                    "timestamp": "2015-02-26T22:23:41-07:00",
+                    "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/cc01cf6f17b0c08e2f6894eb8cfc9943430da141"
+                }
+            ],
+            "compare": "https://github.com/hw-labs/teapot-test-cookbook/compare/4c0f484c8b4c...cc01cf6f17b0",
+            "created": false,
+            "deleted": false,
+            "forced": false,
+            "head_commit": {
+                "added": [],
+                "author": {
+                    "email": "anthony@anthonygoddard.com",
+                    "name": "Anthony Goddard",
+                    "username": "agoddard"
+                },
+                "committer": {
+                    "email": "anthony@anthonygoddard.com",
+                    "name": "Anthony Goddard",
+                    "username": "agoddard"
+                },
+                "distinct": true,
+                "id": "cc01cf6f17b0c08e2f6894eb8cfc9943430da141",
+                "message": "cheffile sync",
+                "modified": [
+                    "Cheffile.lock"
+                ],
+                "removed": [],
+                "timestamp": "2015-02-26T22:23:41-07:00",
+                "url": "https://github.com/hw-labs/teapot-test-cookbook/commit/cc01cf6f17b0c08e2f6894eb8cfc9943430da141"
+            },
+            "organization": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/9833645?v=3",
+                "description": "Experimental projects by your friends at Heavy Water Operations #d2olabs",
+                "events_url": "https://api.github.com/orgs/hw-labs/events",
+                "id": 9833645,
+                "login": "hw-labs",
+                "members_url": "https://api.github.com/orgs/hw-labs/members{/member}",
+                "public_members_url": "https://api.github.com/orgs/hw-labs/public_members{/member}",
+                "repos_url": "https://api.github.com/orgs/hw-labs/repos",
+                "url": "https://api.github.com/orgs/hw-labs"
+            },
+            "pusher": {
+                "email": "anthony@anthonygoddard.com",
+                "name": "agoddard"
+            },
+            "ref": "refs/heads/master",
+            "repository": {
+                "archive_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/{archive_format}{/ref}",
+                "assignees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/assignees{/user}",
+                "blobs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/blobs{/sha}",
+                "branches_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/branches{/branch}",
+                "clone_url": "https://github.com/hw-labs/teapot-test-cookbook.git",
+                "collaborators_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/collaborators{/collaborator}",
+                "comments_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/comments{/number}",
+                "commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/commits{/sha}",
+                "compare_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/compare/{base}...{head}",
+                "contents_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contents/{+path}",
+                "contributors_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/contributors",
+                "created_at": 1420353535,
+                "default_branch": "master",
+                "description": "",
+                "downloads_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/downloads",
+                "events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/events",
+                "fork": false,
+                "forks": 0,
+                "forks_count": 0,
+                "forks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/forks",
+                "full_name": "hw-labs/teapot-test-cookbook",
+                "git_commits_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/commits{/sha}",
+                "git_refs_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/refs{/sha}",
+                "git_tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/tags{/sha}",
+                "git_url": "git://github.com/hw-labs/teapot-test-cookbook.git",
+                "has_downloads": true,
+                "has_issues": true,
+                "has_pages": false,
+                "has_wiki": true,
+                "homepage": null,
+                "hooks_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/hooks",
+                "html_url": "https://github.com/hw-labs/teapot-test-cookbook",
+                "id": 28766545,
+                "issue_comment_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/comments{/number}",
+                "issue_events_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues/events{/number}",
+                "issues_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/issues{/number}",
+                "keys_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/keys{/key_id}",
+                "labels_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/labels{/name}",
+                "language": "Ruby",
+                "languages_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/languages",
+                "master_branch": "master",
+                "merges_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/merges",
+                "milestones_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/milestones{/number}",
+                "mirror_url": null,
+                "name": "teapot-test-cookbook",
+                "notifications_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/notifications{?since,all,participating}",
+                "open_issues": 0,
+                "open_issues_count": 0,
+                "organization": "hw-labs",
+                "owner": {
+                    "email": "labs@hw-ops.com",
+                    "name": "hw-labs"
+                },
+                "private": false,
+                "pulls_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/pulls{/number}",
+                "pushed_at": 1425014631,
+                "releases_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/releases{/id}",
+                "size": 279,
+                "ssh_url": "git@github.com:hw-labs/teapot-test-cookbook.git",
+                "stargazers": 0,
+                "stargazers_count": 0,
+                "stargazers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/stargazers",
+                "statuses_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/statuses/{sha}",
+                "subscribers_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscribers",
+                "subscription_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/subscription",
+                "svn_url": "https://github.com/hw-labs/teapot-test-cookbook",
+                "tags_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/tags",
+                "teams_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/teams",
+                "trees_url": "https://api.github.com/repos/hw-labs/teapot-test-cookbook/git/trees{/sha}",
+                "updated_at": "2015-02-27T05:23:51Z",
+                "url": "https://github.com/hw-labs/teapot-test-cookbook",
+                "watchers": 0,
+                "watchers_count": 0
+            },
+            "sender": {
+                "avatar_url": "https://avatars.githubusercontent.com/u/78595?v=3",
+                "events_url": "https://api.github.com/users/agoddard/events{/privacy}",
+                "followers_url": "https://api.github.com/users/agoddard/followers",
+                "following_url": "https://api.github.com/users/agoddard/following{/other_user}",
+                "gists_url": "https://api.github.com/users/agoddard/gists{/gist_id}",
+                "gravatar_id": "",
+                "html_url": "https://github.com/agoddard",
+                "id": 78595,
+                "login": "agoddard",
+                "organizations_url": "https://api.github.com/users/agoddard/orgs",
+                "received_events_url": "https://api.github.com/users/agoddard/received_events",
+                "repos_url": "https://api.github.com/users/agoddard/repos",
+                "site_admin": false,
+                "starred_url": "https://api.github.com/users/agoddard/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/agoddard/subscriptions",
+                "type": "User",
+                "url": "https://api.github.com/users/agoddard"
+            }
+        },
+        "kitchen": {
+            "instances": [
+                "default-ubuntu-1204"
+            ],
+            "result": {
+                "bundle_exec_kitchen_destroy": {
+                    "exit_code": 0
+                },
+                "bundle_exec_kitchen_test_default-ubuntu-1204": {
+                    "exit_code": 10
+                },
+                "bundle_exec_rspec": {
+                    "exit_code": 1
+                },
+                "bundle_install_--path__var_folders_5f_18v2fb5x7w9639m66jr_8ccc0000gn_T_d20150226-33919-v0hgjj_.jackal-kitchen-vendor": {
+                    "exit_code": 0
+                }
+            },
+            "test_output": {
+                "chefspec": {
+                    "chefspec": {
+                        "examples": [
+                            {
+                                "description": "does not include a broken recipe",
+                                "file_path": "./spec/default_spec.rb",
+                                "full_description": "test-cookbook does not include a broken recipe",
+                                "line_number": 9,
+                                "run_time": 0.013484,
+                                "status": "passed"
+                            },
+                            {
+                                "description": "includes a working recipe",
+                                "exception": {
+                                    "backtrace": [
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/fail_with.rb:30:in `fail_with'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:37:in `handle_failure'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/handler.rb:48:in `handle_matcher'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-expectations-3.1.2/lib/rspec/expectations/expectation_target.rb:54:in `to'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/spec/default_spec.rb:14:in `block (2 levels) in <top (required)>'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `instance_exec'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:152:in `block in run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:329:in `with_around_example_hooks'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example.rb:149:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:490:in `block in run_examples'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `map'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:486:in `run_examples'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/example_group.rb:453:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block (2 levels) in run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `map'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:111:in `block in run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/reporter.rb:53:in `report'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:107:in `run_specs'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:85:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:69:in `run'",
+                                        "/private/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/lib/rspec/core/runner.rb:37:in `invoke'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/gems/rspec-core-3.1.7/exe/rspec:4:in `<top (required)>'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `load'",
+                                        "/var/folders/5f/18v2fb5x7w9639m66jr_8ccc0000gn/T/d20150226-33919-v0hgjj/.jackal-kitchen-vendor/ruby/2.1.0/bin/rspec:23:in `<main>'"
+                                    ],
+                                    "class": "RSpec::Expectations::ExpectationNotMetError",
+                                    "message": "expected [\"test-cookbook::default\"] to include \"http-fail::default\""
+                                },
+                                "file_path": "./spec/default_spec.rb",
+                                "full_description": "test-cookbook includes a working recipe",
+                                "line_number": 13,
+                                "run_time": 0.010587,
+                                "status": "failed"
+                            }
+                        ],
+                        "summary": {
+                            "duration": 4.982568,
+                            "example_count": 2,
+                            "failure_count": 1,
+                            "pending_count": 0
+                        },
+                        "summary_line": "2 examples, 1 failure",
+                        "test_format": "chefspec"
+                    }
+                },
+                "teapot": {
+                    "default-ubuntu-1204": {
+                        "resource_status": {
+                            "not_updated": 4,
+                            "total": 7,
+                            "updated": 3
+                        },
+                        "run_status": {
+                            "failed_resource_defined_at": "test-cookbook::default line 1",
+                            "failed_resource_name": "500 me",
+                            "failed_resource_object": {
+                                "action": "create",
+                                "allowed_actions": [
+                                    "nothing",
+                                    "create",
+                                    "delete",
+                                    "touch",
+                                    "create_if_missing"
+                                ],
+                                "atomic_update": true,
+                                "backup": 5,
+                                "before": null,
+                                "checksum": null,
+                                "cookbook_name": "test-cookbook",
+                                "declared_type": "remote_file",
+                                "default_guard_interpreter": "default",
+                                "diff": null,
+                                "elapsed_time": 100.129712004,
+                                "force_unlink": false,
+                                "ftp_active_mode": false,
+                                "group": null,
+                                "guard_interpreter": null,
+                                "headers": {},
+                                "ignore_failure": false,
+                                "manage_symlink_source": null,
+                                "name": "500 me",
+                                "noop": null,
+                                "owner": null,
+                                "params": {},
+                                "path": "500 me",
+                                "provider": "Chef::Provider::RemoteFile",
+                                "recipe_name": "default",
+                                "resource_name": "remote_file",
+                                "retries": 0,
+                                "retry_delay": 2,
+                                "sensitive": false,
+                                "source": [
+                                    "http://httpstat.us/500"
+                                ],
+                                "source_line": "/tmp/kitchen/cookbooks/test-cookbook/recipes/default.rb:1:in `from_file'",
+                                "supports": {},
+                                "updated": false,
+                                "updated_by_last_action": false,
+                                "use_etag": true,
+                                "use_last_modified": true
+                            },
+                            "failed_resource_type": "remote_file",
+                            "failure": "remote_file[500 me] (test-cookbook::default line 1) had an error: Net::HTTPFatalError: 500 \"Internal Server Error\"",
+                            "http_failure": {
+                                "exception": "Net::HTTPInternalServerError",
+                                "permanent": false,
+                                "source": [
+                                    "http://httpstat.us/500"
+                                ],
+                                "status_code": "500"
+                            },
+                            "run_failed": true
+                        },
+                        "test_format": "teapot",
+                        "timing": [
+                            {
+                                "resource": "remote_file[500 me]",
+                                "time": 100.129712004
+                            },
+                            {
+                                "resource": "remote_file[broken]",
+                                "time": 0
+                            },
+                            {
+                                "resource": "apt_package[will_fail]",
+                                "time": 0
+                            },
+                            {
+                                "resource": "remote_directory[/tmp/kitchen/handlers]",
+                                "time": 0.025226105
+                            },
+                            {
+                                "resource": "chef_gem[chef-teapot]",
+                                "time": 1.707289682
+                            },
+                            {
+                                "resource": "chef_handler[Chef::Handler::Teapot]",
+                                "time": 0.007499455
+                            },
+                            {
+                                "resource": "remote_file[/opt/200]",
+                                "time": 0
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "webhook": {
+            "action": "github",
+            "headers": {
+                "accept": "application/json",
+                "accept_encoding": "gzip, deflate",
+                "content_length": "7416",
+                "content_type": "application/json",
+                "host": "localhost:9999",
+                "user_agent": "Ruby"
+            },
+            "path_extra": "github",
+            "query": {},
+            "version": "v1"
+        }
+    },
+    "id": "705bf8de-8d2c-4b49-8999-0000001e0000",
+    "name": "github"
+}
