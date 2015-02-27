@@ -7,15 +7,13 @@ require 'pry'
 describe Jackal::Kitchen::Tester do
 
   before do
-    @runner = run_setup(:tester, 'rb')
-    @store = Jackal::Assets::Store.new
-
+    @runner = run_setup(:tester)
     fname = 'hw-labs-teapot-test-cookbook-8f4ec29b8d1704cd524218665f7ae9daee5275b0.zip'
-    fpath = "./test/specs/files/bucket_name/#{fname}"
-    io    = File.read(fpath)
-
-    @store.put(fname, io)
-    @runner
+    fpath = File.join('.', 'test', 'specs', 'files', 'bucket_name', fname)
+    bucket_name     = Carnivore::Config[:jackal][:assets][:bucket]
+    obj_store_root  = Carnivore::Config[:jackal][:assets][:connection][:credentials][:object_store_root]
+    FileUtils.mkdir(File.join(obj_store_root, bucket_name))
+    FileUtils.cp(fpath, File.join(obj_store_root, bucket_name, fname))
   end
 
   after do
@@ -32,7 +30,8 @@ describe Jackal::Kitchen::Tester do
       kitchen.transmit(
         payload_for(:tester, :raw => true)
       )
-      source_wait 200
+
+      source_wait 30
       result = MessageStore.messages.pop
       Carnivore::Utils.retrieve(result, :data, :kitchen, :test_output, :chefspec).wont_be_nil
     end
@@ -41,7 +40,7 @@ describe Jackal::Kitchen::Tester do
       kitchen.transmit(
         payload_for(:tester, :raw => true)
       )
-      source_wait 200
+      source_wait 600
       result = MessageStore.messages.pop
       Carnivore::Utils.retrieve(result, :data, :kitchen, :test_output, :serverspec).wont_be_nil
     end
@@ -50,10 +49,11 @@ describe Jackal::Kitchen::Tester do
       kitchen.transmit(
         payload_for(:tester, :raw => true)
       )
+
       source_wait 5
       f = File.read(File.expand_path('~/.netrc')) rescue nil
       assert_match(/^machine +github\.com$/, f)
-      assert_match(/ *login/, f)
+      assert_match(/ *login #{ENV['JACKAL_GITHUB_ACCESS_TOKEN']}/, f)
       assert_match(/ *password x-oauth-basic/, f)
     end
 

@@ -1,4 +1,6 @@
 require 'jackal-kitchen'
+require 'fileutils'
+require 'tmpdir'
 
 module Jackal
   module Kitchen
@@ -28,8 +30,9 @@ module Jackal
       #
       # @param msg [Carnivore::Message]
       def execute(msg)
+        dev_env = ENV['JACKAL_TEST'] == 'true'
         failure_wrap(msg) do |payload|
-          working_dir = working_path = Dir.mktmpdir
+          working_path = dev_env ? FileUtils.mkdir_p('/tmp/jackal-kitchen/bundle').first : Dir.mktmpdir
           debug "Working path: #{working_path}"
 
           begin
@@ -71,8 +74,8 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
-            run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
-            FileUtils.rm_rf(working_dir)
+            run_commands(['bundle exec kitchen destroy'], {}, working_path, payload)
+            FileUtils.rm_rf(working_path) unless dev_env
           end
           completed(payload, msg)
         end
