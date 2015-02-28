@@ -79,18 +79,27 @@ module Jackal
         sorted_tests = data["examples"].sort_by{ |x|x["run_time"] }
         slowest_test = sorted_tests.last
         tests_over_threshold = []
-        threshold = config.fetch(:kitchen, :thresholds, :spec, :test_runtime, 60)
+
+        exceeded = duration > config.fetch(
+                     :kitchen, :thresholds, data["test_format"] , :total_runtime, 60
+                   )
 
         tests_over_threshold = data["examples"].reject { |e|
           if e.key?("run_time")
-            e["run_time"] < threshold
+            e["run_time"] < config.fetch(
+              :kitchen, :thresholds, data["test_format"], :test_runtime, 10)
           end
+        }
+
+        total_runtime => {
+          :duration => duration,
+          :threshold_exceeded => exceeded
         }
 
         Smash.new(
           :slowest_test => slowest_test,
           :tests_over_threshold => tests_over_threshold,
-          :total_runtime => duration
+          :total_runtime => total_runtime
         )
       end
 
