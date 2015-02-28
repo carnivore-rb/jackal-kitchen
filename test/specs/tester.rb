@@ -31,7 +31,7 @@ describe Jackal::Kitchen::Tester do
         payload_for(:tester, :raw => true)
       )
 
-      source_wait 30
+      source_wait 150
       result = MessageStore.messages.pop
       Carnivore::Utils.retrieve(result, :data, :kitchen, :test_output, :chefspec).wont_be_nil
     end

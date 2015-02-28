@@ -30,39 +30,40 @@ module Jackal
       #
       # @param msg [Carnivore::Message]
       def execute(msg)
-        dev_env = ENV['JACKAL_TEST'] == 'true'
         failure_wrap(msg) do |payload|
-          working_path = dev_env ? FileUtils.mkdir_p('/tmp/jackal-kitchen/bundle').first : Dir.mktmpdir
-          debug "Working path: #{working_path}"
+          mkdir = ->(name) { FileUtils.mkdir_p(name).first }
+          working_dir = mkdir.(app_config.fetch(:kitchen, :working_dir, Dir.mktmpdir))
+          bundle_dir  = mkdir.(app_config.fetch(:kitchen, :bundle_vendor_dir, File.join(working_dir, '.jackal-kitchen-vendor')))
+          debug "Working path: #{working_dir}"
 
           begin
             maybe_clean_bundle do
               asset_key = payload.get(:data, :code_fetcher, :asset)
               object = asset_store.get(asset_key)
-              asset_filename = File.join(working_path, asset_key)
+              asset_filename = File.join(working_dir, asset_key)
               asset = File.open(asset_filename, 'w')
               asset.write object.read
               asset.close
-              asset_store.unpack(asset, working_path)
-              insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
-              insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
+              asset_store.unpack(asset, working_dir)
+              insert_kitchen_lxc(working_dir) unless ENV['JACKAL_DISABLE_LXC']
+              insert_kitchen_local(working_dir) unless ENV['JACKAL_DISABLE_LXC']
 
               run_commands(
                 [
-                  "bundle install --path #{File.join(working_path, '.jackal-kitchen-vendor')}",
+                  "bundle install --path #{bundle_dir}",
                   'bundle exec rspec',
                 ],
                 {},
-                working_path,
+                working_dir,
                 payload
               )
 
-              output_path = File.join(working_path, 'output')
+              output_path = File.join(working_dir, 'output')
               parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
-              instances = kitchen_instances(working_path)
+              instances = kitchen_instances(working_dir)
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
-                run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
+                run_commands(["bundle exec kitchen test #{instance}"], {}, working_dir, payload)
                 %w(teapot serverspec).each do |format|
                   parse_test_output(payload, {
                     :format => format.to_sym, :cwd => output_path, :instance => instance
@@ -74,8 +75,8 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
-            run_commands(['bundle exec kitchen destroy'], {}, working_path, payload)
-            FileUtils.rm_rf(working_path) unless dev_env
+            run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
+            FileUtils.rm_rf(working_dir)
           end
           completed(payload, msg)
         end

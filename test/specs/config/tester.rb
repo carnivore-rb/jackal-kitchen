@@ -18,6 +18,9 @@ Configuration.new do
     end
 
     kitchen do
+      working_dir '/tmp/jackal-kitchen'
+      bundle_vendor_dir '/tmp/jackal-kitchen-bundle'
+
       sources do
         input do
           type 'actor'
