@@ -91,10 +91,15 @@ module Jackal
           end
         }
 
+        total_runtime => {
+          :duration => duration,
+          :threshold_exceeded => exceeded
+        }
+
         Smash.new(
           :slowest_test => slowest_test,
           :tests_over_threshold => tests_over_threshold,
-          :total_runtime => duration
+          :total_runtime => total_runtime
         )
       end
 
