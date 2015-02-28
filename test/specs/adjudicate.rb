@@ -47,6 +47,15 @@ describe Jackal::Kitchen::Adjudicate do
       result.get(:data, :kitchen, :judge, :decision).must_equal false
     end
 
+    it 'contains resource failure info when failures present' do
+      kitchen.transmit(
+        payload_for(:adjudicate_resource_failure, :raw => true)
+      )
+      source_wait{ !MessageStore.messages.empty? }
+      result = MessageStore.messages.pop
+      result.get(:data, :kitchen, :test_output, :teapot, "default-ubuntu-1204", :run_status, :failed_resource_name).must_equal "500 me"
+    end
+
     it 'contains descriptions of failing test cases' do
       kitchen.transmit(
         payload_for(:adjudicate_failure, :raw => true)
