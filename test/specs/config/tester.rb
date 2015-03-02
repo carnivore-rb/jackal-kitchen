@@ -1,4 +1,5 @@
 Configuration.new do
+  verbosity :error
   jackal do
     require [ 'carnivore-actor', 'jackal-assets', 'jackal-kitchen' ]
 
