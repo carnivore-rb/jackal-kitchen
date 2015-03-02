@@ -91,7 +91,7 @@ module Jackal
           end
         }
 
-        total_runtime => {
+        total_runtime = {
           :duration => duration,
           :threshold_exceeded => exceeded
         }
