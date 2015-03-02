@@ -1,4 +1,6 @@
 require 'jackal-kitchen'
+require 'fileutils'
+require 'tmpdir'
 
 module Jackal
   module Kitchen
@@ -10,6 +12,7 @@ module Jackal
         require 'childprocess'
         require 'tmpdir'
         require 'shellwords'
+        write_netrc
       end
 
       # Validity of message
@@ -28,43 +31,39 @@ module Jackal
       # @param msg [Carnivore::Message]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          working_dir = working_path = Dir.mktmpdir
-          debug "Working path: #{working_path}"
+          mkdir = ->(name) { FileUtils.mkdir_p(name).first }
+          working_dir = mkdir.(app_config.fetch(:kitchen, :working_dir, Dir.mktmpdir))
+          bundle_dir  = mkdir.(app_config.fetch(:kitchen, :bundle_vendor_dir, File.join(working_dir, '.jackal-kitchen-vendor')))
+          debug "Working path: #{working_dir}"
 
           begin
             maybe_clean_bundle do
               asset_key = payload.get(:data, :code_fetcher, :asset)
               object = asset_store.get(asset_key)
-              asset_filename = File.join(working_path, asset_key)
+              asset_filename = File.join(working_dir, asset_key)
               asset = File.open(asset_filename, 'w')
               asset.write object.read
               asset.close
-              asset_store.unpack(asset, working_path)
-              insert_kitchen_lxc(working_path) unless ENV['JACKAL_DISABLE_LXC']
-              insert_kitchen_local(working_path) unless ENV['JACKAL_DISABLE_LXC']
-              netrc_file = File.open(File.expand_path('~/.netrc'), 'w')
-              gh_token = config.fetch(:github, :access_token,
-                app_config.get(:github, :access_token)
-              )
-              netrc_file.write("machine github.com\n  login #{gh_token}\n  password x-oauth-basic")
-              netrc_file.close
+              asset_store.unpack(asset, working_dir)
+              insert_kitchen_lxc(working_dir) unless ENV['JACKAL_DISABLE_LXC']
+              insert_kitchen_local(working_dir) unless ENV['JACKAL_DISABLE_LXC']
 
               run_commands(
                 [
-                  "bundle install --path #{File.join(working_path, '.jackal-kitchen-vendor')}",
+                  "bundle install --path #{bundle_dir}",
                   'bundle exec rspec',
                 ],
                 {},
-                working_path,
+                working_dir,
                 payload
               )
 
-              output_path = File.join(working_path, 'output')
+              output_path = File.join(working_dir, 'output')
               parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
-              instances = kitchen_instances(working_path)
+              instances = kitchen_instances(working_dir)
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
-                run_commands(["bundle exec kitchen test #{instance}"], {}, working_path, payload)
+                run_commands(["bundle exec kitchen test #{instance}"], {}, working_dir, payload)
                 %w(teapot serverspec).each do |format|
                   parse_test_output(payload, {
                     :format => format.to_sym, :cwd => output_path, :instance => instance
@@ -92,6 +91,25 @@ module Jackal
           if(config[:ssh_key])
             file.puts "  ssh_key: #{config[:ssh_key]}"
           end
+        end
+      end
+
+      # Attempt to write .netrc in user directory for github auth
+      #
+      # @
+      # @returns [NilClass]
+      def write_netrc
+        begin
+          gh_token = config.fetch(:github, :access_token,
+                                  app_config.get(:github, :access_token))
+          git_host = config.fetch(:github, :uri,
+                                  app_config.get(:github, :uri))
+
+          File.open(File.expand_path('~/.netrc'), 'w') do |f|
+            f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
+          end
+        rescue
+          warn "Could not write .netrc file"
         end
       end
 
