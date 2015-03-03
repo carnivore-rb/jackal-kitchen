@@ -25,17 +25,30 @@ module Jackal
       # @param payload [Smash]
       def execute(msg)
         failure_wrap(msg) do |payload|
-          test_types(payload).each do |format|
-            test_output(payload, format).each do |instance, data|
-              payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
-            end
+          failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
+            h[:run_status][:http_failure][:permanent] == false
           end
 
-          reasons = populate_reasons_for_failure(payload)
-          verdict = reasons.all? { |k, v| v.values.flatten.empty? }
+          retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
+          retry_count += 1
 
-          payload.set(:data, :kitchen, :judge, :decision, verdict)
-          job_completed(:kitchen, payload, msg)
+          if failures && retry_count <= app_config.fetch(:kitchen, :config, :retries, 0)
+            payload.set(:data, :kitchen, :retry_count, retry_count)
+            completed(payload, msg)
+          else
+            test_types(payload).each do |format|
+              test_output(payload, format).each do |instance, data|
+                payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
+              end
+            end
+
+            reasons = populate_reasons_for_failure(payload)
+            verdict = reasons.all? { |k, v| v.values.flatten.empty? }
+
+            payload.set(:data, :kitchen, :judge, :decision, verdict)
+            job_completed(:kitchen, payload, msg)
+          end
+
         end
       end
 

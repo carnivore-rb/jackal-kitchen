@@ -22,7 +22,7 @@ module Jackal
       def valid?(msg)
         super do |payload|
           payload.get(:data, :code_fetcher, :asset) &&
-            !payload.get(:data, :kitchen, :test_output)
+            (!payload.get(:data, :kitchen, :test_output) || !payload.get(:data, :kitchen, :retry_count).nil?)
         end
       end
 
@@ -102,8 +102,8 @@ module Jackal
         begin
           gh_token = config.fetch(:github, :access_token,
                                   app_config.get(:github, :access_token))
-          git_host = config.fetch(:github, :uri,
-                                  app_config.get(:github, :uri))
+          git_host = config.fetch(config.fetch(:github, :uri,
+                                  app_config.get(:github, :uri)), 'github.com')
 
           File.open(File.expand_path('~/.netrc'), 'w') do |f|
             f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
