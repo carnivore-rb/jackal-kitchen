@@ -22,7 +22,7 @@ module Jackal
       def valid?(msg)
         super do |payload|
           payload.get(:data, :code_fetcher, :asset) &&
-            (!payload.get(:data, :kitchen, :test_output) || !payload.get(:data, :kitchen, :retry_count).nil?)
+            (payload.get(:data, :kitchen, :test_output).nil? || payload.get(:data, :kitchen, :retry))
         end
       end
 
@@ -78,6 +78,18 @@ module Jackal
             run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
             FileUtils.rm_rf(working_dir)
           end
+
+          failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
+            h[:run_status][:http_failure][:permanent] == false
+          end
+          retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
+          retry_count += 1
+
+          payload.set(:data, :kitchen, :retry_count, retry_count) if failures
+
+          cond = failures && retry_count <= app_config.fetch(:kitchen, :config, :retries, 0)
+          payload.set(:data, :kitchen, :retry, cond)
+
           completed(payload, msg)
         end
       end
