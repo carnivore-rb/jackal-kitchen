@@ -114,10 +114,11 @@ module Jackal
       # @returns [NilClass]
       def write_netrc
         begin
-          gh_token = config.fetch(:github, :access_token,
-                                  app_config.get(:github, :access_token))
-          git_host = config.fetch(config.fetch(:github, :uri,
-                                  app_config.get(:github, :uri)), 'github.com')
+          token    = app_config.get(:github, :access_token)
+          gh_token = config.fetch(:github, :access_token, token)
+
+          uri      = app_config.fetch(:github, :uri, 'github.com')
+          git_host = config.fetch(:github, :uri, uri)
 
           File.open(File.expand_path('~/.netrc'), 'w') do |f|
             f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
