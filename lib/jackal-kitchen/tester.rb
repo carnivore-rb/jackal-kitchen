@@ -87,8 +87,10 @@ module Jackal
 
           payload.set(:data, :kitchen, :retry_count, retry_count) if failures
 
-          cond = failures && retry_count <= app_config.fetch(:kitchen, :config, :retries, 0)
-          payload.set(:data, :kitchen, :retry, cond)
+
+          if failures && retry_count <= app_config.fetch(:kitchen, :config, :retries, 0)
+            payload[:data][:kitchen].delete(:test_output)
+          end
 
           completed(payload, msg)
         end
