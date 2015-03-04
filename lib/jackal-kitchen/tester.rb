@@ -22,7 +22,7 @@ module Jackal
       def valid?(msg)
         super do |payload|
           payload.get(:data, :code_fetcher, :asset) &&
-            (payload.get(:data, :kitchen, :test_output).nil? || payload.get(:data, :kitchen, :retry))
+            payload.get(:data, :kitchen, :test_output).nil?
         end
       end
 
