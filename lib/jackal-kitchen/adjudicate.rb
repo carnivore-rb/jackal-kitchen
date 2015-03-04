@@ -29,13 +29,13 @@ module Jackal
             test_output(payload, format).each do |instance, data|
               payload.set(:data, :kitchen, :judge, instance.to_sym, metadata(data, format))
             end
-
-            reasons = populate_reasons_for_failure(payload)
-            verdict = reasons.all? { |k, v| v.values.flatten.empty? }
-
-            payload.set(:data, :kitchen, :judge, :decision, verdict)
-            job_completed(:kitchen, payload, msg)
           end
+
+          reasons = populate_reasons_for_failure(payload)
+          verdict = reasons.all? { |k, v| v.values.flatten.empty? }
+
+          payload.set(:data, :kitchen, :judge, :decision, verdict)
+          job_completed(:kitchen, payload, msg)
         end
       end
 
