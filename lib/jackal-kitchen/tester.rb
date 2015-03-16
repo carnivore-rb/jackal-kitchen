@@ -22,7 +22,7 @@ module Jackal
       def valid?(msg)
         super do |payload|
           payload.get(:data, :code_fetcher, :asset) &&
-            !payload.get(:data, :kitchen, :test_output)
+            payload.get(:data, :kitchen, :test_output).nil?
         end
       end
 
@@ -78,6 +78,20 @@ module Jackal
             run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
             FileUtils.rm_rf(working_dir)
           end
+
+          failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
+            h[:run_status][:http_failure][:permanent] == false
+          end
+          retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
+          retry_count += 1
+
+          payload.set(:data, :kitchen, :retry_count, retry_count) if failures
+
+
+          if failures && retry_count <= app_config.fetch(:kitchen, :config, :retries, 0)
+            payload[:data][:kitchen].delete(:test_output)
+          end
+
           completed(payload, msg)
         end
       end
@@ -100,10 +114,11 @@ module Jackal
       # @returns [NilClass]
       def write_netrc
         begin
-          gh_token = config.fetch(:github, :access_token,
-                                  app_config.get(:github, :access_token))
-          git_host = config.fetch(:github, :uri,
-                                  app_config.get(:github, :uri))
+          token    = app_config.get(:github, :access_token)
+          gh_token = config.fetch(:github, :access_token, token)
+
+          uri      = app_config.fetch(:github, :uri, 'github.com')
+          git_host = config.fetch(:github, :uri, uri)
 
           File.open(File.expand_path('~/.netrc'), 'w') do |f|
             f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
