@@ -121,6 +121,7 @@ module Jackal
               reasons[type][instance] << h[:description]
             end
             reasons[type][instance] << msg if threshold_exceeded?(payload, type, instance)
+            reasons[type][instance] << 'Chef converge failed' if chef_run_failed?(payload, type, instance)
           end
         end
 
@@ -163,6 +164,12 @@ module Jackal
         return false unless type == :teapot
         mdata = teapot_metadata(test_output(payload, :teapot)[instance])
         mdata[:total_runtime][:threshold_exceeded]
+      end
+
+      def chef_run_failed?(payload, type, instance)
+        return false unless type == :teapot
+        mdata = teapot_metadata(test_output(payload, :teapot)[instance])
+        mdata[:run_failed]
       end
 
     end
