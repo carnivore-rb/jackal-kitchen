@@ -80,7 +80,7 @@ module Jackal
           end
 
           failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
-            h[:run_status][:http_failure][:permanent] == false
+            h.get(:run_status, :http_failure, :permanent) == false
           end
           retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
           retry_count += 1
