@@ -121,6 +121,8 @@ module Jackal
               reasons[type][instance] << h[:description]
             end
             reasons[type][instance] << msg if threshold_exceeded?(payload, type, instance)
+            require 'pry'
+            binding.pry
             reasons[type][instance] << 'Chef converge failed' if chef_run_failed?(payload, type, instance)
           end
         end
@@ -167,9 +169,8 @@ module Jackal
       end
 
       def chef_run_failed?(payload, type, instance)
-        return false unless type == :teapot
-        mdata = teapot_metadata(test_output(payload, :teapot)[instance])
-        mdata[:run_status][:run_failed]
+        return false unless type.to_sym == :teapot
+        test_output(payload, :teapot)[instance][:run_status][:run_failed]
       end
 
     end
