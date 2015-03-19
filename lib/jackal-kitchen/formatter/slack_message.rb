@@ -19,10 +19,16 @@ module Jackal
             ref = payload.get(:data, :github, :head_commit, :id)
             repo = payload.get(:data, :github, :repository, :full_name)
             success = payload.get(:data, :kitchen, :judge, :decision)
+            reasons = payload.get(:data, :kitchen, :judge, :reasons)
+            if success
+              message = "Carlos passed commit #{ref} for #{repo}. \o/"
+            else
+              message = "Carlos failed commit #{ref} for #{repo}, because #{reasons}"
+            end
             payload.set(:data, :slack, :messages,
                         [
                           Smash.new(
-                          :message => payload.get(:data, :kitchen),
+                          :message => message,
                           :color => success ? config.fetch(:colors, :success, 'good') : config.fetch(:colors, :failure, 'danger'),
                           :judgement => {:success => success}
                           )

@@ -121,8 +121,6 @@ module Jackal
               reasons[type][instance] << h[:description]
             end
             reasons[type][instance] << msg if threshold_exceeded?(payload, type, instance)
-            require 'pry'
-            binding.pry
             reasons[type][instance] << 'Chef converge failed' if chef_run_failed?(payload, type, instance)
           end
         end
