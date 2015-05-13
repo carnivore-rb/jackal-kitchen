@@ -218,34 +218,24 @@ module Jackal
         results
       end
 
-      # Parse test output json and add it to the payload
+      # Format test output and add it to the payload
       #
-      # @param format, [Symbol, String] test output format name (:chefspec, :serverspec, :teapot)
-      # @param cwd, [String] test output directory path
+      # @param payload, [Smash] the payload
+      # @param output, [Smash] expects test output hash, format, optional instance name
+      def format_test_output(payload, output = {})
+        have_data = output.fetch(:data, false).is_a?(Enumerable)
+        raise "Output did not contain enumerable data" unless have_data
 
-      def parse_test_output(payload, config = {})
-        fmt = config[:format].to_sym
-
-        msg = "Please pass the cwd in config when parsing #{fmt} test output"
-        raise msg unless config[:cwd]
-
-        msg = "Unknown test output format #{fmt}"
-        raise msg unless %i( chefspec serverspec teapot ).include?(fmt)
+        format = output.fetch(:format, nil)
+        raise "Unknown test output format #{format}" unless %i( chefspec serverspec teapot ).include?(format)
 
         begin
-          file_path = File.join(config[:cwd], "#{fmt}.json")
-          debug "processing #{fmt} from #{file_path}"
-
-          output = JSON.parse(File.open(file_path).read)
-          output[:test_format] = fmt
-
-          config[:instance] = fmt if fmt == :chefspec
-          payload.set(:data, :kitchen, :test_output, fmt, config[:instance], output)
-
-          msg = "Please pass an instance name in config when parsing #{fmt} test output"
-          raise msg unless config[:instance]
+          output[:instance] = format if format == :chefspec
+          payload.set(:data, :kitchen, :test_output, format, output[:instance], output[:data])
+          msg = "Please pass an instance name in config"
+          raise msg unless output[:instance]
         rescue => e
-          error "Processing #{fmt} output failed: #{e.inspect}"
+          error "Processing #{format} output failed: #{e.inspect}"
           raise
         end
       end
