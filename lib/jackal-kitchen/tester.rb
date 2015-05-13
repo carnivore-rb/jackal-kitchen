@@ -47,7 +47,6 @@ module Jackal
               asset.close
               asset_store.unpack(asset, working_dir)
               insert_kitchen_ssh(working_dir)
-              insert_kitchen_local(working_dir)
 
               run_commands(
                 [
@@ -64,11 +63,18 @@ module Jackal
                 :format => :chefspec, :data => JSON.parse(chefspec_data)
               ))
 
+              # insert the .kitchen.local.yml now,
+              # without valid host data so we can get the instance list
+              insert_kitchen_local(working_dir)
               instances = kitchen_instances(working_dir)
+
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
-                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
                 remote = provision_instance
+                # update .kitchen.local.yml every time we provision a new instance
+                insert_kitchen_local(working_dir, remote)
+                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
+
                 connection = Rye::Box.new(
                   remote[:host],
                   :port => remote[:port],
@@ -79,7 +85,6 @@ module Jackal
                 )
 
                 %w(teapot serverspec).each do |format|
-
                   output = StringIO.new
                   connection.file_download("/tmp/output/#{format}.json", output)
 
@@ -124,7 +129,7 @@ module Jackal
       # Create a remote instance and return information for accessing it via SSH
       # TODO: Actually provision instances. For now, read ssh connection params from config.
       #
-      # @param instance_config [Hash, Smash]
+      # @param instance_config [Hash]
       # @returns [Smash]
       def provision_instance(instance_config = {})
         Smash.new(
