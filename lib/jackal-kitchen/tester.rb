@@ -135,15 +135,19 @@ module Jackal
         )
       end
 
-      def insert_kitchen_local(path)
+      # Write .kitchen.local.yml overrides into specified path
+      #
+      # @param path [String]
+      # @param instance [Hash]
+      def insert_kitchen_local(path, instance = {})
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
           file.puts '  name: ssh'
-          file.puts "  hostname: #{config[:ssh][:hostname]}"
-          file.puts "  username: #{config[:ssh][:username]}"
-          file.puts "  port: #{config[:ssh][:port]}"
-          file.puts "  ssh_key: #{config[:ssh][:key]}"
+          file.puts "  hostname: #{instance[:host]}"
+          file.puts "  username: #{instance[:user]}"
+          file.puts "  port: #{instance[:port]}"
+          file.puts "  ssh_key: #{instance[:key]}"
         end
       end
 
