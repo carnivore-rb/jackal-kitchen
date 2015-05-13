@@ -132,12 +132,7 @@ module Jackal
       # @param instance_config [Hash]
       # @returns [Smash]
       def provision_instance(instance_config = {})
-        Smash.new(
-          :host => config[:ssh][:host],
-          :port => config[:ssh][:port],
-          :user => config[:ssh][:user],
-          :key => config[:ssh][:key],
-        )
+        config.fetch(:ssh, {})
       end
 
       # Write .kitchen.local.yml overrides into specified path
