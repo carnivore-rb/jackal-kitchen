@@ -97,7 +97,14 @@ module Jackal
             FileUtils.rm_rf(working_dir)
           end
 
-          failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
+          teapot = payload.fetch(:data, :kitchen, :test_output, :teapot, {})
+
+          if teapot.empty?
+            error "No teapot test output data found"
+            raise
+          end
+
+          failures = teapot.any? do |instance, h|
             h.get(:run_status, :http_failure, :permanent) == false
           end
           retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
