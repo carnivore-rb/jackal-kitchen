@@ -168,7 +168,7 @@ module Jackal
 
       def chef_run_failed?(payload, type, instance)
         return false unless type.to_sym == :teapot
-        test_output(payload, :teapot)[instance][:run_status][:run_failed]
+        test_output(payload, :teapot).fetch(instance, :run_status, :run_failed, false)
       end
 
     end
