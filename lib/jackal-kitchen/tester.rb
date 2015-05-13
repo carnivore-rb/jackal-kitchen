@@ -59,8 +59,11 @@ module Jackal
                 payload
               )
 
-              output_path = File.join(working_dir, 'output')
-              parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
+              chefspec_data = File.open(File.join(working_dir, 'output', 'chefspec.json')).read.to_s
+              format_test_output(payload, Smash.new(
+                :format => :chefspec, :data => JSON.parse(chefspec_data)
+              ))
+
               instances = kitchen_instances(working_dir)
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
@@ -76,9 +79,13 @@ module Jackal
                 )
 
                 %w(teapot serverspec).each do |format|
-                  parse_test_output(payload, {
-                    :format => format.to_sym, :cwd => output_path, :instance => instance
-                  })
+
+                  output = StringIO.new
+                  connection.file_download("/tmp/output/#{format}.json", output)
+
+                  format_test_output(payload, Smash.new(
+                    :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
+                  ))
                 end
               end
 
