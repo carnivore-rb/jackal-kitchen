@@ -97,6 +97,20 @@ module Jackal
         end
       end
 
+      # Create a remote instance and return information for accessing it via SSH
+      # TODO: Actually provision instances. For now, read ssh connection params from config.
+      #
+      # @param instance_config [Hash, Smash]
+      # @returns [Smash]
+      def provision_instance(instance_config = {})
+        Smash.new(
+          :host => config[:ssh][:host],
+          :port => config[:ssh][:port],
+          :user => config[:ssh][:username],
+          :key => config[:ssh][:key],
+        )
+      end
+
       def insert_kitchen_local(path)
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
