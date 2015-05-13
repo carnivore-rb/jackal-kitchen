@@ -135,7 +135,7 @@ module Jackal
         Smash.new(
           :host => config[:ssh][:host],
           :port => config[:ssh][:port],
-          :user => config[:ssh][:username],
+          :user => config[:ssh][:user],
           :key => config[:ssh][:key],
         )
       end
