@@ -64,7 +64,17 @@ module Jackal
               instances = kitchen_instances(working_dir)
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
-                run_commands(["bundle exec kitchen test #{instance}"], {}, working_dir, payload)
+                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
+                remote = provision_instance
+                connection = Rye::Box.new(
+                  remote[:host],
+                  :port => remote[:port],
+                  :user => remote[:user],
+                  :keys => remote[:key],
+                  :password => 'invalid',
+                  :password_prompt => false
+                )
+
                 %w(teapot serverspec).each do |format|
                   parse_test_output(payload, {
                     :format => format.to_sym, :cwd => output_path, :instance => instance
