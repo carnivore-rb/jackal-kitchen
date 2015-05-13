@@ -1,6 +1,7 @@
 require 'jackal-kitchen'
 require 'fileutils'
 require 'tmpdir'
+require 'rye'
 
 module Jackal
   module Kitchen
@@ -45,8 +46,8 @@ module Jackal
               asset.write object.read
               asset.close
               asset_store.unpack(asset, working_dir)
-              insert_kitchen_lxc(working_dir) unless ENV['JACKAL_DISABLE_LXC']
-              insert_kitchen_local(working_dir) unless ENV['JACKAL_DISABLE_LXC']
+              insert_kitchen_ssh(working_dir)
+              insert_kitchen_local(working_dir)
 
               run_commands(
                 [
@@ -100,11 +101,11 @@ module Jackal
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
-          file.puts '  name: lxc'
-          file.puts '  use_sudo: false'
-          if(config[:ssh_key])
-            file.puts "  ssh_key: #{config[:ssh_key]}"
-          end
+          file.puts '  name: ssh'
+          file.puts "  hostname: #{config[:ssh][:hostname]}"
+          file.puts "  username: #{config[:ssh][:username]}"
+          file.puts "  port: #{config[:ssh][:port]}"
+          file.puts "  ssh_key: #{config[:ssh][:key]}"
         end
       end
 
@@ -135,23 +136,23 @@ module Jackal
       def kitchen_instances(path)
         require 'kitchen'
         yaml_path = File.join(path, '.kitchen.yml')
-        config = ::Kitchen::Config.new(
+        kitchen_config = ::Kitchen::Config.new(
           :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
         )
-        return config.instances.map(&:name)
+        return kitchen_config.instances.map(&:name)
       end
 
-      # Update gemfile to include kitchen-lxc driver
+      # Update gemfile to include kitchen-ssh driver
       #
       # @param path [String] working directory
-      def insert_kitchen_lxc(path)
+      def insert_kitchen_ssh(path)
         gemfile = File.join(path, 'Gemfile')
         if(File.exists?(gemfile))
           content = File.readlines(gemfile)
         else
           content = ['source "https://rubygems.org"']
         end
-        content << 'gem "kitchen-lxc"'
+        content << 'gem "kitchen-ssh"'
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
