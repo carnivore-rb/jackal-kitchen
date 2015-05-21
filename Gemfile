@@ -4,8 +4,6 @@ gem 'pry'
 gem 'minitest'
 gem 'carnivore-actor'
 
-gem 'kitchen-vagrant'
-
 %w(
   jackal
   jackal-assets

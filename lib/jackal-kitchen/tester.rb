@@ -1,6 +1,7 @@
 require 'jackal-kitchen'
 require 'fileutils'
 require 'tmpdir'
+require 'rye'
 
 module Jackal
   module Kitchen
@@ -45,8 +46,7 @@ module Jackal
               asset.write object.read
               asset.close
               asset_store.unpack(asset, working_dir)
-              insert_kitchen_lxc(working_dir) unless ENV['JACKAL_DISABLE_LXC']
-              insert_kitchen_local(working_dir) unless ENV['JACKAL_DISABLE_LXC']
+              insert_kitchen_ssh(working_dir)
 
               run_commands(
                 [
@@ -58,16 +58,39 @@ module Jackal
                 payload
               )
 
-              output_path = File.join(working_dir, 'output')
-              parse_test_output(payload, {:format => :chefspec, :cwd => output_path})
+              chefspec_data = File.open(File.join(working_dir, 'output', 'chefspec.json')).read.to_s
+              format_test_output(payload, Smash.new(
+                :format => :chefspec, :data => JSON.parse(chefspec_data)
+              ))
+
+              # insert the .kitchen.local.yml now,
+              # without valid host data so we can get the instance list
+              insert_kitchen_local(working_dir)
               instances = kitchen_instances(working_dir)
+
               payload.set(:data, :kitchen, :instances, instances)
               instances.each do |instance|
-                run_commands(["bundle exec kitchen test #{instance}"], {}, working_dir, payload)
+                remote = provision_instance
+                # update .kitchen.local.yml every time we provision a new instance
+                insert_kitchen_local(working_dir, remote)
+                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
+
+                connection = Rye::Box.new(
+                  remote[:host],
+                  :port => remote[:port],
+                  :user => remote[:user],
+                  :keys => remote[:key],
+                  :password => 'invalid',
+                  :password_prompt => false
+                )
+
                 %w(teapot serverspec).each do |format|
-                  parse_test_output(payload, {
-                    :format => format.to_sym, :cwd => output_path, :instance => instance
-                  })
+                  output = StringIO.new
+                  connection.file_download("/tmp/output/#{format}.json", output)
+
+                  format_test_output(payload, Smash.new(
+                    :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
+                  ))
                 end
               end
 
@@ -79,7 +102,14 @@ module Jackal
             FileUtils.rm_rf(working_dir)
           end
 
-          failures = payload.get(:data, :kitchen, :test_output, :teapot).any? do |instance, h|
+          teapot = payload.fetch(:data, :kitchen, :test_output, :teapot, {})
+
+          if teapot.empty?
+            error "No teapot test output data found"
+            raise
+          end
+
+          failures = teapot.any? do |instance, h|
             h.get(:run_status, :http_failure, :permanent) == false
           end
           retry_count = payload.fetch(:data, :kitchen, :retry_count, 0)
@@ -96,15 +126,28 @@ module Jackal
         end
       end
 
-      def insert_kitchen_local(path)
+      # Create a remote instance and return information for accessing it via SSH
+      # TODO: Actually provision instances. For now, read ssh connection params from config.
+      #
+      # @param instance_config [Hash]
+      # @returns [Smash]
+      def provision_instance(instance_config = {})
+        config.fetch(:ssh, {})
+      end
+
+      # Write .kitchen.local.yml overrides into specified path
+      #
+      # @param path [String]
+      # @param instance [Hash]
+      def insert_kitchen_local(path, instance = {})
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
-          file.puts '  name: lxc'
-          file.puts '  use_sudo: false'
-          if(config[:ssh_key])
-            file.puts "  ssh_key: #{config[:ssh_key]}"
-          end
+          file.puts '  name: ssh'
+          file.puts "  hostname: #{instance[:host]}"
+          file.puts "  username: #{instance[:user]}"
+          file.puts "  port: #{instance[:port]}"
+          file.puts "  ssh_key: #{instance[:key]}"
         end
       end
 
@@ -135,23 +178,23 @@ module Jackal
       def kitchen_instances(path)
         require 'kitchen'
         yaml_path = File.join(path, '.kitchen.yml')
-        config = ::Kitchen::Config.new(
+        kitchen_config = ::Kitchen::Config.new(
           :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
         )
-        return config.instances.map(&:name)
+        return kitchen_config.instances.map(&:name)
       end
 
-      # Update gemfile to include kitchen-lxc driver
+      # Update gemfile to include kitchen-ssh driver
       #
       # @param path [String] working directory
-      def insert_kitchen_lxc(path)
+      def insert_kitchen_ssh(path)
         gemfile = File.join(path, 'Gemfile')
         if(File.exists?(gemfile))
           content = File.readlines(gemfile)
         else
           content = ['source "https://rubygems.org"']
         end
-        content << 'gem "kitchen-lxc"'
+        content << 'gem "kitchen-ssh"'
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
@@ -203,34 +246,24 @@ module Jackal
         results
       end
 
-      # Parse test output json and add it to the payload
+      # Format test output and add it to the payload
       #
-      # @param format, [Symbol, String] test output format name (:chefspec, :serverspec, :teapot)
-      # @param cwd, [String] test output directory path
+      # @param payload, [Smash] the payload
+      # @param output, [Smash] expects test output hash, format, optional instance name
+      def format_test_output(payload, output = {})
+        have_data = output.fetch(:data, false).is_a?(Enumerable)
+        raise "Output did not contain enumerable data" unless have_data
 
-      def parse_test_output(payload, config = {})
-        fmt = config[:format].to_sym
-
-        msg = "Please pass the cwd in config when parsing #{fmt} test output"
-        raise msg unless config[:cwd]
-
-        msg = "Unknown test output format #{fmt}"
-        raise msg unless %i( chefspec serverspec teapot ).include?(fmt)
+        format = output.fetch(:format, nil)
+        raise "Unknown test output format #{format}" unless %i( chefspec serverspec teapot ).include?(format)
 
         begin
-          file_path = File.join(config[:cwd], "#{fmt}.json")
-          debug "processing #{fmt} from #{file_path}"
-
-          output = JSON.parse(File.open(file_path).read)
-          output[:test_format] = fmt
-
-          config[:instance] = fmt if fmt == :chefspec
-          payload.set(:data, :kitchen, :test_output, fmt, config[:instance], output)
-
-          msg = "Please pass an instance name in config when parsing #{fmt} test output"
-          raise msg unless config[:instance]
+          output[:instance] = format if format == :chefspec
+          payload.set(:data, :kitchen, :test_output, format, output[:instance], output[:data])
+          msg = "Please pass an instance name in config"
+          raise msg unless output[:instance]
         rescue => e
-          error "Processing #{fmt} output failed: #{e.inspect}"
+          error "Processing #{format} output failed: #{e.inspect}"
           raise
         end
       end

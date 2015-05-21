@@ -18,7 +18,10 @@ module Jackal
           success = payload.get(:data, :kitchen, :judge, :decision)
           payload.set(:data, :github_kit, :status,
                       Smash.new(
-                        :repository => payload.get(:data, :code_fetcher, :info, :name),
+                        :repository => [
+                          payload.get(:data, :code_fetcher, :info, :owner),
+                          payload.get(:data, :code_fetcher, :info, :name)
+                        ].join('/'),
                         :reference => payload.get(:data, :code_fetcher, :info, :commit_sha),
                         :state => payload.get(:data, :kitchen, :judge, :decision) ? 'success' : 'failure'),
                      )

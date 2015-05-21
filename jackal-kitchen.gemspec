@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'childprocess'
   s.add_dependency 'carnivore-http'
   s.add_dependency 'carnivore-actor'
-  s.add_dependency 'test-kitchen', '~> 1.2.0'
+  s.add_dependency 'test-kitchen', '~> 1.3.0'
+  s.add_dependency 'kitchen-ssh', '~> 0.0.8'
+  s.add_dependency 'rye', '~> 0.9.13'
   s.files = Dir['lib/**/*'] + %w(jackal-kitchen.gemspec README.md CHANGELOG.md CONTRIBUTING.md LICENSE)
 end
