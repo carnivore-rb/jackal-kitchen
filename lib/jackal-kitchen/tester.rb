@@ -1,5 +1,6 @@
 require 'jackal-kitchen'
 require 'fileutils'
+require 'kitchen'
 require 'tmpdir'
 require 'rye'
 
@@ -13,7 +14,6 @@ module Jackal
         require 'childprocess'
         require 'tmpdir'
         require 'shellwords'
-        write_netrc
       end
 
       # Validity of message
@@ -154,24 +154,13 @@ module Jackal
         end
       end
 
-      # Attempt to write .netrc in user directory for github auth
+      # Read kitchen instance state from disk and return as hash
       #
-      # @
-      # @returns [NilClass]
-      def write_netrc
-        begin
-          token    = app_config.get(:github, :access_token)
-          gh_token = config.fetch(:github, :access_token, token)
-
-          uri      = app_config.fetch(:github, :uri, 'github.com')
-          git_host = config.fetch(:github, :uri, uri)
-
-          File.open(File.expand_path('~/.netrc'), 'w') do |f|
-            f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
-          end
-        rescue
-          warn "Could not write .netrc file"
-        end
+      # @param path [String] working directory (not including .kitchen directory)
+      # @param instance [String] name of instance
+      def read_instance_state(path, instance)
+        instance_state = ::Kitchen::StateFile.new(path, instance)
+        instance_state.read
       end
 
       # Load kitchen config and return an array of instances
@@ -179,7 +168,6 @@ module Jackal
       # @param path [String] working directory
       # @returns [Array] array of strings representing test-kitchen instances
       def kitchen_instances(path)
-        require 'kitchen'
         yaml_path = File.join(path, '.kitchen.yml')
         kitchen_config = ::Kitchen::Config.new(
           :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
