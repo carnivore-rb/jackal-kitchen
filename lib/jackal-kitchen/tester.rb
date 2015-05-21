@@ -46,7 +46,7 @@ module Jackal
               asset.write object.read
               asset.close
               asset_store.unpack(asset, working_dir)
-              insert_kitchen_ssh(working_dir)
+              insert_kitchen_miasma(working_dir)
               update_spec_helpers(working_dir)
 
               bundle_install_cmd = config.fetch(:vendor_bundle, true) ? "bundle install --path #{bundle_dir}" : 'bundle install'
@@ -66,37 +66,46 @@ module Jackal
                 :format => :chefspec, :data => JSON.parse(chefspec_data)
               ))
 
-              # insert the .kitchen.local.yml now,
-              # without valid host data so we can get the instance list
               insert_kitchen_local(working_dir)
               instances = kitchen_instances(working_dir)
-
               payload.set(:data, :kitchen, :instances, instances)
-              instances.each do |instance|
-                remote = provision_instance
-                # update .kitchen.local.yml every time we provision a new instance
-                insert_kitchen_local(working_dir, remote)
-                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
 
-                connection = Rye::Box.new(
-                  remote[:host],
-                  :port => remote[:port],
-                  :user => remote[:user],
-                  :keys => remote[:key],
+              instances.each do |instance|
+
+                kitchen_exit_code = run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)[2]
+
+                unless kitchen_exit_code == 0
+                  warn("kitchen exited with unexpected return code: #{kitchen_exit_code}")
+                end
+
+                state = read_instance_state(working_dir, instance)
+
+                debug("Instance state for #{instance}: #{state.inspect}")
+
+                remote_ssh = Rye::Box.new(
+                  state[:hostname],
+                  :port => state.fetch(:port, 22) ,
+                  :user => state[:username],
+                  :keys => state.fetch(:ssh_key, nil),
                   :password => 'invalid',
                   :password_prompt => false
                 )
 
                 %w(teapot serverspec).each do |format|
-                  output = StringIO.new
-                  connection.file_download("/tmp/output/#{format}.json", output)
+                  begin
+                    output = StringIO.new
+                    output_dir = '/tmp'
+                    remote_ssh.file_download(File.join(output_dir, "#{format}.json"), output)
 
-                  format_test_output(payload, Smash.new(
-                    :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
-                  ))
+                    format_test_output(payload, Smash.new(
+                      :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
+                    ))
+                  rescue => e
+                    warn("could not load #{format} result (#{e.class}): #{e}")
+                  end
                 end
-              end
 
+              end
             end
           rescue => e
             error "Command failed! #{e.class}: #{e}"
@@ -129,28 +138,17 @@ module Jackal
         end
       end
 
-      # Create a remote instance and return information for accessing it via SSH
-      # TODO: Actually provision instances. For now, read ssh connection params from config.
-      #
-      # @param instance_config [Hash]
-      # @returns [Smash]
-      def provision_instance(instance_config = {})
-        config.fetch(:ssh, {})
-      end
-
       # Write .kitchen.local.yml overrides into specified path
       #
       # @param path [String]
-      # @param instance [Hash]
-      def insert_kitchen_local(path, instance = {})
+      # @param instance [Miasma::Compute::Server]
+      def insert_kitchen_local(path)
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
-          file.puts '  name: ssh'
-          file.puts "  hostname: #{instance[:host]}"
-          file.puts "  username: #{instance[:user]}"
-          file.puts "  port: #{instance[:port]}"
-          file.puts "  ssh_key: #{instance[:key]}"
+          file.puts '  name: miasma'
+          file.puts "  ssh_key_name: #{config.get(:ssh, :key_name)}"
+          file.puts "  ssh_key_path: #{config.get(:ssh, :key_path)}" if config.get(:ssh, :key_path)
         end
       end
 
@@ -165,7 +163,7 @@ module Jackal
 
       # Load kitchen config and return an array of instances
       #
-      # @param path [String] working directory
+      # @param path [String] directory containing .kitchen.yml
       # @returns [Array] array of strings representing test-kitchen instances
       def kitchen_instances(path)
         yaml_path = File.join(path, '.kitchen.yml')
@@ -175,17 +173,17 @@ module Jackal
         return kitchen_config.instances.map(&:name)
       end
 
-      # Update gemfile to include kitchen-ssh driver
+      # Update gemfile to include kitchen-miasma driver
       #
       # @param path [String] working directory
-      def insert_kitchen_ssh(path)
+      def insert_kitchen_miasma(path)
         gemfile = File.join(path, 'Gemfile')
         if(File.exists?(gemfile))
           content = File.readlines(gemfile)
         else
           content = ['source "https://rubygems.org"']
         end
-        content << 'gem "kitchen-ssh"'
+        content << 'gem "kitchen-miasma", :git => "https://github.com/cwjohnston/kitchen-miasma.git"'
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
