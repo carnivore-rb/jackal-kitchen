@@ -2,6 +2,7 @@ require 'jackal-kitchen'
 require 'fileutils'
 require 'tmpdir'
 require 'rye'
+require 'find'
 
 module Jackal
   module Kitchen
@@ -47,6 +48,7 @@ module Jackal
               asset.close
               asset_store.unpack(asset, working_dir)
               insert_kitchen_ssh(working_dir)
+              update_spec_helpers(working_dir)
 
               run_commands(
                 [
@@ -197,6 +199,29 @@ module Jackal
         content << 'gem "kitchen-ssh"'
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
+        end
+      end
+
+      def update_spec_helpers(path)
+        spec_helpers = []
+        Find.find(path) do |location|
+          spec_helpers << location if location =~ /spec_helper.rb/
+        end
+        spec_helpers.each do |spec_helper|
+          content = File.readlines(spec_helper)
+          open(spec_helper, 'a') { |f|
+            f << "RSpec.configure do |config|\n"
+            f << "  config.log_level = :fatal\n"
+            f << "  output_dir = 'output'\n"
+            f << "  Dir.new(output_dir)\n"
+            f << "  if defined?(ChefSpec)\n"
+            f << "    config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')\n"
+            f << "  elsif defined?(ServerSpec)\n"
+            f << "    config.output_stream = File.open(File.join(output_dir,'serverspec.json'), 'w')\n"
+            f << "  end\n"
+            f << "  config.formatter = 'json'\n"
+            f << "end"
+          }
         end
       end
 
