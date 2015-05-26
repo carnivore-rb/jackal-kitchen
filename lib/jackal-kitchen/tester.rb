@@ -210,6 +210,7 @@ module Jackal
         spec_helpers.each do |spec_helper|
           content = File.readlines(spec_helper)
           open(spec_helper, 'a') { |f|
+            f << "\n"
             f << "RSpec.configure do |config|\n"
             f << "  config.log_level = :fatal\n"
             f << "  output_dir = 'output'\n"
