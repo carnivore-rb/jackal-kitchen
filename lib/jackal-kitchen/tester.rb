@@ -47,6 +47,7 @@ module Jackal
               asset.close
               asset_store.unpack(asset, working_dir)
               insert_kitchen_ssh(working_dir)
+              update_spec_helpers(working_dir)
 
               run_commands(
                 [
@@ -197,6 +198,28 @@ module Jackal
         content << 'gem "kitchen-ssh"'
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
+        end
+      end
+
+      def update_spec_helpers(path)
+        Dir.glob("#{path}/**/spec_helper.rb").each do |file|
+          File.open(file, 'a') do |f|
+            # whitespace here is important if spec_helper lacks trailing newline
+            f.write <<-STR
+
+RSpec.configure do |config|
+  config.log_level = :fatal
+  output_dir = 'output'
+  Dir.new(output_dir)
+  if defined?(ChefSpec)
+    config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')
+  elsif defined?(ServerSpec)
+    config.output_stream = File.open(File.join(output_dir,'serverspec.json'), 'w')
+  end
+  config.formatter = 'json'
+end
+STR
+          end
         end
       end
 
