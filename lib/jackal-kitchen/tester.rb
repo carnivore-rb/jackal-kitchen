@@ -2,7 +2,6 @@ require 'jackal-kitchen'
 require 'fileutils'
 require 'tmpdir'
 require 'rye'
-require 'find'
 
 module Jackal
   module Kitchen
@@ -203,26 +202,24 @@ module Jackal
       end
 
       def update_spec_helpers(path)
-        spec_helpers = []
-        Find.find(path) do |location|
-          spec_helpers << location if location =~ /spec_helper.rb/
-        end
-        spec_helpers.each do |spec_helper|
-          content = File.readlines(spec_helper)
-          open(spec_helper, 'a') { |f|
-            f << "\n"
-            f << "RSpec.configure do |config|\n"
-            f << "  config.log_level = :fatal\n"
-            f << "  output_dir = 'output'\n"
-            f << "  Dir.new(output_dir)\n"
-            f << "  if defined?(ChefSpec)\n"
-            f << "    config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')\n"
-            f << "  elsif defined?(ServerSpec)\n"
-            f << "    config.output_stream = File.open(File.join(output_dir,'serverspec.json'), 'w')\n"
-            f << "  end\n"
-            f << "  config.formatter = 'json'\n"
-            f << "end"
-          }
+        Dir.glob("#{path}/**/spec_helper.rb").each do |file|
+          File.open(file, 'a') do |f|
+            # whitespace here is important if spec_helper lacks trailing newline
+            f.write <<-STR
+
+RSpec.configure do |config|
+  config.log_level = :fatal
+  output_dir = 'output'
+  Dir.new(output_dir)
+  if defined?(ChefSpec)
+    config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')
+  elsif defined?(ServerSpec)
+    config.output_stream = File.open(File.join(output_dir,'serverspec.json'), 'w')
+  end
+  config.formatter = 'json'
+end
+STR
+          end
         end
       end
 
