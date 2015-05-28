@@ -49,10 +49,12 @@ module Jackal
               insert_kitchen_ssh(working_dir)
               update_spec_helpers(working_dir)
 
+              bundle_install_cmd = config.fetch(:vendor_bundle, true) ? "bundle install --path #{bundle_dir}" : 'bundle install'
+
               run_commands(
                 [
-                  "bundle install --path #{bundle_dir}",
-                  'bundle exec rspec',
+                  bundle_install_cmd,
+                  'bundle exec rspec'
                 ],
                 {},
                 working_dir,
