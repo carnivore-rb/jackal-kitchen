@@ -147,8 +147,8 @@ module Jackal
           file.puts '---'
           file.puts 'driver:'
           file.puts '  name: miasma'
-          file.puts "  ssh_key_name: #{config.get(:ssh, :key_name)}"
-          file.puts "  ssh_key_path: #{config.get(:ssh, :key_path)}" if config.get(:ssh, :key_path)
+          file.puts "  key_name: #{config.get(:ssh, :key_name)}"
+          file.puts "  key_path: #{config.get(:ssh, :key_path)}" if config.get(:ssh, :key_path)
         end
       end
 
