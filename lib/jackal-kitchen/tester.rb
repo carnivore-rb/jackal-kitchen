@@ -72,14 +72,16 @@ module Jackal
 
               instances.each do |instance|
 
-                kitchen_exit_code = run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)[2]
+                run_commands(["bundle exec kitchen create #{instance}"], {}, working_dir, payload)
+
+                state = read_instance_state(working_dir, instance)
+                remote_ssh = instance_ssh_connection(state)
+
+                kitchen_exit_code = run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)[:exit_code]
 
                 unless kitchen_exit_code == 0
                   warn("kitchen exited with unexpected return code: #{kitchen_exit_code}")
                 end
-
-                state = read_instance_state(working_dir, instance)
-                remote_ssh = instance_ssh_connection(state)
 
                 debug("Instance state for #{instance}: #{state.inspect}")
 
