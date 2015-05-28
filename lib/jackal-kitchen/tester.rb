@@ -79,17 +79,9 @@ module Jackal
                 end
 
                 state = read_instance_state(working_dir, instance)
+                remote_ssh = instance_ssh_connection(state)
 
                 debug("Instance state for #{instance}: #{state.inspect}")
-
-                remote_ssh = Rye::Box.new(
-                  state[:hostname],
-                  :port => state.fetch(:port, 22) ,
-                  :user => state[:username],
-                  :keys => state.fetch(:ssh_key, nil),
-                  :password => 'invalid',
-                  :password_prompt => false
-                )
 
                 %w(teapot serverspec).each do |format|
                   begin
@@ -104,6 +96,8 @@ module Jackal
                     warn("could not load #{format} result (#{e.class}): #{e}")
                   end
                 end
+
+                remote_ssh.disconnect
 
               end
             end
@@ -136,6 +130,20 @@ module Jackal
 
           completed(payload, msg)
         end
+      end
+
+      # Return a Rye::Box object for the described instance
+      # @param state [Hash]
+      # @return [Rye::Box]
+      def instance_ssh_connection(state)
+        Rye::Box.new(
+          state[:hostname],
+          :port => state.fetch(:port, 22) ,
+          :user => state[:username],
+          :keys => state.fetch(:ssh_key, nil),
+          :password => 'invalid',
+          :password_prompt => false
+        )
       end
 
       # Write .kitchen.local.yml overrides into specified path
