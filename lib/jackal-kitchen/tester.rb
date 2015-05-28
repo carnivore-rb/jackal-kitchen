@@ -183,7 +183,11 @@ module Jackal
         else
           content = ['source "https://rubygems.org"']
         end
-        content << 'gem "kitchen-miasma", :git => "https://github.com/cwjohnston/kitchen-miasma.git"'
+
+        unless content.any? { |line| line.match(/gem ['"]kitchen-miasma['"]/)}
+          content << 'gem "kitchen-miasma", :git => "https://github.com/cwjohnston/kitchen-miasma.git"'
+        end
+
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
