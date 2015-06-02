@@ -104,6 +104,7 @@ module Jackal
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
+            binding.pry if config.fetch(:rescue_before_destroy, false)
             run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
             FileUtils.rm_rf(working_dir)
           end
