@@ -147,18 +147,48 @@ module Jackal
         )
       end
 
+      # Upload the teapot-handler cookbook fixture to a remote instance
+      # @param remote [Rye::Box]
+      # @return [TrueClass]
+      def insert_teapot_cookbook(remote)
+        # inserting teapot
+        # upload file
+        # mkdir -p /tmp/kitchen/cookbooks
+        # unpack cookbook into /tmp/kitchen/cookbooks
+        # get cookbook into run list???
+        info("Inserting teapot-handler cookbook into kitchen cookbook path on #{remote.host}")
+        remote.file_upload(File.join(File.dirname(__FILE__), %w(.. .. data teapot-handler-cookbook.tar)), '/tmp')
+        remote.disable_safe_mode
+        remote.exec('mkdir -p /tmp/kitchen/cookbooks/teapot-handler')
+        remote.exec('chmod -R a+rwx /tmp/kitchen')
+        remote.cd('/tmp/kitchen/cookbooks/teapot-handler')
+        remote.exec('tar --strip-components=1 -xvf /tmp/teapot-handler-cookbook.tar')
+      end
+
       # Write .kitchen.local.yml overrides into specified path
       #
       # @param path [String]
       # @param instance [Miasma::Compute::Server]
+      # @return [TrueClass]
       def insert_kitchen_local(path)
+
+        platforms = kitchen_platforms(path)
+
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
           file.puts '  name: miasma'
           file.puts "  key_name: #{config.get(:ssh, :key_name)}"
           file.puts "  key_path: #{config.get(:ssh, :key_path)}" if config.get(:ssh, :key_path)
+          file.puts 'platforms:'
+          platforms.each do |p|
+            file.puts "  - name: #{p}"
+            file.puts '    run_list:'
+            file.puts '      - recipe[teapot-handler]'
+          end
         end
+
+        true
       end
 
       # Read kitchen instance state from disk and return as hash
@@ -223,6 +253,7 @@ module Jackal
 RSpec.configure do |config|
   config.log_level = :fatal
   output_dir = 'output'
+  Dir.mkdir(output_dir) unless Dir.exist?(output_dir)
   Dir.new(output_dir)
   if defined?(ChefSpec)
     config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')
