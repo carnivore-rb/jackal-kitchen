@@ -97,6 +97,7 @@ module Jackal
                 end
 
                 remote_ssh.disconnect
+                run_commands(["bundle exec kitchen destroy #{instance}"], {}, working_dir, payload)
 
               end
             end
