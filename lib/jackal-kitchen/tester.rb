@@ -182,6 +182,18 @@ module Jackal
         return kitchen_config.instances.map(&:name)
       end
 
+      # Load kitchen config and return an array of platforms
+      #
+      # @param path [String] directory containing .kitchen.yml
+      # @returns [Array] array of strings representing test-kitchen instances
+      def kitchen_platforms(path)
+        yaml_path = File.join(path, '.kitchen.yml')
+        kitchen_config = ::Kitchen::Config.new(
+          :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
+        )
+        return kitchen_config.platforms.map(&:name)
+      end
+
       # Update gemfile to include kitchen-miasma driver
       #
       # @param path [String] working directory
