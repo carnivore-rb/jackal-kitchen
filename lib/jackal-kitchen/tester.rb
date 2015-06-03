@@ -236,7 +236,7 @@ module Jackal
         end
 
         unless content.any? { |line| line.match(/gem ['"]kitchen-miasma['"]/)}
-          content << 'gem "kitchen-miasma", :git => "https://github.com/cwjohnston/kitchen-miasma.git"'
+          content << 'gem "kitchen-miasma", :git => "https://github.com/hw-labs/kitchen-miasma.git", :ref => "develop"'
         end
 
         File.open(gemfile, 'w') do |file|
