@@ -1,5 +1,6 @@
 require 'jackal-kitchen'
 require 'fileutils'
+require 'kitchen'
 require 'tmpdir'
 require 'rye'
 
@@ -13,7 +14,6 @@ module Jackal
         require 'childprocess'
         require 'tmpdir'
         require 'shellwords'
-        write_netrc
       end
 
       # Validity of message
@@ -46,7 +46,7 @@ module Jackal
               asset.write object.read
               asset.close
               asset_store.unpack(asset, working_dir)
-              insert_kitchen_ssh(working_dir)
+              insert_kitchen_miasma(working_dir)
               update_spec_helpers(working_dir)
 
               bundle_install_cmd = config.fetch(:vendor_bundle, true) ? "bundle install --path #{bundle_dir}" : 'bundle install'
@@ -66,41 +66,45 @@ module Jackal
                 :format => :chefspec, :data => JSON.parse(chefspec_data)
               ))
 
-              # insert the .kitchen.local.yml now,
-              # without valid host data so we can get the instance list
               insert_kitchen_local(working_dir)
               instances = kitchen_instances(working_dir)
-
               payload.set(:data, :kitchen, :instances, instances)
-              instances.each do |instance|
-                remote = provision_instance
-                # update .kitchen.local.yml every time we provision a new instance
-                insert_kitchen_local(working_dir, remote)
-                run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
 
-                connection = Rye::Box.new(
-                  remote[:host],
-                  :port => remote[:port],
-                  :user => remote[:user],
-                  :keys => remote[:key],
-                  :password => 'invalid',
-                  :password_prompt => false
-                )
+              instances.each do |instance|
+
+                run_commands(["bundle exec kitchen create #{instance}"], {}, working_dir, payload)
+
+                state = read_instance_state(working_dir, instance)
+                remote_ssh = instance_ssh_connection(state)
+                insert_teapot_cookbook(remote_ssh)
+
+                kitchen_verify_result = run_commands(["bundle exec kitchen verify #{instance}"], {}, working_dir, payload)
+
+                debug("Instance state for #{instance}: #{state.inspect}")
 
                 %w(teapot serverspec).each do |format|
-                  output = StringIO.new
-                  connection.file_download("/tmp/output/#{format}.json", output)
+                  begin
+                    output = StringIO.new
+                    output_dir = '/tmp'
+                    remote_ssh.file_download(File.join(output_dir, "#{format}.json"), output)
 
-                  format_test_output(payload, Smash.new(
-                    :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
-                  ))
+                    format_test_output(payload, Smash.new(
+                      :format => format.to_sym, :data => JSON.parse(output.string), :instance => instance
+                    ))
+                  rescue => e
+                    warn("could not load #{format} result (#{e.class}): #{e}")
+                  end
                 end
-              end
 
+                remote_ssh.disconnect
+                run_commands(["bundle exec kitchen destroy #{instance}"], {}, working_dir, payload)
+
+              end
             end
           rescue => e
             error "Command failed! #{e.class}: #{e}"
           ensure
+            binding.pry if config.fetch(:rescue_before_destroy, false)
             run_commands(['bundle exec kitchen destroy'], {}, working_dir, payload)
             FileUtils.rm_rf(working_dir)
           end
@@ -129,57 +133,78 @@ module Jackal
         end
       end
 
-      # Create a remote instance and return information for accessing it via SSH
-      # TODO: Actually provision instances. For now, read ssh connection params from config.
-      #
-      # @param instance_config [Hash]
-      # @returns [Smash]
-      def provision_instance(instance_config = {})
-        config.fetch(:ssh, {})
+      # Return a Rye::Box object for the described instance
+      # @param state [Hash]
+      # @return [Rye::Box]
+      def instance_ssh_connection(state)
+        Rye::Box.new(
+          state[:hostname],
+          :port => state.fetch(:port, 22) ,
+          :user => state[:username],
+          :keys => state.fetch(:ssh_key, nil),
+          :password => 'invalid',
+          :password_prompt => false
+        )
+      end
+
+      # Upload the teapot-handler cookbook fixture to a remote instance
+      # @param remote [Rye::Box]
+      # @return [TrueClass]
+      def insert_teapot_cookbook(remote)
+        # inserting teapot
+        # upload file
+        # mkdir -p /tmp/kitchen/cookbooks
+        # unpack cookbook into /tmp/kitchen/cookbooks
+        # get cookbook into run list???
+        info("Inserting teapot-handler cookbook into kitchen cookbook path on #{remote.host}")
+        remote.file_upload(File.join(File.dirname(__FILE__), %w(.. .. data teapot-handler-cookbook.tar)), '/tmp')
+        remote.disable_safe_mode
+        remote.exec('mkdir -p /tmp/kitchen/cookbooks/teapot-handler')
+        remote.exec('chmod -R a+rwx /tmp/kitchen')
+        remote.cd('/tmp/kitchen/cookbooks/teapot-handler')
+        remote.exec('tar --strip-components=1 -xvf /tmp/teapot-handler-cookbook.tar')
       end
 
       # Write .kitchen.local.yml overrides into specified path
       #
       # @param path [String]
-      # @param instance [Hash]
-      def insert_kitchen_local(path, instance = {})
+      # @param instance [Miasma::Compute::Server]
+      # @return [TrueClass]
+      def insert_kitchen_local(path)
+
+        platforms = kitchen_platforms(path)
+
         File.open(File.join(path, '.kitchen.local.yml'), 'w') do |file|
           file.puts '---'
           file.puts 'driver:'
-          file.puts '  name: ssh'
-          file.puts "  hostname: #{instance[:host]}"
-          file.puts "  username: #{instance[:user]}"
-          file.puts "  port: #{instance[:port]}"
-          file.puts "  ssh_key: #{instance[:key]}"
+          file.puts '  name: miasma'
+          file.puts "  key_name: #{config.get(:ssh, :key_name)}"
+          file.puts "  key_path: #{config.get(:ssh, :key_path)}" if config.get(:ssh, :key_path)
+          file.puts 'platforms:'
+          platforms.each do |p|
+            file.puts "  - name: #{p}"
+            file.puts '    run_list:'
+            file.puts '      - recipe[teapot-handler]'
+          end
         end
+
+        true
       end
 
-      # Attempt to write .netrc in user directory for github auth
+      # Read kitchen instance state from disk and return as hash
       #
-      # @
-      # @returns [NilClass]
-      def write_netrc
-        begin
-          token    = app_config.get(:github, :access_token)
-          gh_token = config.fetch(:github, :access_token, token)
-
-          uri      = app_config.fetch(:github, :uri, 'github.com')
-          git_host = config.fetch(:github, :uri, uri)
-
-          File.open(File.expand_path('~/.netrc'), 'w') do |f|
-            f.puts("machine #{git_host}\n  login #{gh_token}\n  password x-oauth-basic")
-          end
-        rescue
-          warn "Could not write .netrc file"
-        end
+      # @param path [String] working directory (not including .kitchen directory)
+      # @param instance [String] name of instance
+      def read_instance_state(path, instance)
+        instance_state = ::Kitchen::StateFile.new(path, instance)
+        instance_state.read
       end
 
       # Load kitchen config and return an array of instances
       #
-      # @param path [String] working directory
+      # @param path [String] directory containing .kitchen.yml
       # @returns [Array] array of strings representing test-kitchen instances
       def kitchen_instances(path)
-        require 'kitchen'
         yaml_path = File.join(path, '.kitchen.yml')
         kitchen_config = ::Kitchen::Config.new(
           :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
@@ -187,17 +212,33 @@ module Jackal
         return kitchen_config.instances.map(&:name)
       end
 
-      # Update gemfile to include kitchen-ssh driver
+      # Load kitchen config and return an array of platforms
+      #
+      # @param path [String] directory containing .kitchen.yml
+      # @returns [Array] array of strings representing test-kitchen instances
+      def kitchen_platforms(path)
+        yaml_path = File.join(path, '.kitchen.yml')
+        kitchen_config = ::Kitchen::Config.new(
+          :loader => ::Kitchen::Loader::YAML.new(:project_config => yaml_path)
+        )
+        return kitchen_config.platforms.map(&:name)
+      end
+
+      # Update gemfile to include kitchen-miasma driver
       #
       # @param path [String] working directory
-      def insert_kitchen_ssh(path)
+      def insert_kitchen_miasma(path)
         gemfile = File.join(path, 'Gemfile')
         if(File.exists?(gemfile))
           content = File.readlines(gemfile)
         else
           content = ['source "https://rubygems.org"']
         end
-        content << 'gem "kitchen-ssh"'
+
+        unless content.any? { |line| line.match(/gem ['"]kitchen-miasma['"]/)}
+          content << 'gem "kitchen-miasma", :git => "https://github.com/hw-labs/kitchen-miasma.git", :ref => "develop"'
+        end
+
         File.open(gemfile, 'w') do |file|
           file.puts content.join("\n")
         end
@@ -212,6 +253,7 @@ module Jackal
 RSpec.configure do |config|
   config.log_level = :fatal
   output_dir = 'output'
+  Dir.mkdir(output_dir) unless Dir.exist?(output_dir)
   Dir.new(output_dir)
   if defined?(ChefSpec)
     config.output_stream = File.open(File.join(output_dir,'chefspec.json'), 'w')

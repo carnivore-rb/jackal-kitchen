@@ -2,13 +2,7 @@ source 'https://rubygems.org'
 
 gem 'pry'
 gem 'minitest'
-gem 'carnivore-actor'
-
-%w(
-  jackal
-  jackal-assets
-).each do |component|
-  gem component, :path => File.join(ENV['JACKAL_WORKING_DIR'], component)
-end
+gem 'carnivore-unixsocket'
+gem 'kitchen-miasma', :git => 'https://github.com/hw-labs/kitchen-miasma.git', :ref => 'develop'
 
 gemspec
